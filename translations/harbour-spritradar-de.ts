@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Search Radius</source>
-        <translation>Such Radius</translation>
+        <translation>Suchradius</translation>
     </message>
     <message>
         <source>Location</source>
@@ -21,11 +21,11 @@
     </message>
     <message>
         <source>Use GPS</source>
-        <translation>GPS Position</translation>
+        <translation>GPS-Position</translation>
     </message>
     <message>
         <source>Zip Code</source>
-        <translation>Postleihzahl</translation>
+        <translation>Postleitzahl</translation>
     </message>
 </context>
 <context>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Opening Times</source>
-        <translation>Öfnungszeiten</translation>
+        <translation>Öffnungszeiten</translation>
     </message>
     <message>
         <source>Open</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Set as Favourite</source>
-        <translation>Zu Favoriten Hinzufügen</translation>
+        <translation>Zu Favoriten hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Set as Favourite</source>
-        <translation>Zu Favoriten Hinzufügen</translation>
+        <translation>Zu Favoriten hinzufügen</translation>
     </message>
 </context>
 </TS>
