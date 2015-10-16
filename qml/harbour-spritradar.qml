@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtPositioning 5.2
 import harbour.spritradar.Settings 1.0
+import QtQuick.Window 2.1
 import "pages"
 
 ApplicationWindow
@@ -14,6 +15,8 @@ ApplicationWindow
         id: position
         active: useGps
    }
+
+
    ContextMenu {
        id: favMenu
        property variant parentItem;
@@ -50,7 +53,7 @@ ApplicationWindow
             favs.load()
         }
     }
-    property string apikey: ""
+    property string apikey: "6182355f-3ef8-ec29-ad2f-21d86546dd0c"
     property alias searchRadius: conf.searchRadius //0-25
     property string type: "e10" //e5,e10,diesel
     property string sort: "price" //price,dist
@@ -76,6 +79,31 @@ ApplicationWindow
     }
     Component.onDestruction: {
         settings.save()
+    }
+    onSortChanged: {
+        searchItems = qmSort( searchItems, "asc" )
+    }
+
+    function qmSort( list, mode ) {
+        if( list.length > 1 ) {
+            var left = []
+            var right = []
+            var pivot =  list[list.length-1]
+            var srt = sort == "dist"
+            for( var i = 0; i < list.length-1; i++ ) {
+                var itm = list[i]
+                if( ( (srt?itm.dist:itm.price) < (srt?pivot.dist:pivot.price) && mode == "asc" ) || ( (srt?itm.dist:itm.price) > (srt?pivot.dist:pivot.price) && mode == "desc" ) ) {
+                    left[left.length] = list[i]
+                }
+                else {
+                    right[right.length] = list[i]
+                }
+            }
+            left = qmSort( left, mode )
+            right = qmSort( right, mode )
+            list = ( left.concat( [pivot] ) ).concat( right )
+        }
+        return list
     }
 
     function search() {
