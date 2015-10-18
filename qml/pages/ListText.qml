@@ -20,7 +20,7 @@ Item {
         color: Theme.highlightColor
         font.pixelSize: Theme.fontSizeMedium
     }
-    Text {
+    Label {
         id: opTime
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -33,5 +33,6 @@ Item {
         text: ""
         color: Theme.primaryColor
         font.pixelSize: Theme.fontSizeMedium
+        truncationMode: TruncationMode.Fade
     }
 }

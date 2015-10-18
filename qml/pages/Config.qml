@@ -19,37 +19,40 @@ Dialog {
         Column {
             id: contCol
             width: parent.width
+
             DialogHeader {
                 acceptText: qsTr("Search")
                 cancelText: ""
             }
-            PageHeader {
-                title: qsTr("Fuel Type")
+            SectionHeader {
+                text: qsTr("Fuel Type")
             }
             Row {
-                width: parent.width
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: Theme.horizontalPageMargin
                 Button {
                     text: "Super (E5)"
-                    width: parent.width/3
+                    width: parent.width/3 - 2*Theme.horizontalPageMargin/3
                     down: type == "e5"
                     onClicked: type = "e5"
                 }
                 Button {
                     text: "Super (E10)"
-                    width: parent.width/3
+                    width: parent.width/3 - 2*Theme.horizontalPageMargin/3
                     down: type == "e10"
                     onClicked: type = "e10"
                 }
                 Button {
                     text: "Diesel"
-                    width: parent.width/3
+                    width: parent.width/3 - 2*Theme.horizontalPageMargin/3
                     down: type == "diesel"
                     onClicked: type = "diesel"
                 }
             }
 
-            PageHeader {
-                title: qsTr("Search Radius")
+            SectionHeader {
+                text: qsTr("Search Radius")
             }
             Slider {
                 id: sradius
@@ -61,8 +64,8 @@ Dialog {
                 //onValueChanged: searchRadius = value
                 valueText: value+" km"
             }
-            PageHeader {
-                title: qsTr("Location")
+            SectionHeader {
+                text: qsTr("Location")
             }
             TextSwitch {
                 id: gpsSwitch
@@ -78,6 +81,8 @@ Dialog {
                 onTextChanged: zipCode = text
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                 validator: RegExpValidator { regExp: /\d{5}/ }//IntValidator { bottom: 10000; top: 99999 }
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: focus = false
             }
             Text {
                 color: Theme.secondaryColor

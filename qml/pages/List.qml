@@ -16,12 +16,13 @@ Page {
         }
         delegate: StationListDelegate {
             id: lstItm
+            width: parent.width - 2 * Theme.horizontalPageMargin
+            anchors.horizontalCenter: parent.horizontalCenter
             name: searchItems[index].name
             price: searchItems[index].price
             distance: searchItems[index].dist
             street: searchItems[index].street+(typeof(searchItems[index].houseNumber) == "object"?"":searchItems[index].houseNumber)+", "+searchItems[index].postCode+" "+searchItems[index].place
             stId: searchItems[index].id
-            width: page.width
             height: Theme.itemSizeSmall + ( favMenu.parentItem == this ? favMenu.height : 0 )
             onPressAndHold: favMenu._showI( this, this )
             onClicked: {
@@ -39,12 +40,11 @@ Page {
             }
         }
         VerticalScrollDecorator {}
-    }
-    Text {
-        anchors.centerIn: parent
-        font.pixelSize: Theme.fontSizeHuge
-        color: Theme.secondaryHighlightColor
-        text: errorCode == 1 ? qsTr( "Nothing Found" ) : errorCode == 2 ? qsTr( "Invalid zip code" ) : ""
+
+        ViewPlaceholder {
+            enabled: errorCode !== 0
+            text: errorCode == 1 ? qsTr( "Nothing Found" ) : errorCode == 2 ? qsTr( "Invalid zip code" ) : ""
+        }
     }
 
     BusyIndicator {

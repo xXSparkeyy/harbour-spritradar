@@ -8,7 +8,7 @@ Page {
         station = eval( "{\"station\":{\"id\":\"0\",\"name\":\"Loading...\",\"brand\":\"\",\"street\":\"\",\"houseNumber\":null,\"postCode\":\"\",\"place\":\"\",\"overrides\":[],\"isOpen\":false,\"e5\":0.000,\"e10\":0.000,\"diesel\":0.000,\"lat\":0,\"lng\":0,\"state\":null,\"openingTimes\":[]}}" ).station
         stationLoading = true
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+stationId+"&apikey=6182355f-3ef8-ec29-ad2f-21d86546dd0c" )
+        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+stationId+"&apikey=" + apikey )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 stationLoading = false
@@ -34,39 +34,47 @@ Page {
                 title: station.name
             }
             BackgroundItem {
-                width: parent.width
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: Qt.openUrlExternally( "geo:"+station.lat+","+station.lng )
                 id: usgszfgasz
                 Text {
                     //Adresse
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     anchors.fill: parent
-                    anchors.margins: Theme.paddingSmall
                     text: station.street+" "+(typeof(station.houseNumber) == "object"?"":station.houseNumber)+(station.id=="0"?"":", ")+station.postCode+" "+station.place
                     color: usgszfgasz.highlighted ? Theme.highlightColor : Theme.primaryColor
                     font.pixelSize: 0
                     verticalAlignment: Text.AlignVCenter
                 }
             }
-            PageHeader {
-                title: qsTr("Prices")
+            SectionHeader {
+                text: qsTr("Prices")
             }
             ListText {
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
                 title: "Super E5"
                 text: station.e5+"€"
             }
             ListText {
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
                 title: "Super E10"
                 text: station.e10+"€"
             }
             ListText {
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
                 title: "Diesel"
                 text: station.diesel+"€"
             }
-            PageHeader {
-                title: qsTr("Opening Times")
+            SectionHeader {
+                text: qsTr("Opening Times")
             }
             ListText {
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
                 title: station.isOpen ? qsTr("Open") : qsTr("Closed")
             }
             Item {
@@ -77,6 +85,8 @@ Page {
                 //openin times
                 model: station.openingTimes.length
                 ListText {
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    anchors.horizontalCenter: parent.horizontalCenter
                     title: station.openingTimes[index].text
                     text: station.openingTimes[index].start+" - "+station.openingTimes[index].end
                 }
