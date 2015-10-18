@@ -21,7 +21,6 @@ SOURCES += src/harbour-spritradar.cpp \
 OTHER_FILES += qml/harbour-spritradar.qml \
     qml/cover/*.qml \
     qml/pages/*.qml \
-    rpm/harbour-spritradar.spec \
     rpm/harbour-spritradar.yaml \
     translations/*.ts \
     harbour-spritradar.desktop \
