@@ -34,13 +34,15 @@
 #include "settings.h"
 #include <sailfishapp.h>
 #include <QCoreApplication>
+#include <QGuiApplication>
+#include <QtGui>
+#include <QtQml>
 #include <QQuickView>
+#include <QSettings>
 
 
 int main(int argc, char *argv[])
 {
-    //QString TANKERKOENIG_APIKEY;
-
     // SailfishApp::main() will display "qml/template.qml", if you need more
     // control over initialization, you can use:
     //
