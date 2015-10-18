@@ -21,11 +21,16 @@ SOURCES += src/harbour-spritradar.cpp \
 OTHER_FILES += qml/harbour-spritradar.qml \
     qml/cover/*.qml \
     qml/pages/*.qml \
-    rpm/harbour-spritradar.spec \
     rpm/harbour-spritradar.yaml \
     translations/*.ts \
     harbour-spritradar.desktop \
     rpm/harbour-spritradar.changes
+
+!defined(TANKERKOENIG_APIKEY, var) {
+    error("Please provide Tankerkoenig API key as argument of qmake, e.g. 'qmake TANKERKOENIG_APIKEY=<your API key here>'")
+}
+
+DEFINES += TANKERKOENIG_APIKEY=\\\"$$TANKERKOENIG_APIKEY\\\"
 
 # to disable building translations every time, comment out the
 # following CONFIG line

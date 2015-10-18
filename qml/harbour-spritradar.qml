@@ -52,7 +52,7 @@ ApplicationWindow
             favs.load()
         }
     }
-    property string apikey: "YOUR-API-KEY-HERE" //Claim here: https://creativecommons.tankerkoenig.de/#register
+    property string apikey: tankerkoenig_apikey
     property alias searchRadius: conf.searchRadius //0-25
     property string type: "e10" //e5,e10,diesel
     property string sort: "price" //price,dist

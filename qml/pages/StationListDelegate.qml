@@ -7,42 +7,50 @@ BackgroundItem {
     property string street: ""
     property string distance: ""
     property string stId: ""
-        Text {
-            id: img
-            anchors.margins: Theme.paddingSmall
-            anchors.left: parent.left
-            anchors.top: parent.top
-            color: Theme.highlightColor
-            text: price
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: Theme.fontSizeExtraLarge
-        }
+
+    Rectangle {
+        width: parent.width - 2 * Theme.horizontalPageMargin
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Label {
+            id: img
+            anchors {
+                topMargin: -1 * Theme.paddingSmall
+                left: parent.left
+                top: parent.top
+            }
+            color: Theme.highlightColor
+            text: price
+            font.pixelSize: Theme.fontSizeExtraLarge
+        }
+        Label {
             id: nm
-            anchors.margins: Theme.paddingMedium
-            anchors.right: parent.right
-            anchors.left: img.right
-            anchors.top: parent.top
+            anchors {
+                leftMargin: Theme.paddingMedium
+                right: parent.right
+                left: img.right
+                top: parent.top
+            }
             height: paintedHeight
             color: down ? Theme.highlightColor : Theme.primaryColor
             text: name
-            verticalAlignment: Text.AlignVCenter
             font.pixelSize: Theme.fontSizeMedium
             truncationMode: TruncationMode.Fade
         }
         Label {
             id: srt
-            anchors.margins: Theme.paddingMedium
-            anchors.topMargin: -1*Theme.paddingMedium
-            anchors.right: parent.right
-            anchors.left: img.right
+            anchors {
+                topMargin: -1 * Theme.paddingSmall
+                leftMargin: Theme.paddingMedium
+                right: parent.right
+                left: img.right
+                top: nm.bottom
+            }
             height: paintedHeight
-            anchors.top: nm.bottom
             color: down ? Theme.secondaryHighlightColor : Theme.secondaryColor
-            verticalAlignment: Text.AlignVCenter
             font.pixelSize: Theme.fontSizeSmall
             text: (isFav( stId )?"★":"☆")+" ~"+distance+"km | "+street
             truncationMode: TruncationMode.Fade
         }
+    }
 }
