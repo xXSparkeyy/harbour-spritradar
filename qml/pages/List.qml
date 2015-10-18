@@ -16,8 +16,7 @@ Page {
         }
         delegate: StationListDelegate {
             id: lstItm
-            width: parent.width - 2 * Theme.horizontalPageMargin
-            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width
             name: searchItems[index].name
             price: searchItems[index].price
             distance: searchItems[index].dist
