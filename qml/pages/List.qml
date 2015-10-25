@@ -20,7 +20,8 @@ Page {
             name: searchItems[index].name
             price: searchItems[index].price
             distance: searchItems[index].dist
-            street: searchItems[index].street+(typeof(searchItems[index].houseNumber) == "object"?"":searchItems[index].houseNumber)+", "+searchItems[index].postCode+" "+searchItems[index].place
+            address: capitalizeString(searchItems[index].street) + (typeof(searchItems[index].houseNumber) == "object" ? "" : " " + searchItems[index].houseNumber) +
+                    ", " + searchItems[index].postCode + " " + capitalizeString(searchItems[index].place)
             stId: searchItems[index].id
             height: Theme.itemSizeSmall + ( favMenu.parentItem == this ? favMenu.height : 0 )
             onPressAndHold: favMenu._showI( this, this )

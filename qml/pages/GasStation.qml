@@ -13,9 +13,15 @@ Page {
             if( req.readyState == 4 ) {
                 stationLoading = false
                 station = eval( req.responseText ).station
-                }
+            }
         }
         req.send()
+    }
+
+    function stripSeconds(time) {
+        var timeSplitted = time.split(":")
+        timeSplitted.splice(2,1)
+        return timeSplitted.join(":")
     }
 
     SilicaFlickable {
@@ -30,65 +36,112 @@ Page {
 
         Column {
             width: parent.width
+
             PageHeader {
                 title: station.name
             }
+
             BackgroundItem {
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                anchors.horizontalCenter: parent.horizontalCenter
+                height: address.height * 1.5
+                width: parent.width
                 onClicked: Qt.openUrlExternally( "geo:"+station.lat+","+station.lng )
-                id: usgszfgasz
-                Text {
+                id: addressContainer
+                Label {
+                    id: address
+                    width: parent.width - 2 * Theme.horizontalPageMargin
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    truncationMode: TruncationMode.Fade
+                    wrapMode: Text.WordWrap
                     //Adresse
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    anchors.fill: parent
-                    text: station.street+" "+(typeof(station.houseNumber) == "object"?"":station.houseNumber)+(station.id=="0"?"":", ")+station.postCode+" "+station.place
-                    color: usgszfgasz.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    font.pixelSize: 0
+                    text: capitalizeString(station.street) + " " + (typeof(station.houseNumber) == "object" ? "" : station.houseNumber) + (station.id == "0" ? "" : "\n") +
+                          station.postCode + " " + capitalizeString(station.place)
+                    color: addressContainer.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
                     verticalAlignment: Text.AlignVCenter
                 }
             }
+
+            ListText {
+                title: qsTr("Brand") + ":"
+                text: station.brand
+                visible: station.brand !== ""
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            ListText {
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                anchors.horizontalCenter: parent.horizontalCenter
+                title: qsTr("Status") + ":"
+                text: station.isOpen ? qsTr("Open") : qsTr("Closed")
+            }
+
             SectionHeader {
                 text: qsTr("Prices")
             }
-            ListText {
+
+            Row {
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 anchors.horizontalCenter: parent.horizontalCenter
-                title: "Super E5"
-                text: station.e5+"€"
+                Label {
+                    width: parent.width / 2
+                    text: "Super E5" + ":"
+                    color: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeLarge
+                }
+                Label {
+                    width: parent.width / 2
+                    text: station.e5 + "€"
+                    font.pixelSize: Theme.fontSizeLarge
+                    horizontalAlignment: Text.AlignRight
+                }
             }
-            ListText {
+            Row {
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 anchors.horizontalCenter: parent.horizontalCenter
-                title: "Super E10"
-                text: station.e10+"€"
+                Label {
+                    width: parent.width / 2
+                    text: "Super E10" + ":"
+                    color: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeLarge
+                }
+                Label {
+                    width: parent.width / 2
+                    text: station.e10 + "€"
+                    font.pixelSize: Theme.fontSizeLarge
+                    horizontalAlignment: Text.AlignRight
+                }
             }
-            ListText {
+            Row {
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 anchors.horizontalCenter: parent.horizontalCenter
-                title: "Diesel"
-                text: station.diesel+"€"
+                Label {
+                    width: parent.width / 2
+                    text: "Diesel" + ":"
+                    color: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeLarge
+                }
+                Label {
+                    width: parent.width / 2
+                    text: station.diesel + "€"
+                    font.pixelSize: Theme.fontSizeLarge
+                    horizontalAlignment: Text.AlignRight
+                }
             }
+
             SectionHeader {
                 text: qsTr("Opening Times")
             }
-            ListText {
-                width: parent.width - 2 * Theme.horizontalPageMargin
-                anchors.horizontalCenter: parent.horizontalCenter
-                title: station.isOpen ? qsTr("Open") : qsTr("Closed")
-            }
-            Item {
-                height: Theme.paddingSmall
-                width: 1
-            }
+
             Repeater {
                 //openin times
                 model: station.openingTimes.length
                 ListText {
                     width: parent.width - 2 * Theme.horizontalPageMargin
                     anchors.horizontalCenter: parent.horizontalCenter
-                    title: station.openingTimes[index].text
-                    text: station.openingTimes[index].start+" - "+station.openingTimes[index].end
+                    title: ucfirst(station.openingTimes[index].text) + ":"
+                    text: stripSeconds(station.openingTimes[index].start) + " - " + stripSeconds(station.openingTimes[index].end)
                 }
             }
         }

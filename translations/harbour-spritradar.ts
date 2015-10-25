@@ -61,6 +61,14 @@
         <source>Set as Favourite</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brand</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>List</name>

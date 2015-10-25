@@ -9,10 +9,11 @@ Dialog {
     property alias useGps: gpsSwitch.checked
     property alias zipCode: postalCode.text
     property bool doSearch: false
-    onStatusChanged: if( status == PageStatus.Deactivating) { if( doSearch) {doSearch = false; search(); settings.save()} }
+    onStatusChanged: if( status === PageStatus.Deactivating) { if( doSearch) {doSearch = false; search(); settings.save()} }
     onAccepted: doSearch = true
     acceptDestination: list
     acceptDestinationAction: PageStackAction.Pop
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: contCol.height
@@ -75,7 +76,6 @@ Dialog {
                 id: postalCode
                 placeholderText: qsTr("Zip Code")
                 label: placeholderText
-                labelVisible: true
                 width: parent.width
                 readOnly: useGps
                 onTextChanged: zipCode = text
@@ -84,6 +84,12 @@ Dialog {
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: focus = false
             }
+            Rectangle {
+                width: parent.width
+                height: Theme.paddingLarge * 2
+                color: "transparent"
+            }
+
             Text {
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall

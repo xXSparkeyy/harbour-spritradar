@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 BackgroundItem {
     property string name: ""
     property variant price: 0
-    property string street: ""
+    property string address: ""
     property string distance: ""
     property string stId: ""
 
@@ -49,7 +49,7 @@ BackgroundItem {
             height: paintedHeight
             color: down ? Theme.secondaryHighlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: (isFav( stId )?"★":"☆")+" ~"+distance+"km | "+street
+            text: (isFav( stId )?"★":"☆")+" "+distance+"km | "+address
             truncationMode: TruncationMode.Fade
         }
     }

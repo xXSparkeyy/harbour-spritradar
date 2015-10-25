@@ -131,6 +131,7 @@ ApplicationWindow
         }
 
     }
+
     function _serach( lat, lng ) {
         var req = new XMLHttpRequest()
         req.open( "GET", "https://creativecommons.tankerkoenig.de/json/list.php?lat="+lat+"&lng="+lng+"&rad="+searchRadius+"&sort="+sort+"&type="+type+"&apikey="+apikey )
@@ -151,4 +152,27 @@ ApplicationWindow
         req.send()
     }
 
+    function ucfirst(text) {
+      text += '';
+      var fChar = text.charAt(0).toUpperCase();
+      return fChar + text.substr(1);
+    }
+
+    function capitalizeString(text) {
+        var newText = text.toLowerCase()
+
+        var textSplitDash = newText.split(" ")
+        var newTextDash =""
+        for (var i = 0; i < textSplitDash.length; i++) {
+            newTextDash += ucfirst(textSplitDash[i]) + (i === textSplitDash.length - 1 ? "" : " ")
+        }
+
+        var textSplitHyphen = newTextDash.split("-")
+        var newTextHyphen =""
+        for (var i = 0; i < textSplitHyphen.length; i++) {
+            newTextHyphen += ucfirst(textSplitHyphen[i]) + (i === textSplitHyphen.length - 1 ? "" : "-")
+        }
+
+        return newTextHyphen
+    }
 }

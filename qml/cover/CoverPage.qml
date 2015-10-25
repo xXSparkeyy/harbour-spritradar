@@ -3,34 +3,50 @@ import Sailfish.Silica 1.0
 
 CoverBackground {
     Item {
-        id: bla
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: coverAction.top
-        anchors.margins: Theme.paddingSmall
+        id: cover
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: coverAction.top
+            margins: Theme.paddingSmall * 2
+        }
+
         Column {
-            width: bla.width
+            width: parent.width
             Repeater {
                 model: searchItems.length > 5 ? 5 : searchItems.length
                 Item {
-                    height: price.paintedHeight*1.5
-                    y: height*index
-                    width: bla.width
-                    Text {
+                    height: price.paintedHeight * 1.5
+                    width: cover.width
+                    Label {
                         id: price
                         text: searchItems[index].price
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.primaryColor
+                        color: Theme.highlightColor
                         anchors.left: parent.left
                     }
                     Label {
-                        text: searchItems[index].name
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.highlightColor
-                        anchors.left: price.right
-                        anchors.right: parent.right
-                        anchors.margins: Theme.paddingSmall
+                        text: searchItems[index].brand !== "" ? searchItems[index].brand : searchItems[index].name
+                        color: Theme.primaryColor
+                        anchors {
+                            left: price.right
+                            right: parent.right
+                            top: price.top
+                            leftMargin: Theme.paddingSmall
+                        }
+                        truncationMode: TruncationMode.Fade
+                    }
+                    Label {
+                        width: parent.width
+                        text: capitalizeString(searchItems[index].street) + (typeof(searchItems[index].houseNumber) == "object" ? "" : " " + searchItems[index].houseNumber) + ", " + searchItems[index].postCode + " " + capitalizeString(searchItems[index].place)
+                        font.pixelSize: Theme.fontSizeTiny
+                        color: Theme.secondaryColor
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            top: price.bottom
+                            topMargin: -1 * Theme.paddingSmall
+                        }
                         truncationMode: TruncationMode.Fade
                     }
                 }
