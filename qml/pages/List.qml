@@ -6,7 +6,9 @@ Page {
     clip: true
     id: page
     onStatusChanged: if( status == PageStatus.Active) { pageStack.pushAttached( conf ) }
+    allowedOrientations: Orientation.All
     property int errorCode: 0
+
     SilicaListView {
         id: listView
         model: searchItems.length
@@ -39,6 +41,7 @@ Page {
                 onClicked: search()
             }
         }
+
         VerticalScrollDecorator {}
 
         ViewPlaceholder {

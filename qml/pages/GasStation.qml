@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 
 Page {
     clip: true
+    allowedOrientations: Orientation.All
     property string stationId: ""
     onStationIdChanged: {
         station = eval( "{\"station\":{\"id\":\"0\",\"name\":\"Loading...\",\"brand\":\"\",\"street\":\"\",\"houseNumber\":null,\"postCode\":\"\",\"place\":\"\",\"overrides\":[],\"isOpen\":false,\"e5\":0.000,\"e10\":0.000,\"diesel\":0.000,\"lat\":0,\"lng\":0,\"state\":null,\"openingTimes\":[]}}" ).station
@@ -26,6 +27,8 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: stationDetails.height
+
         PullDownMenu {
             active: stationLoading
             MenuItem {
@@ -34,7 +37,10 @@ Page {
             }
         }
 
+        VerticalScrollDecorator {}
+
         Column {
+            id: stationDetails
             width: parent.width
 
             PageHeader {
@@ -143,6 +149,12 @@ Page {
                     title: ucfirst(station.openingTimes[index].text) + ":"
                     text: stripSeconds(station.openingTimes[index].start) + " - " + stripSeconds(station.openingTimes[index].end)
                 }
+            }
+
+            Rectangle {
+                width: parent.width
+                height: Theme.paddingLarge * 2
+                color: "transparent"
             }
         }
     }

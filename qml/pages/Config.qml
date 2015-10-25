@@ -5,6 +5,7 @@ import Sailfish.Silica 1.0
 Dialog {
     clip: true
     id: page
+    allowedOrientations: Orientation.All
     property alias searchRadius: sradius.value
     property alias useGps: gpsSwitch.checked
     property alias zipCode: postalCode.text
@@ -17,6 +18,9 @@ Dialog {
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: contCol.height
+
+        VerticalScrollDecorator {}
+
         Column {
             id: contCol
             width: parent.width
@@ -65,13 +69,16 @@ Dialog {
                 //onValueChanged: searchRadius = value
                 valueText: value+" km"
             }
+
             SectionHeader {
                 text: qsTr("Location")
             }
+
             TextSwitch {
                 id: gpsSwitch
                 text: qsTr("Use GPS")
             }
+
             TextField {
                 id: postalCode
                 placeholderText: qsTr("Zip Code")
@@ -84,6 +91,7 @@ Dialog {
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: focus = false
             }
+
             Rectangle {
                 width: parent.width
                 height: Theme.paddingLarge * 2
@@ -97,6 +105,12 @@ Dialog {
                 height: paintedHeight
                 horizontalAlignment: Text.AlignHCenter
                 text: "Powered by www.tankerkoenig.de"
+            }
+
+            Rectangle {
+                width: parent.width
+                height: Theme.paddingLarge * 2
+                color: "transparent"
             }
         }
     }
