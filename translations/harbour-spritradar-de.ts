@@ -62,12 +62,12 @@
         <translation>Zu Favoriten hinzufügen</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished"></translation>
+        <source>Brand</source>
+        <translation>Marke</translation>
     </message>
     <message>
-        <source>Brand</source>
-        <translation type="unfinished"></translation>
+        <source>State</source>
+        <translation>Status</translation>
     </message>
 </context>
 <context>

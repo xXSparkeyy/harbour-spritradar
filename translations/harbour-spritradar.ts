@@ -62,11 +62,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Status</source>
+        <source>Brand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Brand</source>
+        <source>State</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -73,7 +73,7 @@ Page {
             ListText {
                 width: parent.width - 2 * Theme.horizontalPageMargin
                 anchors.horizontalCenter: parent.horizontalCenter
-                title: qsTr("Status") + ":"
+                title: qsTr("State") + ":"
                 text: station.isOpen ? qsTr("Open") : qsTr("Closed")
             }
 
