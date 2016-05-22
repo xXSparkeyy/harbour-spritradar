@@ -32,8 +32,14 @@
 #include <QtQuick>
 #endif
 #include "settings.h"
+#include "svmanager.h"
 #include <sailfishapp.h>
 #include <QCoreApplication>
+#include <QGuiApplication>
+#include <QtGui>
+#include <QtQml>
+#include <QQuickView>
+#include <QSettings>
 
 
 int main(int argc, char *argv[])
@@ -49,7 +55,18 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("org");
     QCoreApplication::setOrganizationDomain("Sparkeyy");
     QCoreApplication::setApplicationName("harbour-spritradar");
-    qmlRegisterType<Settings>("harbour.spritradar.Settings", 1,0, "Settings");
-    return SailfishApp::main(argc, argv);
+    qmlRegisterType<Settings>("harbour.SpritRadar.Util", 1,0, "Settings");
+    qmlRegisterType<SVManager>("harbour.SpritRadar.Util", 1,0, "SVManager");
+
+    QGuiApplication* app = SailfishApp::application(argc, argv);
+
+    QQuickView* view = SailfishApp::createView();
+    QObject::connect(view->engine(), SIGNAL(quit()), app, SLOT(quit()));
+    view->rootContext()->setContextProperty("tankerkoenig_apikey", TANKERKOENIG_APIKEY); //Claim here: https://creativecommons.tankerkoenig.de/#register
+    // has to be set as additional qmake argument to the project configuration (armv7hl, i486 and debug/release for both), like this: "TANKERKOENIG_APIKEY=<your_apikey>"
+    view->setSource(SailfishApp::pathTo("qml/harbour-spritradar.qml"));
+    view->show();
+
+    return app->exec();
 }
 

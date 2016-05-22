@@ -5,52 +5,65 @@ import Sailfish.Silica 1.0
 Page {
     clip: true
     id: page
-    onStatusChanged: if( status == PageStatus.Active) { pageStack.pushAttached( conf ) }
+    onStatusChanged: if( status == PageStatus.Active) { if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }; pageStack.pushAttached( selectedPlugin ) }
+    allowedOrientations: Orientation.All
     property int errorCode: 0
+    canNavigateForward: selectedPlugin.pluginReady
+    backNavigation: selectedPlugin.pluginReady
+
     SilicaListView {
         id: listView
-        model: searchItems.length
+        model: selectedPlugin.items
+        interactive: !bsyi.visible
         anchors.fill: parent
         header: PageHeader {
             title: qsTr("Results")
         }
         delegate: StationListDelegate {
             id: lstItm
-            name: searchItems[index].name
-            price: searchItems[index].price
-            distance: searchItems[index].dist
-            street: searchItems[index].street+(typeof(searchItems[index].houseNumber) == "object"?"":searchItems[index].houseNumber)+", "+searchItems[index].postCode+" "+searchItems[index].place
-            stId: searchItems[index].id
-            width: page.width
+            width: parent.width
+            name:      stationName
+            price:     stationPrice
+            distance:  stationDistance
+            address:   stationAdress
+            stId:      stationID
             height: Theme.itemSizeSmall + ( favMenu.parentItem == this ? favMenu.height : 0 )
             onPressAndHold: favMenu._showI( this, this )
             onClicked: {
-                pageStack.push( "GasStation.qml", { stationId:stId } )
+                selectedPlugin.requestStation( stId )
             }
         }
         PullDownMenu {
+            busy: bsyi.visible
             MenuItem {
                 text: qsTr("Sort by")+": "+(sort == "price"? qsTr("Price"):qsTr("Distance"))
                 onClicked: sort = (sort == "price"?"dist":"price")
             }
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: search()
+                onClicked: selectedPlugin.requestItems()
             }
         }
+
         VerticalScrollDecorator {}
-    }
-    Text {
-        anchors.centerIn: parent
-        font.pixelSize: Theme.fontSizeHuge
-        color: Theme.secondaryHighlightColor
-        text: errorCode == 1 ? qsTr( "Nothing Found" ) : errorCode == 2 ? qsTr( "Invalid zip code" ) : ""
+
+        Label {
+            id: plc
+            visible: selectedPlugin.errorCode > 0 || !selectedPlugin.pluginReady
+            text: selectedPlugin.pluginReady?selectedPlugin.errorCode == 1 ? qsTr( "Nothing Found" ) : selectedPlugin.errorCode == 2 ? qsTr( "Invalid zip code" ) : selectedPlugin.errorCode == 3 ? "Something went wrong":"":qsTr("Initializing")
+            anchors.horizontalCenter: bsyi.horizontalCenter
+            anchors.top: bsyi.bottom
+            anchors.topMargin: Theme.paddingLarge
+            color: Theme.highlightColor
+            font.pixelSize: Theme.fontSizeLarge
+        }
+        BusyIndicator {
+            id: bsyi
+            anchors.centerIn: parent
+            running: visible
+            size: BusyIndicatorSize.Large
+            visible: selectedPlugin.itemsBusy || !selectedPlugin.pluginReady
+        }
     }
 
-    BusyIndicator {
-        anchors.centerIn: parent
-        running: visible
-        size: BusyIndicatorSize.Large
-        visible: loading
-    }
 }

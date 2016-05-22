@@ -3,23 +3,19 @@ import Sailfish.Silica 1.0
 
 Page {
     clip: true
+    allowedOrientations: Orientation.All
     property string stationId: ""
-    onStationIdChanged: {
-        station = eval( "{\"station\":{\"id\":\"0\",\"name\":\"Loading...\",\"brand\":\"\",\"street\":\"\",\"houseNumber\":null,\"postCode\":\"\",\"place\":\"\",\"overrides\":[],\"isOpen\":false,\"e5\":0.000,\"e10\":0.000,\"diesel\":0.000,\"lat\":0,\"lng\":0,\"state\":null,\"openingTimes\":[]}}" ).station
-        stationLoading = true
-        var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+stationId+"&apikey=6182355f-3ef8-ec29-ad2f-21d86546dd0c" )
-        req.onreadystatechange = function() {
-            if( req.readyState == 4 ) {
-                stationLoading = false
-                station = eval( req.responseText ).station
-                }
-        }
-        req.send()
-    }
+    property variant station: ({ })
+    onStationChanged: log( station )
 
     SilicaFlickable {
         anchors.fill: parent
+        anchors.leftMargin: Theme.horizontalPageMargin
+        anchors.rightMargin: Theme.horizontalPageMargin
+        anchors.topMargin: Theme.verticalPageMargin
+        anchors.bottomMargin: Theme.verticalPageMargin
+        contentHeight: stationDetails.height
+        id: page
         PullDownMenu {
             active: stationLoading
             MenuItem {
@@ -28,58 +24,72 @@ Page {
             }
         }
 
+        VerticalScrollDecorator {}
+
         Column {
-            width: parent.width
+            id: stationDetails
+            anchors.right: parent.right
+            anchors.left: parent.left
+
             PageHeader {
-                title: station.name
+                title: station.stationName?station.stationName:""
             }
+
             BackgroundItem {
+                height: address.paintedHeight + 2*Theme.paddingLarge
                 width: parent.width
-                onClicked: Qt.openUrlExternally( "geo:"+station.lat+","+station.lng )
-                id: usgszfgasz
-                Text {
+                onClicked: Qt.openUrlExternally( "geo:"+station.stationAdress.latitude+","+station.stationAdress.longitude )
+                id: addressContainer
+                Label {
+                    id: address
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.topMargin: Theme.paddingLarge
+                    anchors.right: ico.left
+                    anchors.rightMargin: Theme.paddingLarge
+                    truncationMode: TruncationMode.Fade
+                    wrapMode: Text.WordWrap
                     //Adresse
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    anchors.fill: parent
-                    anchors.margins: Theme.paddingSmall
-                    text: station.street+" "+(typeof(station.houseNumber) == "object"?"":station.houseNumber)+(station.id=="0"?"":", ")+station.postCode+" "+station.place
-                    color: usgszfgasz.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    font.pixelSize: 0
+                    text: typeof(station.stationAdress) == "object"? ( station.stationAdress.street+"\n"+station.stationAdress.county +(station.stationAdress.country?", "+station.stationAdress.country:"" ) ):""
+                    color: addressContainer.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    font.pixelSize: Theme.fontSizeSmall
                     verticalAlignment: Text.AlignVCenter
                 }
-            }
-            PageHeader {
-                title: qsTr("Prices")
-            }
-            ListText {
-                title: "Super E5"
-                text: station.e5+"€"
-            }
-            ListText {
-                title: "Super E10"
-                text: station.e10+"€"
-            }
-            ListText {
-                title: "Diesel"
-                text: station.diesel+"€"
-            }
-            PageHeader {
-                title: qsTr("Opening Times")
-            }
-            ListText {
-                title: station.isOpen ? qsTr("Open") : qsTr("Closed")
-            }
-            Item {
-                height: Theme.paddingSmall
-                width: 1
+                Image {
+                    id: ico
+                    source: "image://theme/icon-m-whereami?" + (addressContainer.down
+                                 ? Theme.highlightColor
+                                 : Theme.primaryColor)
+                    width: height
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    anchors.margins: Theme.paddingLarge
+                }
             }
             Repeater {
-                //openin times
-                model: station.openingTimes.length
-                ListText {
-                    title: station.openingTimes[index].text
-                    text: station.openingTimes[index].start+" - "+station.openingTimes[index].end
-                }
+                    model: station.content?station.content.length:0
+                    delegate: Column {
+                        width: page.width
+                        property variant items: station.content[index].items
+                        SectionHeader {
+                            visible: station.content[index].title!=""
+                            text: qsTr(station.content[index].title)
+                        }
+                        Repeater {
+                            model: items.length
+                            delegate: ListText {
+                                Component.onCompleted: {
+                                    if( items[index].tf ) titlefade = items[index].tf
+                                    if( items[index].sz ) size = items[index].sz
+                                }
+                                width: page.width
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                title: items[index].title
+                                text: items[index].text?items[index].text:items[index].price+"€"
+                            }
+                        }
+                    }
             }
         }
     }
@@ -87,49 +97,6 @@ Page {
         anchors.centerIn: parent
         running: visible
         size: BusyIndicatorSize.Large
-        visible: stationLoading
+        visible: selectedPlugin.stationBusy
     }
 }
-/*
-{
-  "license": "CC BY 4.0 -  http:\/\/creativecommons.tankerkoenig.de",
-  "data": "MTS-K",
-  "station": {
-    "id": "005056ba-7cb6-1ed2-bceb-90e59ad2cd35",
-    "name": "star Tankstelle",
-    "brand": "STAR",
-    "street": "Gelsdorfer Stra\u00dfe",
-    "houseNumber": "2-4",
-    "postCode": 53340,
-    "place": "Meckenheim",
-    "overrides": [
-
-    ],
-    "openUntil": 1440100800,
-    "isOpen": true,
-    "e5": 1.339,
-    "e10": 1.319,
-    "diesel": 1.069,
-    "lat": 50.61793,
-    "lng": 7.02484,
-    "state": null,
-    "openingTimes": [
-      {
-        "text": "Mo-Fr",
-        "start": "06:00:00",
-        "end": "22:00:00"
-      },
-      {
-        "text": "Samstag",
-        "start": "07:00:00",
-        "end": "22:00:00"
-      },
-      {
-        "text": "Sonntag",
-        "start": "08:00:00",
-        "end": "22:00:00"
-      }
-    ]
-  }
-}
-*/

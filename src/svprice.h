@@ -3,12 +3,17 @@
 
 #include <QObject>
 
-class SVPrice : public QObject
+class SVPrice
 {
-    Q_OBJECT
 public:
-    explicit SVPrice(QObject *parent = 0);
-
+    SVPrice();
+    SVPrice( const SVPrice &p );
+    SVPrice(QString id, QString n, QString p, bool , QString dt);
+    QString name;
+    QString price;
+    QString id;
+    QString date;
+    bool self;
 signals:
 
 public slots:

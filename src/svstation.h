@@ -1,17 +1,26 @@
-#ifndef SVSTATION_H
-#define SVSTATION_H
+#ifndef SVSTATION
+#define SVSTATION
+#include "svprice.h"
 
-#include <QObject>
-
-class SVStation : public QObject
+class SVStation
 {
-    Q_OBJECT
 public:
-    explicit SVStation(QObject *parent = 0);
-
+    SVStation();
+    SVStation( const SVStation &s );
+    SVStation(QString sid, QString sname, QString sadress, QString brand, QString lat, QString lng);
+    QString name;
+    QString id;
+    QString adress;
+    QString brand;
+    QString lat;
+    QString lng;
+    int distance;
+    QString prices;
 signals:
 
 public slots:
 };
 
-#endif // SVSTATION_H
+
+#endif // SVSTATION
+

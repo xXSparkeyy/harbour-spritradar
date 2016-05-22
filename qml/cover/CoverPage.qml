@@ -1,38 +1,35 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../pages"
 
 CoverBackground {
+    CoverPlaceholder {
+        visible: ( selectedPlugin.coverItems.count < 1 ) && !selectedPlugin.itemsBusy && selectedPlugin.pluginReady
+        text: qsTr( "Nothing Found" )
+        anchors {
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+        }
+    }
     Item {
-        id: bla
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: coverAction.top
-        anchors.margins: Theme.paddingSmall
+        id: cover
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: coverAction.top
+            margins: Theme.paddingSmall * 2
+        }
         Column {
-            width: bla.width
+            anchors.fill: parent
             Repeater {
-                model: searchItems.length > 5 ? 5 : searchItems.length
-                Item {
-                    height: price.paintedHeight*1.5
-                    y: height*index
-                    width: bla.width
-                    Text {
-                        id: price
-                        text: searchItems[index].price
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.primaryColor
-                        anchors.left: parent.left
-                    }
-                    Label {
-                        text: searchItems[index].name
-                        font.pixelSize: Theme.fontSizeSmall
-                        color: Theme.highlightColor
-                        anchors.left: price.right
-                        anchors.right: parent.right
-                        anchors.margins: Theme.paddingSmall
-                        truncationMode: TruncationMode.Fade
-                    }
+                id: listView
+                model: selectedPlugin.coverItems
+                delegate: ListText {
+                    width: cover.width
+                    text:      stationName
+                    title:     stationPrice
+                    leftAlign: true
                 }
             }
         }
@@ -40,14 +37,14 @@ CoverBackground {
     }
     BusyIndicator  {
         anchors.centerIn: parent
-        running: visible
-        visible: loading
+        running: true
+        visible: selectedPlugin.itemsBusy || !selectedPlugin.pluginReady
     }
     CoverActionList {
         id: coverAction
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: search()
+            onTriggered: selectedPlugin.requestItems()
         }
     }
 }
