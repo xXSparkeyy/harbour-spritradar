@@ -97,6 +97,7 @@ ApplicationWindow
         settings.save()
     }
     onSortChanged: {
+        selectedPlugin.settings.setValue( "sort", sort )
         selectedPlugin.sort()
     }
 

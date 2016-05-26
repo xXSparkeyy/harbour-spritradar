@@ -86,7 +86,7 @@ Page {
                                 width: page.width
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 title: items[index].title
-                                text: items[index].text?items[index].text:items[index].price+"€"
+                                text: items[index].text?items[index].text:items[index].price+selectedPlugin.units.currency
                             }
                         }
                     }

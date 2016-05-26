@@ -14,6 +14,7 @@ Page {
     SilicaListView {
         id: listView
         model: selectedPlugin.items
+        //onModelChanged: { for( var i = 0; i < model.count; i++ ) log( model.get(i) ) }
         interactive: !bsyi.visible
         anchors.fill: parent
         header: PageHeader {
@@ -27,6 +28,7 @@ Page {
             distance:  stationDistance
             address:   stationAdress
             stId:      stationID
+            message:   customMessage
             height: Theme.itemSizeSmall + ( favMenu.parentItem == this ? favMenu.height : 0 )
             onPressAndHold: favMenu._showI( this, this )
             onClicked: {

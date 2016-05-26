@@ -55,7 +55,7 @@ Page {
             Repeater {
                 model: stations.length
                 BackgroundItem {
-                    width: parent.width
+                    width: col.width
                     id: bghdfas
                     Label {
                         id: lavkavk

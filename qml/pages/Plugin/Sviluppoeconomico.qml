@@ -7,6 +7,7 @@ Plugin {
 
     name: "IT - Osservaprezzi Carburanti"
     description: "Fonte: Ministero dello Sviluppo Economico"
+    units: { "currency":"€", "distance": "km" }
     Connections {
         target: contentItem
         onUseGpsChanged: gpsActive = contentItem.useGps
@@ -96,9 +97,10 @@ Plugin {
                 for( var i = 0; i < x.length; i++ ) {
                     var o = x[i]
                     var price = { price:0 }
+                    var sPrice = { price:0 }
                     for( var j = 0; j < o.prices.length; j++ ) {
-                        if( o.prices[j].type.toLowerCase() == contentItem.type.toLowerCase() && ( price > o.prices[j].price || price == 0 ) ) price = o.prices[j]
-                        else if( o.prices[j].type.toLowerCase().indexOf( contentItem.type.toLowerCase().substring(2, contentItem.type.length) ) > -1 && o.prices[j].type.toLowerCase() != contentItem.type.substring(2, contentItem.type.length).toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) price = o.prices[j]
+                        if( o.prices[j].type.toLowerCase() == contentItem.type.toLowerCase() && ( price > o.prices[j].price || price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                        else if( o.prices[j].type.toLowerCase().indexOf( contentItem.type.toLowerCase().substring(2, contentItem.type.length) ) > -1 && o.prices[j].type.toLowerCase() != contentItem.type.substring(2, contentItem.type.length).toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
                     }
                     if( price.price == 0 ) continue
                     var itm = {
@@ -110,6 +112,11 @@ Plugin {
                         "customMessage": price.self?"":qsTr("Serviced")
                     }
                     items.append( itm )
+                    if( sPrice.price != 0 ) {
+                        itm.stationPrice = sPrice.price
+                        itm.customMessage = sPrice.self?"":qsTr("Serviced")
+                        items.append( itm )
+                    }
                 }
                 sort()
                 itemsBusy = false

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.5.0, 2016-05-18T23:04:11. -->
+<!-- Written by QtCreator 3.5.0, 2016-05-26T13:35:03. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{36e47f73-bd2f-4ca1-81cd-78f637a6fa72}</value>
+  <value type="QByteArray">{ad158bea-dd51-4cb7-ac9d-bae0b4a2bd15}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -60,9 +60,9 @@
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">MerSDK-SailfishOS-i486</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">MerSDK-SailfishOS-i486</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{804af47a-10aa-468c-9e43-9e6506505a9d}</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{7ae06ba7-2b07-4d0a-9844-358c635c3dfa}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">2</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/lukas/Dokumente/Qt Projects/build-harbour-spritradar-MerSDK_SailfishOS_i486-Debug</value>
@@ -80,7 +80,7 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QtProjectManager.QMakeBuildStep</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.LinkQmlDebuggingLibrary">true</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.LinkQmlDebuggingLibraryAuto">false</value>
-      <value type="QString" key="QtProjectManager.QMakeBuildStep.QMakeArguments">TANKERKOENIG_APIKEY=6182355f-3ef8-ec29-ad2f-21d86546dd0c</value>
+      <value type="QString" key="QtProjectManager.QMakeBuildStep.QMakeArguments">TANKERKOENIG_APIKEY=6182355f-3ef8-ec29-ad2f-21d86546dd</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.SeparateDebugInfo">false</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.UseQtQuickCompiler">false</value>
@@ -345,7 +345,7 @@
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">MerSDK-SailfishOS-armv7hl</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">MerSDK-SailfishOS-armv7hl</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{ef8ffdf9-c54f-452c-9e5b-0936f4673224}</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{76ef14a8-fe9c-4bf2-a829-1d643db721ae}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">2</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
@@ -365,7 +365,7 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QtProjectManager.QMakeBuildStep</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.LinkQmlDebuggingLibrary">true</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.LinkQmlDebuggingLibraryAuto">false</value>
-      <value type="QString" key="QtProjectManager.QMakeBuildStep.QMakeArguments">TANKERKOENIG_APIKEY=6182355f-3ef8-ec29-ad2f-21d86546dd0c</value>
+      <value type="QString" key="QtProjectManager.QMakeBuildStep.QMakeArguments">TANKERKOENIG_APIKEY=6182355f-3ef8-ec29-ad2f-21d86546dd</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.SeparateDebugInfo">false</value>
       <value type="bool" key="QtProjectManager.QMakeBuildStep.UseQtQuickCompiler">false</value>
@@ -607,7 +607,7 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">1</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">harbour-spritradar (auf Mobilgerät)</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">harbour-spritradar (on Mer Device)</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QmakeProjectManager.MerRunConfiguration:harbour-spritradar</value>
     <valuelist type="QVariantList" key="Qt4ProjectManager.MaemoRunConfiguration.Arguments"/>
@@ -618,7 +618,7 @@
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
-    <value type="bool" key="RunConfiguration.UseMultiProcess">true</value>
+    <value type="bool" key="RunConfiguration.UseMultiProcess">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
    </valuemap>

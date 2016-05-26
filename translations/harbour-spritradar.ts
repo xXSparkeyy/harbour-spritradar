@@ -95,10 +95,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Served</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Benzin</source>
         <translation type="unfinished"></translation>
     </message>

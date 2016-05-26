@@ -49,14 +49,17 @@ QList<QString> SVManager::download( QString url ) {
     return ret;
 }
 void SVManager::loadStations() {
+    int missingCoords = 0;
     stations.clear();
     QList<QString> stns = download( stationUrl );
     for( int i = 0; i < stns.count(); i++ ) {
         QStringList a = stns.at(i).split( ";" );
         SVStation station( a[0], a[4], a[5]+"?"+a[6]+" ("+a[7]+")", a[2], a[8], a[9] );
+        if( a[8] == "" ) missingCoords++;
         stations.append( station );
     }
     qDebug() << stations.count() << "Stations loaded";
+    qDebug() << qCeil(missingCoords/stations.count()*100) << missingCoords;
 }
 void SVManager::loadPrices() {
     prices.clear();

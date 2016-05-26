@@ -72,6 +72,8 @@ Dialog {
     property alias contentItem: contentWrapper.item
     property string name;
     property string description;
+    property variant units: { "currency":"", "distance": "" }
+
     onPluginReadyChanged: if( pluginReady ) requestItems()
 
     function requestItems() {
@@ -93,9 +95,11 @@ Dialog {
                 "stationName": o.stationName,
                 "stationPrice": o.stationPrice,
                 "stationAdress": o.stationAdress,
-                "stationDistance": o.stationDistance
+                "stationDistance": o.stationDistance,
+                "customMessage": o.customMessage
             }
         }
+        if( main.sort!="price") list = qmSort( "price", list ).reverse()
         list = qmSort( main.sort, list )
         items.clear()
         for( var i = 0; i<list.length; i++ ) {

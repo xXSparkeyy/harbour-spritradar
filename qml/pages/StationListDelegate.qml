@@ -8,8 +8,8 @@ BackgroundItem {
     property int distance: 0
     property string stId: ""
     property string supPrice: ""
-    property variant customMessage;
-    onCustomMessageChanged: if( customMessage == "" ) customMessage = false
+    property string message;
+    //onCustomMessageChanged: if( customMessage == "" ) customMessage = false
 
     function normalizePrice( p ) {
         p = (p<1?"0":"")+(p*1000)
@@ -77,7 +77,7 @@ BackgroundItem {
             height: paintedHeight
             color: down ? Theme.secondaryHighlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: (customMessage?customMessage+" | ":"")+(distance<1000?distance+"m":Math.round(distance/1000)+"km")+" | "+address
+            text: (message?message+" | ":"")+(distance<1000?"m":Math.round(distance/1000)+"km")+" | "+address
             truncationMode: TruncationMode.Fade
         }
     }

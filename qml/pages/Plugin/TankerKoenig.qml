@@ -13,7 +13,7 @@ Plugin {
 
     name: "DE - Tankerkönig"
     description: "Powered by www.tankerkönig.de"
-
+    units: { "currency":"€", "distance": "km" }
     settings: Settings {
         name: "tankerkoenig"
 

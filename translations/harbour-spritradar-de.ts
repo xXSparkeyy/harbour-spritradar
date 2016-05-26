@@ -95,20 +95,16 @@
         <translation type="unfinished">Postleitzahl</translation>
     </message>
     <message>
-        <source>Served</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Benzin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Benzin</translation>
     </message>
     <message>
         <source>Diesel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diesel</translation>
     </message>
     <message>
         <source>Methan</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Methan</translation>
     </message>
     <message>
         <source>Info</source>
@@ -120,11 +116,11 @@
     </message>
     <message>
         <source>Serviced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tankwart</translation>
     </message>
     <message>
         <source>Special</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spezial</translation>
     </message>
     <message>
         <source>Brand</source>
@@ -132,11 +128,11 @@
     </message>
     <message>
         <source>Off-Brand</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unabhängig</translation>
     </message>
     <message>
         <source>Updated</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktualisiert</translation>
     </message>
 </context>
 <context>
@@ -183,11 +179,11 @@
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geschlossen</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geöffnet</translation>
     </message>
 </context>
 <context>
