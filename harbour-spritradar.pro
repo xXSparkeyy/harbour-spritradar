@@ -52,4 +52,7 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-spritradar-de.ts \
                 translations/harbour-spritradar-it.ts
 
+DISTFILES += \
+    qml/pages/Plugin/Spritpreisrechner.qml
+
 

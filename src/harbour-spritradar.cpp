@@ -32,7 +32,6 @@
 #include <QtQuick>
 #endif
 #include "settings.h"
-#include "svmanager.h"
 #include <sailfishapp.h>
 #include <QCoreApplication>
 #include <QGuiApplication>
@@ -56,7 +55,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("Sparkeyy");
     QCoreApplication::setApplicationName("harbour-spritradar");
     qmlRegisterType<Settings>("harbour.SpritRadar.Util", 1,0, "Settings");
-    qmlRegisterType<SVManager>("harbour.SpritRadar.Util", 1,0, "SVManager");
 
     QGuiApplication* app = SailfishApp::application(argc, argv);
 

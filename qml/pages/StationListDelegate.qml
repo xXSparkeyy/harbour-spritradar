@@ -77,7 +77,7 @@ BackgroundItem {
             height: paintedHeight
             color: down ? Theme.secondaryHighlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: (message?message+" | ":"")+(distance<1000?"m":Math.round(distance/1000)+"km")+" | "+address
+            text: (distance<1000?distance+"m":Math.ceil(distance/1000)+"km")+(message?" | "+message:"")+" | "+address
             truncationMode: TruncationMode.Fade
         }
     }

@@ -73,6 +73,57 @@
     </message>
 </context>
 <context>
+    <name>Spritpreisrechner</name>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening Times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fuel Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use GPS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zip Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Sviluppoeconomico</name>
     <message>
         <source>Fuel Type</source>
@@ -132,6 +183,10 @@
     </message>
     <message>
         <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GPL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

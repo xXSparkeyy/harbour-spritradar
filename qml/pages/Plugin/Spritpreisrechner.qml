@@ -4,6 +4,7 @@ import harbour.SpritRadar.Util 1.0
 
 Plugin {
     id: page
+    property string apikey: tankerkoenig_apikey
     Connections {
         target: contentItem
         onUseGpsChanged: gpsActive = contentItem.useGps
@@ -78,9 +79,8 @@ Plugin {
         }
     }
     function gotItems( lat, lng ) {
-        console.log(tankerkoenig_apikey)
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/list.php?sort=dist&lat="+lat+"&lng="+lng+"&rad="+contentItem.searchRadius+"&type="+contentItem.type+"&apikey="+tankerkoenig_apikey )
+        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/list.php?sort=dist&lat="+lat+"&lng="+lng+"&rad="+contentItem.searchRadius+"&type="+contentItem.type+"&apikey="+apikey )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
@@ -119,7 +119,7 @@ Plugin {
         station = {}
         stationPage = pageStack.push( "../GasStation.qml", {stationId:id} )
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+id+"&apikey="+tankerkoenig_apikey )
+        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+id+"&apikey="+apikey )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 console.log( req.responseText )

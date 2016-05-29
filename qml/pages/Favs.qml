@@ -73,7 +73,7 @@ Page {
 
                     }
                     onClicked: {
-                        pageStack.push( "GasStation.qml", { stationId:stations[index].id } )
+                        selectedPlugin.requestStation( stations[index].id )
                     }
                     height: Theme.itemSizeSmall + ( favMenu.parentItem == lavkavk ? favMenu.height : 0 )
                     onPressAndHold: favMenu._showI( this, lavkavk )

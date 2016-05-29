@@ -4,6 +4,12 @@ import harbour.SpritRadar.Util 1.0
 
 /*
 
+  France: http://www.prix-carburants.gouv.fr/mobile/
+  Spain: https://github.com/kbsali/gasolineras-espana/blob/master/open_gasolineras.py
+  Netherlands: http://www.anwb.nl/pois/
+  Österreich: www.spritpreisrechner.at ( Seems more like a developers diarrhea )
+
+
   Format for items:
     [
         ...,

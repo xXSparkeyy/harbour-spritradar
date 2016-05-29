@@ -10,8 +10,6 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
-        anchors.leftMargin: Theme.horizontalPageMargin
-        anchors.rightMargin: Theme.horizontalPageMargin
         anchors.topMargin: Theme.verticalPageMargin
         anchors.bottomMargin: Theme.verticalPageMargin
         contentHeight: stationDetails.height
@@ -28,8 +26,8 @@ Page {
 
         Column {
             id: stationDetails
-            anchors.right: parent.right
-            anchors.left: parent.left
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width-2*Theme.horizontalPageMargin
 
             PageHeader {
                 title: station.stationName?station.stationName:""
@@ -70,7 +68,7 @@ Page {
             Repeater {
                     model: station.content?station.content.length:0
                     delegate: Column {
-                        width: page.width
+                        width: stationDetails.width
                         property variant items: station.content[index].items
                         SectionHeader {
                             visible: station.content[index].title!=""
@@ -83,7 +81,7 @@ Page {
                                     if( items[index].tf ) titlefade = items[index].tf
                                     if( items[index].sz ) size = items[index].sz
                                 }
-                                width: page.width
+                                width: stationDetails.width
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 title: items[index].title
                                 text: items[index].text?items[index].text:items[index].price+selectedPlugin.units.currency
