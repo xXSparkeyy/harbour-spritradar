@@ -8,7 +8,7 @@ Plugin {
     name: "IT - Osservaprezzi Carburanti"
     description: "Fonte: Ministero dello Sviluppo Economico"
     units: { "currency":"€", "distance": "km" }
-    property string url: "http://spritradar.w4f.eu/"
+    property string url: ""
     Connections {
         target: contentItem
         onUseGpsChanged: gpsActive = contentItem.useGps
