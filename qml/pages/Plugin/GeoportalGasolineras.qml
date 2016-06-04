@@ -5,16 +5,16 @@ import harbour.spritradar.Util 1.0
 Plugin {
     id: page
 
-    name: "IT - Osservaprezzi Carburanti"
-    description: "Fonte: Ministero dello Sviluppo Economico"
+    name: "ES - GeoportalGasolineras.es"
+    description: "Ministerio de Industria, Energía y Turismo"
     units: { "currency":"€", "distance": "km" }
-    property string url: "http://spritradar.w4f.eu/it/"
+    property string url: "http://spritradar.w4f.eu/es/"
     Connections {
         target: contentItem
         onUseGpsChanged: gpsActive = contentItem.useGps
     }
     settings: Settings {
-        name: "sviluppoeconomico"
+        name: "GeoportalGasolineras"
 
         function save() {
             setValue( "radius", contentItem.searchRadius )
@@ -53,18 +53,18 @@ Plugin {
 
 
     function requestItems() {
+        console.log("heyy")
         if( contentItem.useGps ) getItems( latitude, longitude )
         var req = new XMLHttpRequest()
-        req.open( "GET", "http://maps.google.com/maps/api/geocode/json?components=country:IT|postal_code:"+contentItem.zipCode )
+        req.open( "GET", "http://maps.google.com/maps/api/geocode/json?components=country:ES|postal_code:"+contentItem.zipCode )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
-                try {
+                    console.log("ho")
                     var x = eval( req.responseText ).results[0].geometry.location
                     getItems( x.lat, x.lng )
-                }
+                try{}
                 catch( e ) {
                     items.clear()
-                    coverItems.clear()
                     itemsBusy = false
                     errorCode = 2
                 }
@@ -82,32 +82,24 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 //try {
-                    console.log( req.responseText )
+                console.log(req.responseText)
                     var x = eval( req.responseText )
-
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
                         var price = { price:0 }
-                        var sPrice = { price:0 }
                         for( var j = 0; j < o.prices.length; j++ ) {
-                            if( o.prices[j].type.toLowerCase() == contentItem.type.toLowerCase() && ( price > o.prices[j].price || price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
-                            else if( o.prices[j].type.toLowerCase().indexOf( contentItem.type.toLowerCase().substring(2, contentItem.type.length) ) > -1 && o.prices[j].type.toLowerCase() != contentItem.type.substring(2, contentItem.type.length).toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                            if( o.prices[j].type.toLowerCase() == contentItem.type.toLowerCase() ) price = o.prices[j]
                         }
                         if( price.price == 0 ) continue
                         var itm = {
                             "stationID": o.id,
                             "stationName": (o.brand=="Pompe Bianche"?"":o.brand+" - ")+o.name,
                             "stationPrice": price.price,
-                            "stationAdress": o.adress.replace("?", ", "),//capitalizeString(o.street) + (typeof(o.houseNumber) == "object" ? "" : " " + o.houseNumber) + ", " + o.postCode + " " + capitalizeString(o.place),
+                            "stationAdress": "",
                             "stationDistance": o.distance,
-                            "customMessage": price.self?"":qsTr("Serviced")
+                            "customMessage": o.open
                         }
                         items.append( itm )
-                        if( sPrice.price != 0 ) {
-                            itm.stationPrice = sPrice.price
-                            itm.customMessage = sPrice.self?"":qsTr("Serviced")
-                            items.append( itm )
-                        }
                     }
                     sort()
                     itemsBusy = false
@@ -136,21 +128,13 @@ Plugin {
                     for( var j = 0; j < st.prices.length; j++ ) {
                         price[price.length] = { "title":st.prices[j].type+(st.prices[j].self?"":" ("+qsTr("Serviced")+")"), "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
                     }
-                    var adress = st.adress.split("?")
-                    var street = adress[0].split( " " )
-                    var zipcode = street[street.length-1]
-                    street = street.splice(0, street.length-1).join(" ")
-                    adress = adress[1].split(" ")
-                    var provincia = adress[adress.length-1]
-                    adress = adress.splice(0, adress.length-1).join(" ")
-                    var county = zipcode+" "+adress
                     page.station = {
                         "stationID":st.id,
                         "stationName":(st.brand=="Pompe Bianche"?"":st.brand+" - ")+st.name,
                         "stationAdress": {
-                            "street":capitalizeString(street),
-                            "county":capitalizeString(county)+" "+provincia,
-                            "country":"Italy",
+                            "street":"No Street",
+                            "county":"No Place",
+                            "country":"Spain",
                             "latitude":st.lat,
                             "longitude":st.lng
                         },
@@ -177,61 +161,25 @@ Plugin {
             property alias searchRadius: sradius.value
             property alias useGps: gpsSwitch.checked
             property alias zipCode: postalCode.text
-            property string type: "Benzina"
+            property string type: "GPR"
+            property variant types: ['GPR', 'G98', 'GOA', 'NGO', 'GOB', 'GOC', 'BIO', 'G95', 'BIE', 'GLP', 'GNC']
 
             SectionHeader {
                 text: qsTr("Fuel Type")
             }
-            Row {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.paddingSmall
-                Button {
-                    text: qsTr("Benzin")
-                    width: parent.width/4 - parent.spacing
-                    down: type == "Benzina"
-                    onClicked: type = "Benzina"
-                }
-                Button {
-                    text: qsTr("Diesel")
-                    width: parent.width/4 - parent.spacing
-                    down: type == "Gasolio"
-                    onClicked: type = "Gasolio"
-                }
-                Button {
-                    text: qsTr("Methan")
-                    width: parent.width/4 - parent.spacing
-                    down: type == "Metano"
-                    onClicked: type = "Metano"
-                }
-                Button {
-                    text: qsTr("GPL")
-                    width: parent.width/4
-                    down: type == "GPL"
-                    onClicked: type = "GPL"
-                }
-            }
-            Item {
-                width: 1
-                height: Theme.paddingSmall
-            }
 
-            Row {
+            ComboBox {
                 width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.paddingSmall
-                Button {
-                    text: qsTr("Benzin")+" "+qsTr( "Special" )
-                    width: parent.width/2 - parent.spacing
-                    down: type == "spbenzina"
-                    onClicked: type = "spbenzina"
-                }
-                Button {
-                    text: qsTr("Diesel")+" "+qsTr( "Special" )
-                    width: parent.width/2
-                    down: type == "spgasolio"
-                    onClicked: type = "spgasolio"
-                }
+                    label: "Select Fuel"
+
+                    menu: ContextMenu {
+                        Repeater {
+                            model: types.length
+                            MenuItem {
+                                text: types[index]
+                            }
+                        }
+                    }
             }
 
             SectionHeader {

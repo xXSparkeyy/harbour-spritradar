@@ -12,7 +12,7 @@ QList<QString> SVManager::download( QString url ) {
     QEventLoop eventLoop;
     QNetworkAccessManager mgr;
     QNetworkDiskCache *diskCache = new QNetworkDiskCache(this);
-    diskCache->setCacheDirectory("/home/nemo/.config/harbour-spritradar/cache");
+    diskCache->setCacheDirectory("$HOME/.config/harbour-spritradar/cache");
     mgr.setCache(diskCache);
     QDateTime lastmod =  diskCache->metaData( stationUrl ).lastModified();
     QDateTime lastref = QDateTime( QDateTime::currentDateTime().date() ).addSecs( 28800 );

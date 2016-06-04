@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.SpritRadar.Util 1.0
+import harbour.spritradar.Util 1.0
 
 Plugin {
     id: page

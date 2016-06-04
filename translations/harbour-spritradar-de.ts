@@ -27,6 +27,53 @@
     </message>
 </context>
 <context>
+    <name>GeoportalGasolineras</name>
+    <message>
+        <source>Serviced</source>
+        <translation type="unfinished">Tankwart</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>Brand</source>
+        <translation type="unfinished">Marke</translation>
+    </message>
+    <message>
+        <source>Off-Brand</source>
+        <translation type="unfinished">Unabhängig</translation>
+    </message>
+    <message>
+        <source>Updated</source>
+        <translation type="unfinished">Aktualisiert</translation>
+    </message>
+    <message>
+        <source>Prices</source>
+        <translation type="unfinished">Preise</translation>
+    </message>
+    <message>
+        <source>Fuel Type</source>
+        <translation type="unfinished">Kraftstoffart</translation>
+    </message>
+    <message>
+        <source>Search Radius</source>
+        <translation type="unfinished">Suchradius</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished">Standort</translation>
+    </message>
+    <message>
+        <source>Use GPS</source>
+        <translation type="unfinished">GPS-Position</translation>
+    </message>
+    <message>
+        <source>Zip Code</source>
+        <translation type="unfinished">Postleitzahl</translation>
+    </message>
+</context>
+<context>
     <name>List</name>
     <message>
         <source>Results</source>
@@ -70,57 +117,6 @@
     <message>
         <source>Plugin</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Spritpreisrechner</name>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished">Geschlossen</translation>
-    </message>
-    <message>
-        <source>Brand</source>
-        <translation type="unfinished">Marke</translation>
-    </message>
-    <message>
-        <source>State</source>
-        <translation type="unfinished">Status</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="unfinished">Geöffnet</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished">Info</translation>
-    </message>
-    <message>
-        <source>Prices</source>
-        <translation type="unfinished">Preise</translation>
-    </message>
-    <message>
-        <source>Opening Times</source>
-        <translation type="unfinished">Öffnungszeiten</translation>
-    </message>
-    <message>
-        <source>Fuel Type</source>
-        <translation type="unfinished">Kraftstoffart</translation>
-    </message>
-    <message>
-        <source>Search Radius</source>
-        <translation type="unfinished">Suchradius</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished">Standort</translation>
-    </message>
-    <message>
-        <source>Use GPS</source>
-        <translation type="unfinished">GPS-Position</translation>
-    </message>
-    <message>
-        <source>Zip Code</source>
-        <translation type="unfinished">Postleitzahl</translation>
     </message>
 </context>
 <context>

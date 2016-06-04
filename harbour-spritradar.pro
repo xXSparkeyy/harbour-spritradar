@@ -16,15 +16,9 @@ CONFIG += sailfishapp
 
 HEADERS += \
     src/settings.h \
-    src/svmanager.h \
-    src/svstation.h \
-    src/svprice.h
 
 SOURCES += src/harbour-spritradar.cpp \
     src/settings.cpp \
-    src/svmanager.cpp \
-    src/svstation.cpp \
-    src/svprice.cpp
 
 OTHER_FILES += qml/harbour-spritradar.qml \
     qml/cover/*.qml \
@@ -53,6 +47,7 @@ TRANSLATIONS += translations/harbour-spritradar-de.ts \
                 translations/harbour-spritradar-it.ts
 
 DISTFILES += \
-    qml/pages/Plugin/Spritpreisrechner.qml
+    qml/pages/Plugin/Spritpreisrechner.qml \
+    qml/pages/Plugin/GeoportalGasolineras.qml
 
 

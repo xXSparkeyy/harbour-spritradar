@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtPositioning 5.2
-import harbour.SpritRadar.Util 1.0
+import harbour.spritradar.Util 1.0
 import "pages"
 import "pages/Plugin"
 
@@ -61,6 +61,7 @@ ApplicationWindow
                 switch( getValue( "plugin" ) ) {
                     case tk.name: selectedPlugin = tk; break
                     case sv.name: selectedPlugin = sv; break
+                    case gg.name: selectedPlugin = gg; break
                     default: selectedPlugin = tk
                 }
             }
@@ -80,6 +81,7 @@ ApplicationWindow
     property Plugin selectedPlugin;
     TankerKoenig { id: tk }
     Sviluppoeconomico { id: sv }
+    GeoportalGasolineras { id: gg }
     function changePlugin( plugin ) {
         plugin.pluginReady = false
         selectedPlugin.station = {}

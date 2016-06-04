@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.SpritRadar.Util 1.0
+import harbour.spritradar.Util 1.0
 
 /*
 
@@ -173,14 +173,20 @@ Dialog {
                 label: qsTr("Plugin")
                 description: selectedPlugin.description
                 value: selectedPlugin.name
+                id:mfcb
                 menu: ContextMenu {
                     MenuItem {
                         text: tk.name
-                        onClicked: changePlugin( tk )
+                        onClicked: { changePlugin( tk ); mfcb.currentIndex = 0 }
                     }
                     MenuItem {
                         text: sv.name
-                        onClicked: changePlugin( sv )
+                        onClicked: { changePlugin( sv ); mfcb.currentIndex = 1 }
+                    }
+                    MenuItem {
+                        visible: false
+                        text: gg.name
+                        onClicked: { changePlugin( gg ); mfcb.currentIndex = 2 }
                     }
                 }
             }

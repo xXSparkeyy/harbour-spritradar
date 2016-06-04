@@ -11,23 +11,23 @@
 		}
 	}
 	function saveStations() {
-		mysql_query( "TRUNCATE TABLE  `stations`" );
+		mysql_query( "TRUNCATE TABLE  `it_stations`" );
 		global $stationsURL;
 		$csv = download( $stationsURL );
 		$csv = explode( "\n", $csv );
 		for( $i = 2; $i <= count($csv); $i++ ) {
 			$a = explode( ";", x($csv[$i]) );
-			mysql_query( "INSERT INTO `stations`(`id`, `name`, `adress`, `brand`, `lat`, `lng`) VALUES ( \"$a[0]\", \"$a[4]\", \"".($a[5]."?".$a[6]." (".$a[7].")")."\", \"$a[2]\", \"$a[8]\", \"$a[9]\" )" ) or die( mysql_error() );
+			mysql_query( "INSERT INTO `it_stations`(`id`, `name`, `adress`, `brand`, `lat`, `lng`) VALUES ( \"$a[0]\", \"$a[4]\", \"".($a[5]."?".$a[6]." (".$a[7].")")."\", \"$a[2]\", \"$a[8]\", \"$a[9]\" )" ) or die( mysql_error() );
 		}
 	}
 	function savePrices() {
-		mysql_query( "TRUNCATE TABLE  `prices`" );
+		mysql_query( "TRUNCATE TABLE  `it_prices`" );
 		global $pricesURL;
 		$csv = download( $pricesURL );
 		$csv = explode( "\n", $csv );
 		for( $i = 2; $i <= count($csv); $i++ ) {
 			$a = explode( ";", $csv[$i] );
-			mysql_query( "INSERT INTO `prices`(`id`, `type`, `price`, `self`, `date`) VALUES ( \"$a[0]\", \"$a[1]\", \"$a[2]\", ".($a[3]==0?"false":"true").", \"$a[4]\" )" ) or die( mysql_error() );
+			mysql_query( "INSERT INTO `it_prices`(`id`, `type`, `price`, `self`, `date`) VALUES ( \"$a[0]\", \"$a[1]\", \"$a[2]\", ".($a[3]==0?"false":"true").", \"$a[4]\" )" ) or die( mysql_error() );
 			
 		}
 	}
@@ -49,7 +49,7 @@
 	}
 	function getStations($lat, $lng, $rad) {
 		$ret = array();
-		$q = mysql_query( "SELECT * FROM `stations`" );
+		$q = mysql_query( "SELECT * FROM `it_stations`" );
 		while( ($station=mysql_fetch_assoc($q))!=null ) {
 			$station["distance"] = ceil(getDistance( (double)$station["lat"], (double)$station["lng"], (double)$lat, (double)$lng )*1000);
 			if( $station["distance"] < $rad*1000 ) {
@@ -60,13 +60,13 @@
 		return $ret;
 	}
 	function getStation( $id ) {
-		$o = mysql_fetch_assoc( mysql_query("SELECT * FROM `stations` WHERE `id` Like \"$id\" ") );
+		$o = mysql_fetch_assoc( mysql_query("SELECT * FROM `it_stations` WHERE `id` Like \"$id\" ") );
 		$o["prices"] = getPrices( $id );
 		return $o;
 	}
 	function getPrices( $id ) {
 		$ret = array();
-		$q = mysql_query( "SELECT * FROM `prices` WHERE `id` Like \"$id\"" );
+		$q = mysql_query( "SELECT * FROM `it_prices` WHERE `id` Like \"$id\"" );
 		while( ($price=mysql_fetch_assoc($q))!=null ) {
 			$price["self"] = $price["self"]==1;
 			$ret[] = $price;
@@ -87,7 +87,8 @@
 				echo json_encode( getStation( $_GET["id"] ) );
 			break;
 			case "cron":
-				cron();
+				global $cronjob_key;
+				if( $_GET["key"] == $cronjob_key ) cron();
 			break;
 			case "info":
 				connectDB();
@@ -97,15 +98,16 @@
 		}
 	}
 	function getInfo( $s ) {
-		$lp = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `prices` WHERE 1" ) )["length"];
-		$ls = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `stations` WHERE 1" ) )["length"];
+		$lp = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `it_prices` WHERE 1" ) )["length"];
+		$ls = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `it_stations` WHERE 1" ) )["length"];
 		$s = $s&&($lp>0)&&($ls>0);
-		mail('@.com', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+		mail('', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
 	}
 	
 	
 	$stationsURL = "http://www.sviluppoeconomico.gov.it/images/exportCSV/anagrafica_impianti_attivi.csv";
 	$pricesURL = "http://www.sviluppoeconomico.gov.it/images/exportCSV/prezzo_alle_8.csv";
+	include "../index.php";
 	include 'db.php';
 	main();
 ?>
