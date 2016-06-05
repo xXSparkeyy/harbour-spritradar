@@ -29,23 +29,7 @@
 <context>
     <name>GeoportalGasolineras</name>
     <message>
-        <source>Serviced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Off-Brand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -70,6 +54,10 @@
     </message>
     <message>
         <source>Zip Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening Times</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

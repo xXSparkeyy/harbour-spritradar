@@ -36,8 +36,8 @@
 		foreach( $csv as $raw ) {
 			$raw = explode( "\"", $raw );
 			$raw[0] = explode( ", ", $raw[0] );
-				$lat = $raw[0][0];
-				$lng = $raw[0][1];
+				$lat = $raw[0][1];
+				$lng = $raw[0][0];
 			$raw = explode( " ", $raw[1] );
 				$open = $raw[count($raw)-3];
 				$price = str_replace(",", ".", $raw[count($raw)-2] );
@@ -71,6 +71,7 @@
 		while( ($station=mysql_fetch_assoc($q))!=null ) {
 			$station["distance"] = ceil(getDistance( (double)$station["lat"], (double)$station["lng"], (double)$lat, (double)$lng )*1000);
 			if( $station["distance"] < $rad*1000 ) {
+				
 				$station["prices"] = getPrices( $station["id"] );
 				$ret[] = $station;
 			}
@@ -123,7 +124,7 @@
 		$lp = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `it_prices` WHERE 1" ) )["length"];
 		$ls = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `it_stations` WHERE 1" ) )["length"];
 		$s = $s&&($lp>0)&&($ls>0);
-		mail('', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+		mail('fasfsf', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
 	}
 	include "../index.php";
 	include 'db.php';

@@ -29,24 +29,8 @@
 <context>
     <name>GeoportalGasolineras</name>
     <message>
-        <source>Serviced</source>
-        <translation type="unfinished">Tankwart</translation>
-    </message>
-    <message>
         <source>Info</source>
         <translation type="unfinished">Info</translation>
-    </message>
-    <message>
-        <source>Brand</source>
-        <translation type="unfinished">Marke</translation>
-    </message>
-    <message>
-        <source>Off-Brand</source>
-        <translation type="unfinished">Unabhängig</translation>
-    </message>
-    <message>
-        <source>Updated</source>
-        <translation type="unfinished">Aktualisiert</translation>
     </message>
     <message>
         <source>Prices</source>
@@ -71,6 +55,10 @@
     <message>
         <source>Zip Code</source>
         <translation type="unfinished">Postleitzahl</translation>
+    </message>
+    <message>
+        <source>Opening Times</source>
+        <translation type="unfinished">Öffnungszeiten</translation>
     </message>
 </context>
 <context>

@@ -39,7 +39,7 @@ Plugin {
         }
         function assign() {
             setValue( "radius", 1 )
-            setValue( "type", "Benzina" )
+            setValue( "type", "GPR" )
             setValue( "sort", main.sort )
             setValue( "gps", false )
             setValue( "zipCode", "" )
@@ -93,11 +93,11 @@ Plugin {
                         if( price.price == 0 ) continue
                         var itm = {
                             "stationID": o.id,
-                            "stationName": (o.brand=="Pompe Bianche"?"":o.brand+" - ")+o.name,
+                            "stationName": o.name,
                             "stationPrice": price.price,
-                            "stationAdress": "",
+                            "stationAdress": o.open,
                             "stationDistance": o.distance,
-                            "customMessage": o.open
+                            "customMessage": ""
                         }
                         items.append( itm )
                     }
@@ -126,11 +126,11 @@ Plugin {
                     var st = eval( req.responseText )
                     var price = []
                     for( var j = 0; j < st.prices.length; j++ ) {
-                        price[price.length] = { "title":st.prices[j].type+(st.prices[j].self?"":" ("+qsTr("Serviced")+")"), "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
+                        price[price.length] = { "title":st.prices[j].type, "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
                     }
                     page.station = {
                         "stationID":st.id,
-                        "stationName":(st.brand=="Pompe Bianche"?"":st.brand+" - ")+st.name,
+                        "stationName":st.name,
                         "stationAdress": {
                             "street":"No Street",
                             "county":"No Place",
@@ -139,7 +139,7 @@ Plugin {
                             "longitude":st.lng
                         },
                         "content": [
-                            { "title":qsTr("Info"), items:[ {title:qsTr("Brand"), text:st.brand=="Pompe Bianche"?qsTr("Off-Brand"):st.brand},{title:qsTr("Updated"), text:st.prices[0].date} ] },
+                            { "title":qsTr("Info"), items:[ {title:qsTr("Opening Times"), text:st.open } ] },
                             { "title":qsTr("Prices"), "items": price }
 
                         ]
@@ -177,6 +177,7 @@ Plugin {
                             model: types.length
                             MenuItem {
                                 text: types[index]
+                                onClicked: type = types[index]
                             }
                         }
                     }

@@ -184,7 +184,6 @@ Dialog {
                         onClicked: { changePlugin( sv ); mfcb.currentIndex = 1 }
                     }
                     MenuItem {
-                        visible: false
                         text: gg.name
                         onClicked: { changePlugin( gg ); mfcb.currentIndex = 2 }
                     }
