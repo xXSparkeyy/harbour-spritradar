@@ -1,13 +1,12 @@
 <?php
 	
-	$types = ['GPR', 'G98', 'GOA', 'NGO', 'GOB', 'GOC', 'BIO', 'G95', 'BIE', 'GLP', 'GNC'];
+	$types = array('GPR', 'G98', 'GOA', 'NGO', 'GOB', 'GOC', 'BIO', 'G95', 'BIE', 'GLP', 'GNC');
 	function downloadFiles() {
 		global $types;
 		foreach( $types as $name ) download( $name );
 	}
 	function download( $name ) {
-		mkdir( "/tmp" );
-		$url = "www6.mityc.es/aplicaciones/carburantes/eess_$name.zip";
+		$url = "http://www6.mityc.es/aplicaciones/carburantes/eess_$name.zip";
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -18,12 +17,14 @@
 		fclose( $f );
 	}
 	function parseFiles() {
+		global $db;
 		global $types;
-		mysql_query( "TRUNCATE TABLE  `es_prices`" );
-		mysql_query( "TRUNCATE TABLE  `es_stations`" );
+		mysqli_query( $db, "TRUNCATE TABLE  `es_prices`" );
+		mysqli_query( $db, "TRUNCATE TABLE  `es_stations`" );
 		foreach( $types as $name ) parseFile( $name );
 	}
 	function parseFile( $name ) {
+		global $db;
 		$zip = zip_open( "tmp/$name.zip" );
 		$entry = zip_read( $zip );
 		zip_entry_open( $zip, $entry, "r" );
@@ -48,16 +49,16 @@
 				unset($raw[count($raw)-1]);unset($raw[count($raw)-1]);unset($raw[count($raw)-1]);
 				$name = rtrim( implode( " ", $raw ), ":" );
 				$id = md5( "$lat+$lng+$name" );
-				if( !mysql_fetch_assoc( mysql_query( "SELECT `id` FROM `es_stations` WHERE `id` Like \"$id\"" ) ) )
-				mysql_query( "INSERT INTO `es_stations`(`id`, `name`, `open`, `lat`, `lng` ) VALUES ( \"$id\", \"$name\", \"$open\", \"$lat\", \"$lng\" )" ) or die( mysql_error() );
-				mysql_query( "INSERT INTO `es_prices`(`id`, `type`, `price` ) VALUES ( \"$id\", \"$type\", \"$price\" )" ) or die( "asfs".mysql_error() );
+				if( !mysqli_fetch_assoc( mysqli_query( $db, "SELECT `id` FROM `es_stations` WHERE `id` Like \"$id\"" ) ) )
+				mysqli_query( $db, "INSERT INTO `es_stations`(`id`, `name`, `open`, `lat`, `lng` ) VALUES ( \"$id\", \"$name\", \"$open\", \"$lat\", \"$lng\" )" ) or die( mysqli_error($db) );
+				mysqli_query( $db, "INSERT INTO `es_prices`(`id`, `type`, `price` ) VALUES ( \"$id\", \"$type\", \"$price\" )" ) or die( mysqli_error($db) );
 		}
 	}
 	function clearFiles() {
 		global $types;
-		foreach( $types as $name ) unlink( "tmp/$name.zip" );
+		foreach( $types as $name ) { unlink( "tmp/$name.zip" ); }
 	}
-		function getDistance($lat1, $lon1, $lat2, $lon2) {
+	function getDistance($lat1, $lon1, $lat2, $lon2) {
 		$theta = $lon1 - $lon2;
 		$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
 		$dist = acos($dist);
@@ -66,30 +67,54 @@
 		return $dist;
 	}
 	function getStations($lat, $lng, $rad) {
-		$ret = array();
-		$q = mysql_query( "SELECT * FROM `es_stations`" );
-		while( ($station=mysql_fetch_assoc($q))!=null ) {
+		global $db;
+		$ret = [];
+		$q = mysqli_query( $db, "SELECT * FROM `es_stations`" );
+		while( ($station=mysqli_fetch_assoc($q))!=null ) {
 			$station["distance"] = ceil(getDistance( (double)$station["lat"], (double)$station["lng"], (double)$lat, (double)$lng )*1000);
 			if( $station["distance"] < $rad*1000 ) {
-				
-				$station["prices"] = getPrices( $station["id"] );
+				$station["address"] = getAdress( $station["id"] );
+				$station["prices"] =  getPrices( $station["id"] );
 				$ret[] = $station;
 			}
 		}
 		return $ret;
 	}
 	function getStation( $id ) {
-		$o = mysql_fetch_assoc( mysql_query("SELECT * FROM `es_stations` WHERE `id` Like \"$id\" ") );
-		$o["prices"] = getPrices( $id );
+		global $db;
+		$q = mysqli_query($db, "SELECT * FROM `es_stations` WHERE `id` Like \"$id\" ");
+		$o = mysqli_fetch_assoc( $q );
+		$o["address"] = getAdress( $id );
+		$o["prices"]  = getPrices( $id );
 		return $o;
 	}
 	function getPrices( $id ) {
-		$ret = array();
-		$q = mysql_query( "SELECT `type`, `price` FROM `es_prices` WHERE `id` Like \"$id\"" );
-		while( ($price=mysql_fetch_assoc($q))!=null ) {
+		global $db;
+		$ret = [];
+		$q = mysqli_query( $db, "SELECT `type`, `price` FROM `es_prices` WHERE `id` Like \"$id\"" );
+		while( ($price=mysqli_fetch_assoc($q))!=null ) {
 			$ret[] = $price;
 		}
 		return $ret;
+	}
+	function getAdress( $id ) {
+		global $db;
+		$q = mysqli_query( $db, "SELECT `address` FROM `es_addresses` WHERE `id` Like \"$id\"" );
+		if( ($address=mysqli_fetch_assoc($q))!=null ) {
+			return $address["address"];
+		}
+		
+		$o = mysqli_fetch_assoc( mysqli_query($db, "SELECT `lat`, `lng` FROM `es_stations` WHERE `id` Like \"$id\" ") ); $lat = $o["lat"]; $lng = $o["lng"];
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng" );
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		
+		$address = json_decode($data,true)["results"][0]["formatted_address"];
+		mysqli_query($db, "INSERT INTO `es_addresses` ( `id`, `address` ) VALUES ( \"$id\", \"$address\" )");
+		
+		return $address;
 	}
 	function x( $s ) {
 		return str_replace( "\"","\\\"",$s );
@@ -121,12 +146,15 @@
 		}
 	}
 	function getInfo( $s ) {
-		$lp = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `it_prices` WHERE 1" ) )["length"];
-		$ls = mysql_fetch_assoc( mysql_query("SELECT COUNT(*) As length FROM `it_stations` WHERE 1" ) )["length"];
+		global $db;
+		$lp = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `it_prices` WHERE 1" ) );
+		$lp = $lp["length"];
+		$ls = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `it_stations` WHERE 1" ) );
+		$ls = $ls["length"];
 		$s = $s&&($lp>0)&&($ls>0);
-		mail('fasfsf', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+		mail('lukasnagel99@gmail.com', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
 	}
 	include "../index.php";
-	include 'db.php';
+	include '../db.php';
 	main();
 ?>

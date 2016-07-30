@@ -1,0 +1,3 @@
+<?php
+	$cronjob_key = "";
+?>
