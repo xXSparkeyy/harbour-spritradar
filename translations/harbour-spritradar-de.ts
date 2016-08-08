@@ -41,48 +41,48 @@
         <translation>Öffnungszeiten</translation>
     </message>
     <message>
-        <source>GPR</source>
-        <translation></translation>
+        <source>Gasolina 95 (G.Protecctión)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>G98</source>
-        <translation></translation>
+        <source>Gasolina 98</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GOA</source>
-        <translation></translation>
+        <source>Gasóleo A habitual</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NGO</source>
-        <translation></translation>
+        <source>Nuevo gasóleo</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GOB</source>
-        <translation></translation>
+        <source>Gasóleo B</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GOC</source>
-        <translation></translation>
+        <source>Gasóleo C</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>BIO</source>
-        <translation></translation>
+        <source>Biodiésel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>G95</source>
-        <translation></translation>
+        <source>Gasolina 95</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>BIE</source>
-        <translation></translation>
+        <source>Bioetanol</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GLP</source>
-        <translation></translation>
+        <source>(GLP) - Gases licuados del petróleo</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GNC</source>
-        <translation></translation>
+        <source>(GNC) - Gases natural comprimido</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

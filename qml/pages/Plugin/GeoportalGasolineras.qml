@@ -12,7 +12,7 @@ Plugin {
     property string url: "http://harbour-spritradar.w4f.eu/es/"
     type: "GPR"
     types: ['GPR', 'G98', 'GOA', 'NGO', 'GOB', 'GOC', 'BIO', 'G95', 'BIE', 'GLP', 'GNC']
-    names: [qsTr('GPR'), qsTr('G98'), qsTr('GOA'), qsTr('NGO'), qsTr('GOB'), qsTr('GOC'), qsTr('BIO'), qsTr('G95'), qsTr('BIE'), qsTr('GLP'), qsTr('GNC')]
+    names: [qsTr('Gasolina 95 (G.Protecctión)'), qsTr('Gasolina 98'), qsTr('Gasóleo A habitual'), qsTr('Nuevo gasóleo'), qsTr('Gasóleo B'), qsTr('Gasóleo C'), qsTr('Biodiésel'), qsTr('Gasolina 95'), qsTr('Bioetanol'), qsTr('(GLP) - Gases licuados del petróleo'), qsTr('(GNC) - Gases natural comprimido')]
 
 
     settings: Settings {

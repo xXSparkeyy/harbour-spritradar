@@ -45,6 +45,7 @@ CONFIG += sailfishapp_i18n
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-spritradar.ts \
                 translations/harbour-spritradar-de.ts \
+                translations/harbour-spritradar-es.ts \
                 translations/harbour-spritradar-it.ts
 
 
