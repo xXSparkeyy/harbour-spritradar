@@ -38,7 +38,6 @@
 #include <QtGui>
 #include <QtQml>
 #include <QQuickView>
-#include <QSettings>
 
 
 int main(int argc, char *argv[])

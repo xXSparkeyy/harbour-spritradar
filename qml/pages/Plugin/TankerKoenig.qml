@@ -4,32 +4,35 @@ import harbour.spritradar.Util 1.0
 
 Plugin {
     id: page
-    Connections {
-        target: contentItem
-        onUseGpsChanged: gpsActive = contentItem.useGps
-    }
-
 
     name: "DE - Tankerkönig"
     description: "Powered by www.tankerkönig.de"
     units: { "currency":"€", "distance": "km" }
+    countryCode: "-"
+    type: "e10"
+    types: ["e5","e10","diesel"]
+    names: [qsTr("e5"),qsTr("e10"),qsTr("diesel")]
+
     settings: Settings {
         name: "tankerkoenig"
 
         function save() {
-            setValue( "radius", contentItem.searchRadius )
-            setValue( "type", contentItem.type )
+            setValue( "radius", searchRadius )
+            setValue( "type", type )
             setValue( "sort", main.sort )
-            setValue( "gps", contentItem.useGps )
-            setValue( "zipCode", contentItem.zipCode )
+            setValue( "gps", useGps )
+            setValue( "hideClosed", contentItem.hideClosed )
+            setValue( "zipCode", zipCode )
         }
         function load() {
             try {
-                contentItem.searchRadius = getValue( "radius" )
-                contentItem.type = getValue( "type" )
+                searchRadius = getValue( "radius" )
+                type = getValue( "type" )
                 main.sort = getValue( "sort" )
-                contentItem.useGps = eval( getValue( "gps" ) )
-                contentItem.zipCode = getValue( "zipCode" )
+                useGps = eval( getValue( "gps" ) )
+                contentItem.hideClosed = eval( getValue( "hideClosed" ) )
+                zipCode = getValue( "zipCode" )
+                names = [qsTr("e5"),qsTr("e10"),qsTr("diesel")]
                 favs.load()
             }
             catch( e ) {
@@ -42,54 +45,36 @@ Plugin {
             setValue( "type", "e5" )
             setValue( "sort", main.sort )
             setValue( "gps", false )
+            setValue( "hideClosed", false )
             setValue( "zipCode", "" )
+
         }
     }
+
     function prepare() {
         settings.load()
         pluginReady = true
     }
 
     function requestItems() {
-        errorCode = 0
-        itemsBusy = true
-        items.clear()
-        coverItems.clear()
-        if( contentItem.useGps ) {
-            gotItems( latitude, longitude )
-        }
-        else {
-            var req = new XMLHttpRequest()
-            req.open( "GET", "http://maps.google.com/maps/api/geocode/json?components=country:DE|postal_code:"+contentItem.zipCode )
-            req.onreadystatechange = function() {
-                if( req.readyState == 4 ) {
-                    try {
-                        var x = eval( req.responseText ).results[0].geometry.location
-                        gotItems( x.lat, x.lng )
-                    }
-                    catch( e ) {
-                        items.clear()
-                        itemsBusy = false
-                        errorCode = 2
-                    }
-                }
-            }
-            req.send()
-        }
+        prepareItems()
+        if( useGps ) getItems( latitude, longitude )
+        else getItemsByPostalCode("DE", getItems)
     }
-    function gotItems( lat, lng ) {
-        console.log(tankerkoenig_apikey)
+
+    function getItems( lat, lng ) {
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/list.php?sort=dist&lat="+lat+"&lng="+lng+"&rad="+contentItem.searchRadius+"&type="+contentItem.type+"&apikey="+tankerkoenig_apikey )
+        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/list.php?sort=dist&lat="+lat+"&lng="+lng+"&rad="+searchRadius+"&type="+type+"&apikey="+tankerkoenig_apikey )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    console.log( req.responseText )
+                    //console.log( req.responseText )
                     var x = eval( req.responseText )
 
                     x = x.stations
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
+                        if( contentItem.hideClosed && !o.isOpen ) continue
                         var itm = {
                             "stationID": o.id,
                             "stationName": o.name,
@@ -123,7 +108,7 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 console.log( req.responseText )
-                //try {
+                try {
                     var x = eval( req.responseText )
                     x = x.station
                     var info = [
@@ -146,8 +131,8 @@ Plugin {
                             "street":x.street + " " + (typeof(x.houseNumber) == "object" ? "" : x.houseNumber),
                             "county":x.postCode + " " + x.place,
                             "country":"",
-                            "latitude":station.lat,
-                            "longitude":station.lng
+                            "latitude":x.lat,
+                            "longitude":x.lng
                         },
                         "content": [
                             { "title":qsTr("Info"), "items": info },
@@ -156,7 +141,7 @@ Plugin {
                         ]
                     }
                     stationBusy = false
-                try{}
+                }
                 catch ( e ) {
                     station = {}
                     stationBusy = false
@@ -168,81 +153,20 @@ Plugin {
         req.send()
     }
 
-
-
-
-
+    radiusSlider {
+        maximumValue: 20
+    }
 
     content: Component {
         Column {
-            property alias searchRadius: sradius.value
-            property alias useGps: gpsSwitch.checked
-            property alias zipCode: postalCode.text
-            property string type: "e10"
-
-            SectionHeader {
-                text: qsTr("Fuel Type")
-            }
-            Row {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.paddingSmall
-                Button {
-                    text: "Super (E5)"
-                    width: parent.width/3 - parent.spacing
-                    down: type == "e5"
-                    onClicked: type = "e5"
-                }
-                Button {
-                    text: "Super (E10)"
-                    width: parent.width/3 - parent.spacing
-                    down: type == "e10"
-                    onClicked: type = "e10"
-                }
-                Button {
-                    text: "Diesel"
-                    width: parent.width/3
-                    down: type == "diesel"
-                    onClicked: type = "diesel"
-                }
-            }
-
-            SectionHeader {
-                text: qsTr("Search Radius")
-            }
-            Slider {
-                id: sradius
-                width: parent.width
-                minimumValue: 1
-                maximumValue: 25
-                stepSize: 1
-                value: 1
-                //onValueChanged: searchRadius = value
-                valueText: value+" km"
-            }
-
-            SectionHeader {
-                text: qsTr("Location")
-            }
+            property alias hideClosed: hideClosedButton.checked
 
             TextSwitch {
-                id: gpsSwitch
-                text: qsTr("Use GPS")
-            }
-
-            TextField {
-                id: postalCode
-                placeholderText: qsTr("Zip Code")
-                label: placeholderText
+                id: hideClosedButton
                 width: parent.width
-                readOnly: useGps
-                onTextChanged: zipCode = text
-                inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: RegExpValidator { regExp: /\d{5}/ }
-                EnterKey.enabled: text.length > 0
-                EnterKey.onClicked: focus = false
+                text: qsTr("Hide Closed")
             }
         }
-    }
+}
 }
 

@@ -35,8 +35,6 @@ ApplicationWindow
        }
    }
 
-
-    property string type: "e10" //e5,e10,diesel
     property string sort: "price" //price,dist
 
 
@@ -53,16 +51,16 @@ ApplicationWindow
     function setFav(x,y) {favs.set(x,y) }
     function unsetFav(x,y) {favs.unset(x,y)}
 
-
+    //Sometimes this shouldn't be hardcoded anymore...
     Settings {
         id: pluginSettings
         function load() {
             try {
                 switch( getValue( "plugin" ) ) {
-                    case tk.name: selectedPlugin = tk; break
-                    case sv.name: selectedPlugin = sv; break
-                    case gg.name: selectedPlugin = gg; break
-                    default: selectedPlugin = tk
+                    case tk.name: selectedPlugin = tk; selectedPluginNum = 0; break
+                    case sv.name: selectedPlugin = sv; selectedPluginNum = 1; break
+                    case gg.name: selectedPlugin = gg; selectedPluginNum = 2;break
+                    default: selectedPlugin = tk;
                 }
             }
             catch( e ) {
@@ -90,8 +88,22 @@ ApplicationWindow
         pluginSettings.save()
         pageStack.popAttached()
     }
-
-
+    property int selectedPluginNum: 0
+    property ContextMenu pluginSwitcher: ContextMenu {
+        id: plgnswtchr
+        MenuItem {
+            text: tk.name
+            onClicked: { changePlugin( tk ); selectedPluginNum = 0 }
+        }
+        MenuItem {
+            text: sv.name
+            onClicked: { changePlugin( sv ); selectedPluginNum = 1 }
+        }
+        MenuItem {
+            text: gg.name
+            onClicked: { changePlugin( gg ); selectedPluginNum = 2 }
+        }
+    }
 
     property bool gpsActive: false
 
@@ -146,5 +158,13 @@ ApplicationWindow
     function log( str ) {
         if( typeof(str) == "object" ) console.log( printlist( str ) )
         else console.log( str )
+    }
+    function normalizePrice( p ) {
+        p = (p<1?"0":"")+(p*1000)
+
+        var ret = p.charAt( 0 )+"."
+        for( var i = 1; i<3; i++ ) { ret+=(p.charAt(i)?p.charAt(i):"0") }
+        var supPrice = p.charAt(3)?p.charAt(i):"0"
+        return [ret,supPrice]
     }
 }

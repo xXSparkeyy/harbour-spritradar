@@ -6,7 +6,6 @@ Page {
     allowedOrientations: Orientation.All
     property string stationId: ""
     property variant station: ({ })
-    onStationChanged: log( station )
 
     SilicaFlickable {
         anchors.fill: parent
@@ -38,6 +37,7 @@ Page {
                 width: parent.width
                 onClicked: Qt.openUrlExternally( "geo:"+station.stationAdress.latitude+","+station.stationAdress.longitude )
                 id: addressContainer
+                visible: !selectedPlugin.stationBusy
                 Label {
                     id: address
                     anchors.left: parent.left
@@ -48,7 +48,7 @@ Page {
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.WordWrap
                     //Adresse
-                    text: typeof(station.stationAdress) == "object"? ( station.stationAdress.street+"\n"+station.stationAdress.county +(station.stationAdress.country?", "+station.stationAdress.country:"" ) ):""
+                    text: typeof(station.stationAdress) == "object"? ( station.stationAdress.street+"\n"+station.stationAdress.county +(station.stationAdress.country?"\n"+station.stationAdress.country:"" ) ):""
                     color: addressContainer.highlighted ? Theme.highlightColor : Theme.primaryColor
                     font.pixelSize: Theme.fontSizeSmall
                     verticalAlignment: Text.AlignVCenter

@@ -5,7 +5,6 @@ import harbour.spritradar.Util 1.0
 /*
 
   France: http://www.prix-carburants.gouv.fr/mobile/
-  Spain: https://github.com/kbsali/gasolineras-espana/blob/master/open_gasolineras.py
   Netherlands: http://www.anwb.nl/pois/
   Österreich: www.spritpreisrechner.at ( Seems more like a developers diarrhea )
 
@@ -79,6 +78,7 @@ Dialog {
     property string name;
     property string description;
     property variant units: { "currency":"", "distance": "" }
+    property string countryCode: ""
 
     onPluginReadyChanged: if( pluginReady ) requestItems()
 
@@ -90,6 +90,31 @@ Dialog {
     }
     function prepare() {
         pluginReady = true
+    }
+    function prepareItems() {
+        errorCode = 0
+        itemsBusy = true
+        items.clear()
+        coverItems.clear()
+    }
+    function getItemsByPostalCode(country, callback) {
+        var req = new XMLHttpRequest()
+        req.open( "GET", "http://maps.google.com/maps/api/geocode/json?components=country:"+country+"|postal_code:"+zipCode )
+        req.onreadystatechange = function() {
+            if( req.readyState == 4 && !useGps ) {
+                try {
+                    var x = eval( req.responseText ).results[0].geometry.location
+                    callback( x.lat, x.lng )
+                }
+                catch( e ) {
+                    items.clear()
+                    coverItems.clear()
+                    itemsBusy = false
+                    errorCode = 2
+                }
+            }
+        }
+        req.send()
     }
 
     function sort() {
@@ -105,10 +130,10 @@ Dialog {
                 "customMessage": o.customMessage
             }
         }
-        if( main.sort!="price") list = qmSort( "price", list ).reverse()
-        list = qmSort( main.sort, list )
+        if( main.sort!="price") list = qmSort( "dist",  qmSort( "price", list ).reverse() )
+        else                    list = qmSort( "price", qmSort( "dist",  list ).reverse() )
         items.clear()
-        for( var i = 0; i<list.length; i++ ) {
+        for( var i = 0; i<list.length&&i<50; i++ ) {
             items.append(list[i])
         }
         createCoverItems()
@@ -142,6 +167,19 @@ Dialog {
         }
         return list
     }
+    property alias radiusSlider: sradius
+    property alias postalCodeInput: postalCode
+    property alias gpsSwitch: gpsSwitchh
+    property alias searchRadius: sradius.value
+    property alias zipCode: postalCode.text
+    property alias useGps: gpsSwitchh.checked
+    onUseGpsChanged: main.gpsActive = useGps
+
+    property string type: ""
+    property variant types: []
+    property variant names: []
+    onTypeChanged: fuelTypeSwitcher.currentIndex = types.indexOf( type )
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: contCol.height
@@ -156,15 +194,69 @@ Dialog {
                 acceptText: qsTr("Search")
                 cancelText: ""
             }
+
+            SectionHeader {
+                text: qsTr("Fuel Type")
+            }
+
+            ComboBox {
+                id: fuelTypeSwitcher
+                width: parent.width
+                    label: qsTr("Select Fuel")
+                    menu: ContextMenu {
+                        Repeater {
+                            model: types.length
+                            MenuItem {
+                                text: names[index]
+                                onClicked: type = types[index]
+                            }
+                        }
+                    }
+            }
+
             Loader {
                 id: contentWrapper
                 sourceComponent: content
                 width: page.width-2*x
                 x: Theme.horizontalPageMargin
             }
+
+            SectionHeader {
+                text: qsTr("Search Radius")
+            }
+            Slider {
+                id: sradius
+                width: parent.width
+                minimumValue: 1
+                maximumValue: 1
+                stepSize: 1
+                value: 1
+                valueText: value+" km"
+            }
+
+            SectionHeader {
+                text: qsTr("Location")
+            }
+
+            TextSwitch {
+                id: gpsSwitchh
+                text: qsTr("Use GPS")
+            }
+
+            TextField {
+                id: postalCode
+                placeholderText: qsTr("Zip Code")
+                label: placeholderText
+                width: parent.width
+                readOnly: useGps
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                validator: RegExpValidator { regExp: /\d{5}/ }
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: focus = false
+            }
             Item {
                 width: 1
-                height: Theme.horizontalPageMargin*5
+                height: Theme.horizontalPageMargin*2
             }
 
             ComboBox {
@@ -173,21 +265,8 @@ Dialog {
                 label: qsTr("Plugin")
                 description: selectedPlugin.description
                 value: selectedPlugin.name
-                id:mfcb
-                menu: ContextMenu {
-                    MenuItem {
-                        text: tk.name
-                        onClicked: { changePlugin( tk ); mfcb.currentIndex = 0 }
-                    }
-                    MenuItem {
-                        text: sv.name
-                        onClicked: { changePlugin( sv ); mfcb.currentIndex = 1 }
-                    }
-                    MenuItem {
-                        text: gg.name
-                        onClicked: { changePlugin( gg ); mfcb.currentIndex = 2 }
-                    }
-                }
+                currentIndex: selectedPluginNum
+                menu: main.pluginSwitcher
             }
         }
     }

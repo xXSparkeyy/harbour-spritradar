@@ -5,7 +5,7 @@
     <name>CoverPage</name>
     <message>
         <source>Nothing Found</source>
-        <translation type="unfinished">Nichts gefunden</translation>
+        <translation>Nichts gefunden</translation>
     </message>
 </context>
 <context>
@@ -19,46 +19,70 @@
     <name>GasStation</name>
     <message>
         <source>Unset as Favourite</source>
-        <translation type="unfinished">Aus Favoriten entfernen</translation>
+        <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
         <source>Set as Favourite</source>
-        <translation type="unfinished">Zu Favoriten hinzufügen</translation>
+        <translation>Zu Favoriten hinzufügen</translation>
     </message>
 </context>
 <context>
     <name>GeoportalGasolineras</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Prices</source>
-        <translation type="unfinished">Preise</translation>
-    </message>
-    <message>
-        <source>Fuel Type</source>
-        <translation type="unfinished">Kraftstoffart</translation>
-    </message>
-    <message>
-        <source>Search Radius</source>
-        <translation type="unfinished">Suchradius</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished">Standort</translation>
-    </message>
-    <message>
-        <source>Use GPS</source>
-        <translation type="unfinished">GPS-Position</translation>
-    </message>
-    <message>
-        <source>Zip Code</source>
-        <translation type="unfinished">Postleitzahl</translation>
+        <translation>Preise</translation>
     </message>
     <message>
         <source>Opening Times</source>
-        <translation type="unfinished">Öffnungszeiten</translation>
+        <translation>Öffnungszeiten</translation>
+    </message>
+    <message>
+        <source>GPR</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>G98</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>GOA</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>NGO</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>GOB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>GOC</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>BIO</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>G95</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>BIE</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>GLP</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>GNC</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -93,147 +117,151 @@
     </message>
     <message>
         <source>Initializing</source>
-        <translation type="unfinished">Initialisiere</translation>
+        <translation>Initialisiere</translation>
     </message>
 </context>
 <context>
     <name>Plugin</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Suchen</translation>
+        <translation>Suchen</translation>
     </message>
     <message>
         <source>Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Select Fuel</source>
+        <translation>Kraftstoffart</translation>
+    </message>
+    <message>
+        <source>Fuel Type</source>
+        <translation>Kraftstoffart</translation>
+    </message>
+    <message>
+        <source>Search Radius</source>
+        <translation>Suchradius</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Standort</translation>
+    </message>
+    <message>
+        <source>Use GPS</source>
+        <translation>GPS-Position</translation>
+    </message>
+    <message>
+        <source>Zip Code</source>
+        <translation>Postleitzahl</translation>
     </message>
 </context>
 <context>
     <name>Sviluppoeconomico</name>
     <message>
-        <source>Fuel Type</source>
-        <translation type="unfinished">Kraftstoffart</translation>
-    </message>
-    <message>
-        <source>Search Radius</source>
-        <translation type="unfinished">Suchradius</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished">Standort</translation>
-    </message>
-    <message>
-        <source>Use GPS</source>
-        <translation type="unfinished">GPS-Position</translation>
-    </message>
-    <message>
-        <source>Zip Code</source>
-        <translation type="unfinished">Postleitzahl</translation>
-    </message>
-    <message>
-        <source>Benzin</source>
-        <translation type="unfinished">Benzin</translation>
-    </message>
-    <message>
-        <source>Diesel</source>
-        <translation type="unfinished">Diesel</translation>
-    </message>
-    <message>
-        <source>Methan</source>
-        <translation type="unfinished">Methan</translation>
-    </message>
-    <message>
         <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Prices</source>
-        <translation type="unfinished">Preise</translation>
+        <translation>Preise</translation>
     </message>
     <message>
         <source>Serviced</source>
-        <translation type="unfinished">Tankwart</translation>
-    </message>
-    <message>
-        <source>Special</source>
-        <translation type="unfinished">Spezial</translation>
+        <translation>Tankwart</translation>
     </message>
     <message>
         <source>Brand</source>
-        <translation type="unfinished">Marke</translation>
+        <translation>Marke</translation>
     </message>
     <message>
         <source>Off-Brand</source>
-        <translation type="unfinished">Unabhängig</translation>
+        <translation>Unabhängig</translation>
     </message>
     <message>
         <source>Updated</source>
-        <translation type="unfinished">Aktualisiert</translation>
+        <translation>Aktualisiert</translation>
     </message>
     <message>
         <source>GPL</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Benzina</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Gasolio</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Metano</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Gasolio Special</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Benzina Special</source>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>TankerKoenig</name>
     <message>
-        <source>Fuel Type</source>
-        <translation type="unfinished">Kraftstoffart</translation>
-    </message>
-    <message>
-        <source>Search Radius</source>
-        <translation type="unfinished">Suchradius</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished">Standort</translation>
-    </message>
-    <message>
-        <source>Use GPS</source>
-        <translation type="unfinished">GPS-Position</translation>
-    </message>
-    <message>
-        <source>Zip Code</source>
-        <translation type="unfinished">Postleitzahl</translation>
+        <source>Hide Closed</source>
+        <translation>Blende Geschlossene aus</translation>
     </message>
     <message>
         <source>Brand</source>
-        <translation type="unfinished">Marke</translation>
+        <translation>Marke</translation>
     </message>
     <message>
         <source>State</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>Prices</source>
-        <translation type="unfinished">Preise</translation>
+        <translation>Preise</translation>
     </message>
     <message>
         <source>Opening Times</source>
-        <translation type="unfinished">Öffnungszeiten</translation>
+        <translation>Öffnungszeiten</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Geschlossen</translation>
+        <translation>Geschlossen</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished">Geöffnet</translation>
+        <translation>Geöffnet</translation>
+    </message>
+    <message>
+        <source>e5</source>
+        <translation>Super</translation>
+    </message>
+    <message>
+        <source>e10</source>
+        <translation>Super E10</translation>
+    </message>
+    <message>
+        <source>diesel</source>
+        <translation>Diesel</translation>
     </message>
 </context>
 <context>
     <name>harbour-spritradar</name>
     <message>
         <source>Unset as Favourite</source>
-        <translation type="unfinished">Aus Favoriten entfernen</translation>
+        <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
         <source>Set as Favourite</source>
-        <translation type="unfinished">Zu Favoriten hinzufügen</translation>
+        <translation>Zu Favoriten hinzufügen</translation>
     </message>
 </context>
 </TS>

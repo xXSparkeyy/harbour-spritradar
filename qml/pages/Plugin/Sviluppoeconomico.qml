@@ -8,28 +8,30 @@ Plugin {
     name: "IT - Osservaprezzi Carburanti"
     description: "Fonte: Ministero dello Sviluppo Economico"
     units: { "currency":"€", "distance": "km" }
-    property string url: "http://spritradar.w4f.eu/it/"
-    Connections {
-        target: contentItem
-        onUseGpsChanged: gpsActive = contentItem.useGps
-    }
+    countryCode: "it"
+    property string url: "http://harbour-spritradar.w4f.eu/it/"
+    type: "Benzina"
+    types: ["Benzina","Gasolio","Metano","GPL","((.*(benzina|benzin|petrol|spezial).+)|(.+(benzina|benzin|petrol|spezial).*))","(.+(gasolio|diesel|gasoline|spezial).*)|(.*(gasolio|diesel|gasoline|spezial).+)"]
+    names: [qsTr("Benzina"),qsTr("Gasolio"),qsTr("Metano"),qsTr("GPL"),qsTr("Benzina Special"),qsTr("Gasolio Special")]
+
+
     settings: Settings {
         name: "sviluppoeconomico"
 
         function save() {
-            setValue( "radius", contentItem.searchRadius )
-            setValue( "type", contentItem.type )
+            setValue( "radius", searchRadius )
+            setValue( "type", type )
             setValue( "sort", main.sort )
-            setValue( "gps", contentItem.useGps )
-            setValue( "zipCode", contentItem.zipCode )
+            setValue( "gps", useGps )
+            setValue( "zipCode", zipCode )
         }
         function load() {
             try {
-                contentItem.searchRadius = getValue( "radius" )
-                contentItem.type = getValue( "type" )
+                searchRadius = getValue( "radius" )
+                type = getValue( "type" )
                 main.sort = getValue( "sort" )
-                contentItem.useGps = eval( getValue( "gps" ) )
-                contentItem.zipCode = getValue( "zipCode" )
+                useGps = eval( getValue( "gps" ) )
+                zipCode = getValue( "zipCode" )
                 favs.load()
             }
             catch( e ) {
@@ -45,44 +47,29 @@ Plugin {
             setValue( "zipCode", "" )
         }
     }
+
     function prepare() {
         settings.load()
         pluginReady = true
     }
 
-
-
     function requestItems() {
-        if( contentItem.useGps ) getItems( latitude, longitude )
-        var req = new XMLHttpRequest()
-        req.open( "GET", "http://maps.google.com/maps/api/geocode/json?components=country:IT|postal_code:"+contentItem.zipCode )
-        req.onreadystatechange = function() {
-            if( req.readyState == 4 ) {
-                try {
-                    var x = eval( req.responseText ).results[0].geometry.location
-                    getItems( x.lat, x.lng )
-                }
-                catch( e ) {
-                    items.clear()
-                    coverItems.clear()
-                    itemsBusy = false
-                    errorCode = 2
-                }
-            }
-        }
-        req.send()
+        prepareItems()
+        if( useGps ) getItems( latitude, longitude )
+        else getItemsByPostalCode( "IT", getItems )
     }
+
     function getItems( lat, lng ) {
         errorCode = 0
         itemsBusy = true
         items.clear()
         coverItems.clear()
         var req = new XMLHttpRequest()
-        req.open( "GET", url+"?get=stations&lat="+lat+"&lng="+lng+"&radius="+contentItem.searchRadius )
+        req.open( "GET", url+"?get=stations&lat="+lat+"&lng="+lng+"&radius="+searchRadius )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
-                //try {
-                    console.log( req.responseText )
+                try {
+                    //console.log( req.responseText )
                     var x = eval( req.responseText )
 
                     for( var i = 0; i < x.length; i++ ) {
@@ -90,8 +77,8 @@ Plugin {
                         var price = { price:0 }
                         var sPrice = { price:0 }
                         for( var j = 0; j < o.prices.length; j++ ) {
-                            if( o.prices[j].type.toLowerCase() == contentItem.type.toLowerCase() && ( price > o.prices[j].price || price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
-                            else if( o.prices[j].type.toLowerCase().indexOf( contentItem.type.toLowerCase().substring(2, contentItem.type.length) ) > -1 && o.prices[j].type.toLowerCase() != contentItem.type.substring(2, contentItem.type.length).toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                            if( o.prices[j].type.toLowerCase() == type.toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                            else if( type.indexOf("spezial") > -1 && ( (new RegExp( type, "i" )).test(o.prices[j].type) && ( price.price > o.prices[j].price || price.price == 0 ) ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
                         }
                         if( price.price == 0 ) continue
                         var itm = {
@@ -112,7 +99,7 @@ Plugin {
                     sort()
                     itemsBusy = false
                     errorCode = items.count < 1 ? 1 : 0
-                try {}
+                }
                 catch ( e ) {
                     items.clear()
                     itemsBusy = false
@@ -122,6 +109,7 @@ Plugin {
         }
         req.send()
     }
+
     function requestStation( id ) {
         stationBusy = true
         station = {}
@@ -130,7 +118,7 @@ Plugin {
         req.open( "GET", url+"?get=station&id="+id )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
-                //try {
+                try {
                     var st = eval( req.responseText )
                     var price = []
                     for( var j = 0; j < st.prices.length; j++ ) {
@@ -150,7 +138,7 @@ Plugin {
                         "stationAdress": {
                             "street":capitalizeString(street),
                             "county":capitalizeString(county)+" "+provincia,
-                            "country":"Italy",
+                            "country":"",//"Italy",
                             "latitude":st.lat,
                             "longitude":st.lng
                         },
@@ -161,7 +149,7 @@ Plugin {
                         ]
                     }
                     stationBusy = false
-                try {}
+                }
                 catch ( e ) {
                     page.station = {}
                     stationBusy = false
@@ -172,103 +160,16 @@ Plugin {
         req.send()
     }
 
+    function toTimeSince( t ) {
+        console.log( "Coming", "soo"+("oon".split("")[2]) )
+    }
+
+    radiusSlider {
+        maximumValue: 25
+    }
+
     content: Component {
-        Column {
-            property alias searchRadius: sradius.value
-            property alias useGps: gpsSwitch.checked
-            property alias zipCode: postalCode.text
-            property string type: "Benzina"
-
-            SectionHeader {
-                text: qsTr("Fuel Type")
-            }
-            Row {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.paddingSmall
-                Button {
-                    text: qsTr("Benzin")
-                    width: parent.width/4 - parent.spacing
-                    down: type == "Benzina"
-                    onClicked: type = "Benzina"
-                }
-                Button {
-                    text: qsTr("Diesel")
-                    width: parent.width/4 - parent.spacing
-                    down: type == "Gasolio"
-                    onClicked: type = "Gasolio"
-                }
-                Button {
-                    text: qsTr("Methan")
-                    width: parent.width/4 - parent.spacing
-                    down: type == "Metano"
-                    onClicked: type = "Metano"
-                }
-                Button {
-                    text: qsTr("GPL")
-                    width: parent.width/4
-                    down: type == "GPL"
-                    onClicked: type = "GPL"
-                }
-            }
-            Item {
-                width: 1
-                height: Theme.paddingSmall
-            }
-
-            Row {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.paddingSmall
-                Button {
-                    text: qsTr("Benzin")+" "+qsTr( "Special" )
-                    width: parent.width/2 - parent.spacing
-                    down: type == "spbenzina"
-                    onClicked: type = "spbenzina"
-                }
-                Button {
-                    text: qsTr("Diesel")+" "+qsTr( "Special" )
-                    width: parent.width/2
-                    down: type == "spgasolio"
-                    onClicked: type = "spgasolio"
-                }
-            }
-
-            SectionHeader {
-                text: qsTr("Search Radius")
-            }
-            Slider {
-                id: sradius
-                width: parent.width
-                minimumValue: 1
-                maximumValue: 25
-                stepSize: 1
-                value: 1
-                valueText: value+" km"
-            }
-
-            SectionHeader {
-                text: qsTr("Location")
-            }
-
-            TextSwitch {
-                id: gpsSwitch
-                text: qsTr("Use GPS")
-            }
-
-            TextField {
-                id: postalCode
-                placeholderText: qsTr("Zip Code")
-                label: placeholderText
-                width: parent.width
-                readOnly: useGps
-                onTextChanged: zipCode = text
-                inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: RegExpValidator { regExp: /\d{5}/ }
-                EnterKey.enabled: text.length > 0
-                EnterKey.onClicked: focus = false
-            }
-        }
+        Column {}
     }
 }
 

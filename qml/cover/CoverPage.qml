@@ -28,7 +28,7 @@ CoverBackground {
                 delegate: ListText {
                     width: cover.width
                     text:      stationName
-                    title:     stationPrice
+                    title:     normalizePrice(stationPrice).join("")
                     leftAlign: true
                 }
             }

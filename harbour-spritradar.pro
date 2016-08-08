@@ -43,11 +43,9 @@ CONFIG += sailfishapp_i18n
 # planning to localize your app, remember to comment out the
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
-TRANSLATIONS += translations/harbour-spritradar-de.ts \
+TRANSLATIONS += translations/harbour-spritradar.ts \
+                translations/harbour-spritradar-de.ts \
                 translations/harbour-spritradar-it.ts
 
-DISTFILES += \
-    qml/pages/Plugin/Spritpreisrechner.qml \
-    qml/pages/Plugin/GeoportalGasolineras.qml
 
 
