@@ -42,47 +42,47 @@
     </message>
     <message>
         <source>Gasolina 95 (G.Protecctión)</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzina 95 (G.Protettivo)</translation>
     </message>
     <message>
         <source>Gasolina 98</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzina 98</translation>
     </message>
     <message>
         <source>Gasóleo A habitual</source>
-        <translation type="unfinished"></translation>
+        <translation>Gasolio tradizionale</translation>
     </message>
     <message>
         <source>Nuevo gasóleo</source>
-        <translation type="unfinished"></translation>
+        <translation>Gasolio nuovo</translation>
     </message>
     <message>
         <source>Gasóleo B</source>
-        <translation type="unfinished"></translation>
+        <translation>Gasolio B</translation>
     </message>
     <message>
         <source>Gasóleo C</source>
-        <translation type="unfinished"></translation>
+        <translation>Gasolio C</translation>
     </message>
     <message>
         <source>Biodiésel</source>
-        <translation type="unfinished"></translation>
+        <translation>Biodiesel</translation>
     </message>
     <message>
         <source>Gasolina 95</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzina 95</translation>
     </message>
     <message>
         <source>Bioetanol</source>
-        <translation type="unfinished"></translation>
+        <translation>Bioetanolo</translation>
     </message>
     <message>
         <source>(GLP) - Gases licuados del petróleo</source>
-        <translation type="unfinished"></translation>
+        <translation>(GPL) - Gas di petrolio liquefatti</translation>
     </message>
     <message>
         <source>(GNC) - Gases natural comprimido</source>
-        <translation type="unfinished"></translation>
+        <translation>(GNC) - Gas naturali compressi</translation>
     </message>
 </context>
 <context>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Select Fuel</source>
-        <translation type="unfinished"></translation>
+        <translation>Carburante</translation>
     </message>
 </context>
 <context>
@@ -238,7 +238,7 @@
     </message>
     <message>
         <source>e5</source>
-        <translation>Benzina</translation>
+        <translation>Benzina E5</translation>
     </message>
     <message>
         <source>e10</source>
@@ -250,7 +250,7 @@
     </message>
     <message>
         <source>Hide Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi Chiusi</translation>
     </message>
 </context>
 <context>
