@@ -245,6 +245,36 @@
         <source>in %1</source>
         <translation>in %1</translation>
     </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Every %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Kilometers</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n Minutes</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>At distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Sviluppoeconomico</name>

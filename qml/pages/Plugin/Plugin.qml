@@ -272,6 +272,67 @@ Dialog {
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: focus = false
             }
+
+
+            ComboBox {
+                id: autoUpdateSelector
+                label: "Auto update"
+                description: currentIndex==0?qsTr("Disabled"):qsTr("Every %1").arg( currentIndex==1?qsTr("%n Kilometers","",autoUpdateSlider.value):qsTr("%n Minutes","",autoUpdateSlider.value) )
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Disabled")
+                    }
+                    MenuItem {
+                        text: qsTr("At distance")
+                    }
+                    MenuItem {
+                        text: qsTr("At time")
+                    }
+                }
+                onCurrentIndexChanged: {
+                    autoUpdateTimer.running = currentIndex==2
+                }
+                Connections {
+                    target: main
+                    property string olat
+                    property string olng
+
+                    onLatitudeChanged: positionChanged()
+                    onLongitudeChanged: positionChanged()
+
+
+                    function positionChanged() {
+                        if( autoUpdateSelector.currentIndex == 1 ) {
+                            if( !olat || !olng ) {
+                                olat = main.latitude
+                                olng = main.longitude
+                            } else if( getGeoDistance( olat, olng, main.latitude, main.longitude )/1000 > autoUpdateSlider.value ) {
+                                olat = main.latitude
+                                olng = main.longitude
+                            }
+                        }
+
+                    }
+
+                }
+                Timer {
+                    id: autoUpdateTimer
+                    repeat: true
+                    interval: autoUpdateSlider.value*60000
+                    onTriggered: requestItems()
+                }
+            }
+            Slider {
+                id: autoUpdateSlider
+                width: parent.width
+                visible: autoUpdateSelector.currentIndex > 0
+                valueText: autoUpdateSelector.currentIndex==1?qsTr("%n Kilometers","",value):qsTr("%n Minutes","",value)
+                maximumValue: 100
+                minimumValue: 1
+                value: 1
+                stepSize: 1
+            }
+
             Item {
                 width: 1
                 height: Theme.horizontalPageMargin*2

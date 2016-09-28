@@ -95,6 +95,7 @@ ApplicationWindow
         pluginSettings.save()
         pageStack.popAttached()
     }
+
     property int selectedPluginNum: 0
     property ContextMenu pluginSwitcher: ContextMenu {
         id: plgnswtchr
@@ -181,6 +182,22 @@ ApplicationWindow
         for( var i = 0; i < month; i++ ) { day+=months[i] }    // Monate zu Tagen
         if( (year-1972)%4 == 0 ) day+=1                        // Schaltjahre
         return ((((year-1970)*365+day)*12+hour)*60+minute)*60  // Alles runter gerechnet bis Sekunden, Millisekunden *ergeben* keinen Sinn
+    }
+
+    function getGeoDistance( lat1, lng1, lat2, lng2) {
+            var R = 6371000;
+            var a1 = lat1/180*Math.PI
+            var o1 = lng1/180*Math.PI
+            var a2 = lat2/180*Math.PI
+            var o2 = lng2/180*Math.PI
+            var da = a2 - a1;
+            var db = o2 - o1;
+            var a = Math.sin(da/2) * Math.sin(da/2)
+                  + Math.cos(a1) * Math.cos(a2)
+                  * Math.sin(db/2) * Math.sin(db/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = Math.round(R * c)
+            return d;
     }
 
 
