@@ -70,7 +70,7 @@ BackgroundItem {
             height: paintedHeight
             color: down ? Theme.secondaryHighlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: (distance<1000?distance+"m":Math.ceil(distance/1000)+"km")+(message?" | "+message:"")+" | "+address
+            text: (selectedPlugin.units.distance=="km"?distance<1000?distance+"m":Math.ceil(distance/1000)+"km":distance+selectedPlugin.units.distance)+(message?" | "+message:"")+" | "+address
             truncationMode: TruncationMode.Fade
         }
     }

@@ -23,7 +23,7 @@ Plugin {
             setValue( "type", type )
             setValue( "sort", main.sort )
             setValue( "gps", useGps )
-            setValue( "zipCode", zipCode )
+            setValue( "address", address )
         }
         function load() {
             try {
@@ -31,7 +31,7 @@ Plugin {
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )
                 useGps = eval( getValue( "gps" ) )
-                zipCode = getValue( "zipCode" )
+                address = getValue( "address" )
                 favs.load()
             }
             catch( e ) {
@@ -44,7 +44,7 @@ Plugin {
             setValue( "type", "GPR" )
             setValue( "sort", main.sort )
             setValue( "gps", false )
-            setValue( "zipCode", "" )
+            setValue( "address", "" )
         }
     }
 
@@ -56,7 +56,7 @@ Plugin {
     function requestItems() {
         prepareItems()
         if( useGps ) getItems( latitude, longitude )
-        else getItemsByPostalCode("ES", getItems)
+        else getItemsByAddress("ES", getItems)
     }
 
     function getItems( lat, lng ) {
@@ -114,7 +114,7 @@ Plugin {
                     var st = eval( req.responseText )
                     var price = []
                     for( var j = 0; j < st.prices.length; j++ ) {
-                        price[price.length] = { "title":st.prices[j].type, "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
+                        price[price.length] = { "title":qsTr(names[types.indexOf(st.prices[j].type)]), "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
                     }
                     var addr = st.address.split( ", " )
                     var o = 0

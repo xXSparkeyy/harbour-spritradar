@@ -45,6 +45,14 @@ Page {
 
         VerticalScrollDecorator {}
 
+        PullDownMenu {
+            MenuItem {
+                enabled: main.launchToList
+                text: qsTr("Set as First Page")
+                onClicked: launchToList = false
+            }
+        }
+
         Column {
             id: col
             width: parent.width

@@ -14,6 +14,10 @@
         <source>Favourites</source>
         <translation>Favoriten</translation>
     </message>
+    <message>
+        <source>Set as First Page</source>
+        <translation>Als erste Seite zeigen</translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>
@@ -96,10 +100,6 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <source>Sort by</source>
-        <translation>Sortieren nach</translation>
-    </message>
-    <message>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
@@ -118,6 +118,41 @@
     <message>
         <source>Initializing</source>
         <translation>Initialisiere</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sortiert nach</translation>
+    </message>
+    <message>
+        <source>Set as First Page</source>
+        <translation>Als erste Seite zeigen</translation>
+    </message>
+</context>
+<context>
+    <name>MyGasFeed</name>
+    <message>
+        <source>Regular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mid-Grade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Premium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diesel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prices</source>
+        <translation type="unfinished">Preise</translation>
+    </message>
+    <message>
+        <source>Updated</source>
+        <translation type="unfinished">Aktualisiert</translation>
     </message>
 </context>
 <context>
@@ -151,8 +186,64 @@
         <translation>GPS-Position</translation>
     </message>
     <message>
-        <source>Zip Code</source>
-        <translation>Postleitzahl</translation>
+        <source>Address</source>
+        <translation>Adresse</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n year</source>
+        <comment>0</comment>
+        <translation>
+            <numerusform>%n Jahr</numerusform>
+            <numerusform>%n Jahren</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n month</source>
+        <comment>0</comment>
+        <translation>
+            <numerusform>%n Monat</numerusform>
+            <numerusform>%n Monaten</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <comment>0</comment>
+        <translation>
+            <numerusform>%n Tag</numerusform>
+            <numerusform>%n Tagen</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <comment>0</comment>
+        <translation>
+            <numerusform>%n Stunde</numerusform>
+            <numerusform>%n Stunden</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <comment>0</comment>
+        <translation>
+            <numerusform>%n Minute</numerusform>
+            <numerusform>%n Minuten</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n second</source>
+        <comment>0</comment>
+        <translation>
+            <numerusform>%n Sekunde</numerusform>
+            <numerusform>%n Sekunden</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>%1 ago</source>
+        <translation>vor %1</translation>
+    </message>
+    <message>
+        <source>in %1</source>
+        <translation>in %1</translation>
     </message>
 </context>
 <context>
@@ -210,7 +301,7 @@
     <name>TankerKoenig</name>
     <message>
         <source>Hide Closed</source>
-        <translation>Blende Geschlossene aus</translation>
+        <translation>Nur Geöffnete zeigen</translation>
     </message>
     <message>
         <source>Brand</source>

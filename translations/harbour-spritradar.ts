@@ -14,6 +14,10 @@
         <source>Favourites</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Set as First Page</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>
@@ -92,10 +96,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>Sort by</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Price</source>
         <translation></translation>
     </message>
@@ -117,6 +117,41 @@
     </message>
     <message>
         <source>Results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set as First Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MyGasFeed</name>
+    <message>
+        <source>Regular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mid-Grade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Premium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diesel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Updated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -147,12 +182,62 @@
         <translation></translation>
     </message>
     <message>
-        <source>Zip Code</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Select Fuel</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 ago</source>
+        <translation type="unfinished">%n ago</translation>
+    </message>
+    <message>
+        <source>in %1</source>
+        <translation type="unfinished">In %n</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n year</source>
+        <comment>0</comment>
+        <translation type="unfinished">
+            <numerusform>%n year</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n month</source>
+        <comment>0</comment>
+        <translation type="unfinished">
+            <numerusform>%n month</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day</source>
+        <comment>0</comment>
+        <translation type="unfinished">
+            <numerusform>%n day</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour</source>
+        <comment>0</comment>
+        <translation type="unfinished">
+            <numerusform>%n hour</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n minute</source>
+        <comment>0</comment>
+        <translation type="unfinished">
+            <numerusform>%n minute</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n second</source>
+        <comment>0</comment>
+        <translation type="unfinished">
+            <numerusform>%n second</numerusform>
+        </translation>
     </message>
 </context>
 <context>

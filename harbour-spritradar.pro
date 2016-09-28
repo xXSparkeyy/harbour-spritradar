@@ -48,5 +48,8 @@ TRANSLATIONS += translations/harbour-spritradar.ts \
                 translations/harbour-spritradar-es.ts \
                 translations/harbour-spritradar-it.ts
 
+DISTFILES += \
+    qml/pages/Plugin/MyGasFeed.qml
+
 
 

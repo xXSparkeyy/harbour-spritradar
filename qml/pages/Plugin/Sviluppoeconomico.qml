@@ -23,7 +23,7 @@ Plugin {
             setValue( "type", type )
             setValue( "sort", main.sort )
             setValue( "gps", useGps )
-            setValue( "zipCode", zipCode )
+            setValue( "address", address )
         }
         function load() {
             try {
@@ -31,7 +31,7 @@ Plugin {
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )
                 useGps = eval( getValue( "gps" ) )
-                zipCode = getValue( "zipCode" )
+                address = getValue( "address" )
                 favs.load()
             }
             catch( e ) {
@@ -44,7 +44,7 @@ Plugin {
             setValue( "type", "Benzina" )
             setValue( "sort", main.sort )
             setValue( "gps", false )
-            setValue( "zipCode", "" )
+            setValue( "address", "" )
         }
     }
 
@@ -56,7 +56,7 @@ Plugin {
     function requestItems() {
         prepareItems()
         if( useGps ) getItems( latitude, longitude )
-        else getItemsByPostalCode( "IT", getItems )
+        else getItemsByAddress( "IT", getItems )
     }
 
     function getItems( lat, lng ) {
@@ -143,7 +143,7 @@ Plugin {
                             "longitude":st.lng
                         },
                         "content": [
-                            { "title":qsTr("Info"), items:[ {title:qsTr("Brand"), text:st.brand=="Pompe Bianche"?qsTr("Off-Brand"):st.brand},{title:qsTr("Updated"), text:st.prices[0].date} ] },
+                            { "title":qsTr("Info"), items:[ {title:qsTr("Brand"), text:st.brand=="Pompe Bianche"?qsTr("Off-Brand"):st.brand},{title:qsTr("Updated"), text:toTimeSince(st.prices[0].date)} ] },
                             { "title":qsTr("Prices"), "items": price }
 
                         ]
@@ -161,7 +161,7 @@ Plugin {
     }
 
     function toTimeSince( t ) {
-        console.log( "Coming", "soo"+("oon".split("")[2]) )
+        return timeSince( Date.fromLocaleString( Qt.locale("it_IT"), t, "dd/MM/yyyy hh:mm:ss").getTime() )
     }
 
     radiusSlider {

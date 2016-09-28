@@ -10,9 +10,11 @@ ApplicationWindow
     id: main
     initialPage: favs
     Component.onCompleted: {
+        pluginSettings.load();
         pageStack.pushAttached( list )
-        pageStack.push( list, PageStackAction.Immediate)
-        selectedPlugin.requestItems
+        if( launchToList ) pageStack.push( list, PageStackAction.Immediate)
+        else if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }
+        selectedPlugin.requestItems()
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
@@ -45,13 +47,14 @@ ApplicationWindow
     property variant favs: []
     property variant station: []
     property bool stationLoading: false
+    property bool launchToList: true
+    onLaunchToListChanged: pluginSettings.save()
     List { id: list }
     Favs { id: favs }
     function isFav(x) {return favs.is( x )}
     function setFav(x,y) {favs.set(x,y) }
     function unsetFav(x,y) {favs.unset(x,y)}
 
-    //Sometimes this shouldn't be hardcoded anymore...
     Settings {
         id: pluginSettings
         function load() {
@@ -60,8 +63,10 @@ ApplicationWindow
                     case tk.name: selectedPlugin = tk; selectedPluginNum = 0; break
                     case sv.name: selectedPlugin = sv; selectedPluginNum = 1; break
                     case gg.name: selectedPlugin = gg; selectedPluginNum = 2;break
+                    case gf.name: selectedPlugin = gf; selectedPluginNum = 4;break
                     default: selectedPlugin = tk;
                 }
+                launchToList = getValue( "launchToList" )==1
             }
             catch( e ) {
                 assign()
@@ -69,17 +74,19 @@ ApplicationWindow
         }
         function save() {
             setValue( "plugin", selectedPlugin.name )
+            setValue( "launchToList", launchToList?"1":"0" )
         }
         function assign() {
             selectedPlugin = tk
+            launchToList = true
             save()
         }
-        Component.onCompleted: load()
     }
     property Plugin selectedPlugin;
     TankerKoenig { id: tk }
     Sviluppoeconomico { id: sv }
     GeoportalGasolineras { id: gg }
+    MyGasFeed { id: gf }
     function changePlugin( plugin ) {
         plugin.pluginReady = false
         selectedPlugin.station = {}
@@ -103,13 +110,15 @@ ApplicationWindow
             text: gg.name
             onClicked: { changePlugin( gg ); selectedPluginNum = 2 }
         }
+        MenuItem {
+            text: gf.name
+            onClicked: { changePlugin( gf ); selectedPluginNum = 3 }
+        }
     }
 
     property bool gpsActive: false
 
-    Component.onDestruction: {
-        settings.save()
-    }
+
     onSortChanged: {
         selectedPlugin.settings.setValue( "sort", sort )
         selectedPlugin.sort()
@@ -160,11 +169,19 @@ ApplicationWindow
         else console.log( str )
     }
     function normalizePrice( p ) {
-        p = (p<1?"0":"")+(p*1000)
+        p = (p<1?"0":"")+(p<0.1?"0":"")+(p*1000)
 
         var ret = p.charAt( 0 )+"."
         for( var i = 1; i<3; i++ ) { ret+=(p.charAt(i)?p.charAt(i):"0") }
         var supPrice = p.charAt(3)?p.charAt(i):"0"
         return [ret,supPrice]
     }
+    function getTimestamp( year, month, day, hour, minute, second ) {
+        var months = [31,28,31,30,31,30,31,31,30,31,30,31]
+        for( var i = 0; i < month; i++ ) { day+=months[i] }    // Monate zu Tagen
+        if( (year-1972)%4 == 0 ) day+=1                        // Schaltjahre
+        return ((((year-1970)*365+day)*12+hour)*60+minute)*60  // Alles runter gerechnet bis Sekunden, Millisekunden *ergeben* keinen Sinn
+    }
+
+
 }

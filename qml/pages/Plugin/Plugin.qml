@@ -97,13 +97,15 @@ Dialog {
         items.clear()
         coverItems.clear()
     }
-    function getItemsByPostalCode(country, callback) {
+    function getItemsByAddress(country, callback) {
         var req = new XMLHttpRequest()
-        req.open( "GET", "http://maps.google.com/maps/api/geocode/json?components=country:"+country+"|postal_code:"+zipCode )
+        req.open( "GET", "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&region="+country )
         req.onreadystatechange = function() {
             if( req.readyState == 4 && !useGps ) {
                 try {
-                    var x = eval( req.responseText ).results[0].geometry.location
+                    var x = eval( req.responseText )
+                    address = x.results[0].formatted_address
+                    x = x.results[0].geometry.location
                     callback( x.lat, x.lng )
                 }
                 catch( e ) {
@@ -167,11 +169,29 @@ Dialog {
         }
         return list
     }
+
+    function timeSince( timestamp ) {
+        console.log( Date.now(), timestamp )
+        var ago = _getAgo( timestamp )
+        return ago[0]?qsTr("%1 ago").arg(ago[1]):qsTr("in %1").arg(ago[1])
+    }
+    function _getAgo( timestamp ) {
+        var now = Date.now()
+        var ago = now > timestamp
+        var time = new Date( Math.abs( now - timestamp ) )
+        if( time.getFullYear() > 1970 ) return [ ago, qsTr( "%n year",   "0", time.getFullYear() ) ]
+        if( time.getMonth() > 1 )       return [ ago, qsTr( "%n month",  "0", time.getMonth()    ) ]
+        if( time.getDay() > 1 )         return [ ago, qsTr( "%n day",    "0", time.getDay()      ) ]
+        if( time.getHours() > 0 )       return [ ago, qsTr( "%n hour",   "0", time.getHours()    ) ]
+        if( time.getMinutes() > 0 )     return [ ago, qsTr( "%n minute", "0", time.getMinutes()  ) ]
+        if( time.getSeconds() > 0 )     return [ ago, qsTr( "%n second", "0", time.getSeconds()  ) ]
+    }
+
     property alias radiusSlider: sradius
-    property alias postalCodeInput: postalCode
+    property alias addressInput: postalCode
     property alias gpsSwitch: gpsSwitchh
     property alias searchRadius: sradius.value
-    property alias zipCode: postalCode.text
+    property alias address: postalCode.text
     property alias useGps: gpsSwitchh.checked
     onUseGpsChanged: main.gpsActive = useGps
 
@@ -231,7 +251,7 @@ Dialog {
                 maximumValue: 1
                 stepSize: 1
                 value: 1
-                valueText: value+" km"
+                valueText: value+" "+units.distance
             }
 
             SectionHeader {
@@ -245,12 +265,10 @@ Dialog {
 
             TextField {
                 id: postalCode
-                placeholderText: qsTr("Zip Code")
+                placeholderText: qsTr("Address")
                 label: placeholderText
                 width: parent.width
                 readOnly: useGps
-                inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: RegExpValidator { regExp: /\d{5}/ }
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: focus = false
             }

@@ -38,7 +38,12 @@ Page {
         PullDownMenu {
             busy: bsyi.visible
             MenuItem {
-                text: qsTr("Sort by")+": "+(sort == "price"? qsTr("Price"):qsTr("Distance"))
+                enabled: !main.launchToList
+                text: qsTr("Set as First Page")
+                onClicked: launchToList = true
+            }
+            MenuItem {
+                text: qsTr("Sort by")+" "+(sort == "price"? qsTr("Distance"):qsTr("Price"))
                 onClicked: sort = (sort == "price"?"dist":"price")
             }
             MenuItem {

@@ -5,23 +5,24 @@ import harbour.spritradar.Util 1.0
 Plugin {
     id: page
 
-    name: "DE - Tankerkönig"
-    description: "Powered by www.tankerkönig.de"
-    units: { "currency":"€", "distance": "km" }
-    countryCode: "de"
+    name: "US - MyGasFeed"
+    description: "Seems quite dead :("
+    units: { "currency":"$", "distance": "mi" }
+    countryCode: "us"
     type: "e10"
-    types: ["e5","e10","diesel"]
-    names: [qsTr("e5"),qsTr("e10"),qsTr("diesel")]
+    types: ["reg","mid","pre","diesel"]
+    names: [qsTr("Regular"),qsTr("Mid-Grade"),qsTr("Premium"),qsTr("Diesel")]
+
+    property string url: "http://api.mygasfeed.com"
 
     settings: Settings {
-        name: "tankerkoenig"
+        name: "mygasfeed"
 
         function save() {
             setValue( "radius", searchRadius )
             setValue( "type", type )
             setValue( "sort", main.sort )
             setValue( "gps", useGps )
-            setValue( "hideClosed", contentItem.hideClosed )
             setValue( "address", address )
         }
         function load() {
@@ -30,7 +31,6 @@ Plugin {
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )
                 useGps = eval( getValue( "gps" ) )
-                contentItem.hideClosed = eval( getValue( "hideClosed" ) )
                 address = getValue( "address" )
                 favs.load()
             }
@@ -44,7 +44,6 @@ Plugin {
             setValue( "type", "e5" )
             setValue( "sort", main.sort )
             setValue( "gps", false )
-            setValue( "hideClosed", false )
             setValue( "address", "" )
 
         }
@@ -58,32 +57,31 @@ Plugin {
     function requestItems() {
         prepareItems()
         if( useGps ) getItems( latitude, longitude )
-        else getItemsByAddress("DE", getItems)
+        else getItemsByAddress("us", getItems)
     }
 
     function getItems( lat, lng ) {
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/list.php?sort=dist&lat="+lat+"&lng="+lng+"&rad="+searchRadius+"&type="+type+"&apikey="+tankerkoenig_apikey )
+        req.open( "GET", url+ "/stations/radius/"+lat+"/"+lng+"/"+radiusSlider.value+"/"+type+"/price/ihnv7692u1.json" )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    //console.log( req.responseText )
-                    var x = eval( req.responseText )
-
-                    x = x.stations
+                    //console.log(req.responseText)
+                    var x = eval( req.responseText ).stations
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
-                        if( contentItem.hideClosed && !o.isOpen ) continue
+                        var price = o[type+"_price"]
+                        if( price == "N/A" ) continue
                         var itm = {
                             "stationID": o.id,
-                            "stationName": (o.name.toLowerCase().substring(0, o.brand.length)==o.brand.toLowerCase()?"":o.brand+" ")+o.name,
-                            "stationPrice": o.price,
-                            "stationAdress": capitalizeString(o.street) + (typeof(o.houseNumber) == "object" ? "" : " " + o.houseNumber) + ", " + o.postCode + " " + capitalizeString(o.place),
-                            "stationDistance": o.dist*1000,
-                            "customMessage": !o.isOpen?qsTr("Closed"):""
+                            "stationName": o.station,
+                            "stationPrice": price,
+                            "stationAdress": o.address+" "+o.city+" ("+o.region+")",
+                            "stationDistance": o.distance.split("m")[0],
+                            "customMessage": o[type+"_date"]
                         }
                         items.append( itm )
-                  }
+                    }
                     sort()
                     itemsBusy = false
                     errorCode = items.count < 1 ? 1 : 0
@@ -103,40 +101,35 @@ Plugin {
         station = {}
         stationPage = pageStack.push( "../GasStation.qml", {stationId:id} )
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+id+"&apikey="+tankerkoenig_apikey )
+        req.open( "GET", url+"/stations/details/"+id+"/ihnv7692u1.json" )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 //console.log( req.responseText )
                 try {
                     var x = eval( req.responseText )
-                    x = x.station
-                    var info = [
-                        { "title":qsTr("Brand"), "text":x.brand },
-                        { "title":qsTr("State"), "text":x.isOpen?qsTr("Open"):qsTr("Closed") }
-                    ]
-                    var price = [
-                        { "title":"Super",       "price":x.e5, "sz":Theme.fontSizeLarge },
-                        { "title":"Super E10", "price": x.e10, "sz":Theme.fontSizeLarge },
-                        { "title":"Diesel", "price": x.diesel, "sz":Theme.fontSizeLarge }
-                    ]
+                    x = x.details
+                    var price = []
                     var times = []
-                    for( var i = 0; i < x.openingTimes.length; i++ ) {
-                        times[times.length] = { "title":x.openingTimes[i].text, "text":stripSeconds(x.openingTimes[i].start) + " - " + stripSeconds(x.openingTimes[i].end), "tf":true }
-                    }
+                    if( x.reg_price != "N/A" ) { price.push( { "title":"Regular",       "price":x.reg_price, "sz":Theme.fontSizeLarge } ); times.push( { "title":"Regular",       "text":x.reg_date } ) }
+                    if( x.mid_price != "N/A" ) { price.push( { "title":"Mid-Range", "price": x.mid_price, "sz":Theme.fontSizeLarge } ); times.push( { "title":"Mid-Range", "text": x.mid_date } ) }
+                    if( x.pre_price != "N/A" ) { price.push( { "title":"Premium", "price": x.pre_price, "sz":Theme.fontSizeLarge } ); times.push( { "title":"Premium", "text": x.pre_date } ) }
+                    if( x.diesel_price != "N/A" && x.diesel == 1 ) { price.push({ "title":"Diesel", "price": x.diesel_price, "sz":Theme.fontSizeLarge }); times.push({ "title":"Diesel", "text": x.diesel_date }) }
+
+
+
                     station = {
                         "stationID":x.id,
-                        "stationName":x.name,
+                        "stationName":x.station,
                         "stationAdress": {
-                            "street":x.street + " " + (typeof(x.houseNumber) == "object" ? "" : x.houseNumber),
-                            "county":x.postCode + " " + x.place,
+                            "street":x.address,
+                            "county":x.region,
                             "country":"",
                             "latitude":x.lat,
                             "longitude":x.lng
                         },
                         "content": [
-                            { "title":qsTr("Info"), "items": info },
                             { "title":qsTr("Prices"), "items": price },
-                            { "title":qsTr("Opening Times"), "items": times }
+                            { "title":qsTr("Updated"), "items": times }
                         ]
                     }
                     stationBusy = false
@@ -157,15 +150,7 @@ Plugin {
     }
 
     content: Component {
-        Column {
-            property alias hideClosed: hideClosedButton.checked
-
-            TextSwitch {
-                id: hideClosedButton
-                width: parent.width
-                text: qsTr("Hide Closed")
-            }
-        }
-}
+        Column {}
+    }
 }
 
