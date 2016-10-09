@@ -18,6 +18,10 @@
         <source>Set as First Page</source>
         <translation>Als erste Seite zeigen</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished">Aktualisieren</translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>

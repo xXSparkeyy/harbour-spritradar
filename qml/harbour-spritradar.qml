@@ -14,7 +14,6 @@ ApplicationWindow
         pageStack.pushAttached( list )
         if( launchToList ) pageStack.push( list, PageStackAction.Immediate)
         else if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }
-        selectedPlugin.requestItems()
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 

@@ -152,6 +152,29 @@ Plugin {
         req.send()
     }
 
+    function getPriceForFav( id ) {
+        var req = new XMLHttpRequest()
+        req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+id+"&apikey="+tankerkoenig_apikey )
+        req.onreadystatechange = function() {
+            if( req.readyState == 4 ) {
+                try {
+                    var x = eval( req.responseText )
+                    x = x.station
+                    var price = x[type]
+                    if( !price ) return
+                    var y = favs.stations
+                    for( var x in y ) {
+                        if( y[x].id == id  ) y[x].price = price
+                    }
+                    favs.stations = y
+                }
+                catch ( e ) {
+                }
+            }
+        }
+        req.send()
+    }
+
     radiusSlider {
         maximumValue: 20
     }

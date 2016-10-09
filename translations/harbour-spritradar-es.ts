@@ -18,6 +18,10 @@
         <source>Set as First Page</source>
         <translation>Establecer como primera página</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished">Recargar</translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>

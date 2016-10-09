@@ -6,7 +6,7 @@ BackgroundItem {
     property variant price: 0
     property variant rPrice: normalizePrice(price)
     property string address: ""
-    property int distance: 0
+    property int distance: -1
     property string stId: ""
     property string message;
     //onCustomMessageChanged: if( customMessage == "" ) customMessage = false
@@ -51,12 +51,13 @@ BackgroundItem {
                 leftMargin: Theme.paddingMedium*3
                 right: parent.right
                 left: img.right
-                top: parent.top
+                top: srt.text==""?img.top:parent.top
             }
+            verticalAlignment: Text.AlignTop
             height: paintedHeight
             color: down ? Theme.highlightColor : Theme.primaryColor
             text: name
-            font.pixelSize: Theme.fontSizeMedium
+            font.pixelSize: srt.text==""?img.font.pixelSize:Theme.fontSizeMedium
             truncationMode: TruncationMode.Fade
         }
         Label {
@@ -70,7 +71,7 @@ BackgroundItem {
             height: paintedHeight
             color: down ? Theme.secondaryHighlightColor : Theme.secondaryColor
             font.pixelSize: Theme.fontSizeSmall
-            text: (selectedPlugin.units.distance=="km"?distance<1000?distance+"m":Math.ceil(distance/1000)+"km":distance+selectedPlugin.units.distance)+(message?" | "+message:"")+" | "+address
+            text: (distance<0?"":(selectedPlugin.units.distance=="km"?distance<1000?distance+"m":Math.ceil(distance/1000)+"km":distance+selectedPlugin.units.distance)+" | ")+(message?message+" | ":"")+address
             truncationMode: TruncationMode.Fade
         }
     }

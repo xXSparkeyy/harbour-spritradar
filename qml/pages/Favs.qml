@@ -6,9 +6,10 @@ Page {
     property variant stations: []
     function set( stId, name ) {
         var y = stations
-        y[y.length] = { id:stId, name:name }
+        y[y.length] = { id:stId, name:name, price:9.999 }
         stations = y
         save()
+        selectedPlugin.getPriceForFav(stId)
     }
     function unset( stId, name ) {
         var y = []
@@ -29,7 +30,8 @@ Page {
         var x = selectedPlugin.settings.getValue( "Favourites/count" )
         for( var i = 0; i<x; i++ ) {
             var s = selectedPlugin.settings.getValue( "Favourites/station"+i ).split("|")
-            y[y.length] = { id:s[0], name:s[1] }
+            y[y.length] = { id:s[0], name:s[1], price:9.999}
+            selectedPlugin.getPriceForFav( s[0] )
         }
         stations = y
     }
@@ -51,6 +53,11 @@ Page {
                 text: qsTr("Set as First Page")
                 onClicked: launchToList = false
             }
+            MenuItem {
+                enabled: main.launchToList
+                text: qsTr("Refresh")
+                onClicked: load()
+            }
         }
 
         Column {
@@ -62,29 +69,17 @@ Page {
 
             Repeater {
                 model: stations.length
-                BackgroundItem {
-                    width: col.width
-                    id: bghdfas
-                    Label {
+                    StationListDelegate {
                         id: lavkavk
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: Theme.paddingLarge
-                        text: stations[index].name
+                        width: col.width
+                        name: stations[index].name
+                        price: stations[index].price
                         property string stId: stations[index].id
-                        color: bghdfas.highlighted ? Theme.highlightColor : Theme.primaryColor
-                        font.family: Theme.fontFamily
-                        font.pixelSize: Theme.fontSizeMedium
-                        verticalAlignment: Text.AlignVCenter
-                        truncationMode: TruncationMode.Fade
-
-                    }
-                    onClicked: {
-                        selectedPlugin.requestStation( stations[index].id )
-                    }
-                    height: Theme.itemSizeSmall + ( favMenu.parentItem == lavkavk ? favMenu.height : 0 )
-                    onPressAndHold: favMenu._showI( this, lavkavk )
+                        onClicked: {
+                            selectedPlugin.requestStation( stations[index].id )
+                        }
+                        height: Theme.itemSizeSmall + ( favMenu.parentItem == lavkavk ? favMenu.height : 0 )
+                        onPressAndHold: favMenu._showI( this, lavkavk )
                 }
             }
         }

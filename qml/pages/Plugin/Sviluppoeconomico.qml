@@ -77,7 +77,7 @@ Plugin {
                         var price = { price:0 }
                         var sPrice = { price:0 }
                         for( var j = 0; j < o.prices.length; j++ ) {
-                            if( o.prices[j].type.toLowerCase() == type.toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                            if( o.prices[j].type.toLowerCase() == type.toLowerCase() && ( o.prices[j].price <= price.price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
                             else if( type.indexOf("spezial") > -1 && ( (new RegExp( type, "i" )).test(o.prices[j].type) && ( price.price > o.prices[j].price || price.price == 0 ) ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
                         }
                         if( price.price == 0 ) continue
@@ -155,6 +155,33 @@ Plugin {
                     stationBusy = false
                 }
                 stationPage.station = page.station
+            }
+        }
+        req.send()
+    }
+
+    function getPriceForFav( id ) {
+        var req = new XMLHttpRequest()
+        req.open( "GET", url+"?get=station&id="+id )
+        req.onreadystatechange = function() {
+            if( req.readyState == 4 ) {
+                try {
+                    var o = eval( req.responseText )
+                    var sPrice = {}
+                    var price = {price:0}
+                        for( var j = 0; j < o.prices.length; j++ ) {
+                            if( o.prices[j].type.toLowerCase() == type.toLowerCase() && ( price.price > o.prices[j].price || price.price == 0 ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                            else if( type.indexOf("spezial") > -1 && ( (new RegExp( type, "i" )).test(o.prices[j].type) && ( price.price > o.prices[j].price || price.price == 0 ) ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
+                        }
+                    if( price.price == 0) return
+                    var y = favs.stations
+                    for( var x in y ) {
+                        if( y[x].id == id  ) y[x].price = price.price
+                    }
+                    favs.stations = y
+                }
+                catch ( e ) {
+                }
             }
         }
         req.send()

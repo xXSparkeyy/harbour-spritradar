@@ -88,6 +88,12 @@ Dialog {
     function requestStation( id ) {
         busy = true;
     }
+    function getNearbyStations( station ) {
+        busy = true;
+    }
+    function getPriceForFav( id ) {
+        return 0
+    }
     function prepare() {
         pluginReady = true
     }
@@ -171,7 +177,6 @@ Dialog {
     }
 
     function timeSince( timestamp ) {
-        console.log( Date.now(), timestamp )
         var ago = _getAgo( timestamp )
         return ago[0]?qsTr("%1 ago").arg(ago[1]):qsTr("in %1").arg(ago[1])
     }
@@ -276,6 +281,9 @@ Dialog {
 
             ComboBox {
                 id: autoUpdateSelector
+
+                visible: false
+
                 label: "Auto update"
                 description: currentIndex==0?qsTr("Disabled"):qsTr("Every %1").arg( currentIndex==1?qsTr("%n Kilometers","",autoUpdateSlider.value):qsTr("%n Minutes","",autoUpdateSlider.value) )
                 menu: ContextMenu {
