@@ -16,7 +16,7 @@
     </message>
     <message>
         <source>Set as First Page</source>
-        <translation>Imposta come prima pagina</translation>
+        <translation>Imposta come Prima Pagina</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -129,26 +129,26 @@
     </message>
     <message>
         <source>Set as First Page</source>
-        <translation>Imposta come prima pagina</translation>
+        <translation>Imposta come Prima Pagina</translation>
     </message>
 </context>
 <context>
     <name>MyGasFeed</name>
     <message>
         <source>Regular</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Base</translation>
     </message>
     <message>
         <source>Mid-Grade</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Medio</translation>
     </message>
     <message>
         <source>Premium</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Premium</translation>
     </message>
     <message>
         <source>Diesel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gasolio</translation>
     </message>
     <message>
         <source>Prices</source>
@@ -156,7 +156,7 @@
     </message>
     <message>
         <source>Updated</source>
-        <translation type="unfinished">Aggiornato al</translation>
+        <translation type="unfinished">Aggiornato</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <source>Select Fuel</source>
-        <translation>Selezionare Fuel</translation>
+        <translation>Seleziona Carburante</translation>
     </message>
     <message>
         <source>Address</source>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>%1 ago</source>
-        <translation>%1 fa</translation>
+        <translation>%1 fa'</translation>
     </message>
     <message>
         <source>in %1</source>
@@ -251,33 +251,33 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Disabilitato</translation>
     </message>
     <message>
         <source>Every %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ogni %1</translation>
     </message>
     <message numerus="yes">
         <source>%n Kilometers</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n chilometro</numerusform>
+            <numerusform>%n chilometri</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n Minutes</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n minuto</numerusform>
+            <numerusform>%n minuti</numerusform>
         </translation>
     </message>
     <message>
         <source>At distance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Distante</translation>
     </message>
     <message>
         <source>At time</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Distante</translation>
     </message>
 </context>
 <context>
@@ -304,7 +304,7 @@
     </message>
     <message>
         <source>Updated</source>
-        <translation>Aggiornato al</translation>
+        <translation>Aggiornato</translation>
     </message>
     <message>
         <source>Benzina</source>
@@ -324,11 +324,11 @@
     </message>
     <message>
         <source>Gasolio Special</source>
-        <translation></translation>
+        <translation>Gasolio speciale</translation>
     </message>
     <message>
         <source>Benzina Special</source>
-        <translation></translation>
+        <translation>Benzina speciale</translation>
     </message>
 </context>
 <context>
@@ -375,7 +375,7 @@
     </message>
     <message>
         <source>Hide Closed</source>
-        <translation>Hide chiuso</translation>
+        <translation>Nascondi chiusi</translation>
     </message>
 </context>
 <context>
