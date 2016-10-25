@@ -281,6 +281,25 @@
     </message>
 </context>
 <context>
+    <name>SpritpreisRechner</name>
+    <message>
+        <source>e5</source>
+        <translation type="unfinished">Super</translation>
+    </message>
+    <message>
+        <source>diesel</source>
+        <translation type="unfinished">Diesel</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Geschlossen</translation>
+    </message>
+    <message>
+        <source>Hide Closed</source>
+        <translation type="unfinished">Nur Geöffnete zeigen</translation>
+    </message>
+</context>
+<context>
     <name>Sviluppoeconomico</name>
     <message>
         <source>Info</source>

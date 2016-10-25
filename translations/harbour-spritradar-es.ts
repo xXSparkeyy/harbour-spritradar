@@ -281,6 +281,25 @@
     </message>
 </context>
 <context>
+    <name>SpritpreisRechner</name>
+    <message>
+        <source>e5</source>
+        <translation type="unfinished">Gasolina 95</translation>
+    </message>
+    <message>
+        <source>diesel</source>
+        <translation type="unfinished">Diésel</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Cerrado</translation>
+    </message>
+    <message>
+        <source>Hide Closed</source>
+        <translation type="unfinished">Ocultar cerrados</translation>
+    </message>
+</context>
+<context>
     <name>Sviluppoeconomico</name>
     <message>
         <source>Info</source>

@@ -63,6 +63,7 @@ ApplicationWindow
                     case sv.name: selectedPlugin = sv; selectedPluginNum = 1; break
                     case gg.name: selectedPlugin = gg; selectedPluginNum = 2;break
                     case gf.name: selectedPlugin = gf; selectedPluginNum = 4;break
+                    case sr.name: selectedPlugin = sr; selectedPluginNum = 5; break
                     default: selectedPlugin = tk;
                 }
                 launchToList = getValue( "launchToList" )==1
@@ -86,6 +87,7 @@ ApplicationWindow
     Sviluppoeconomico { id: sv }
     GeoportalGasolineras { id: gg }
     MyGasFeed { id: gf }
+    SpritpreisRechner { id: sr }
     function changePlugin( plugin ) {
         plugin.pluginReady = false
         selectedPlugin.station = {}
@@ -113,6 +115,10 @@ ApplicationWindow
         MenuItem {
             text: gf.name
             onClicked: { changePlugin( gf ); selectedPluginNum = 3 }
+        }
+        MenuItem {
+            text: sr.name
+            onClicked: { changePlugin( sr ); selectedPluginNum = 5 }
         }
     }
 
