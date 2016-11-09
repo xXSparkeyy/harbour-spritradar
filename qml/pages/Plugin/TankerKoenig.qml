@@ -76,7 +76,7 @@ Plugin {
                         if( contentItem.hideClosed && !o.isOpen ) continue
                         var itm = {
                             "stationID": o.id,
-                            "stationName": (o.name.toLowerCase().substring(0, o.brand.length)==o.brand.toLowerCase()?"":o.brand+" ")+o.name,
+                            "stationName": (o.name.toLowerCase().substring(0, o.brand.length)==o.brand.toLowerCase()?"":(x.brand?x.brand:"")+" ")+o.name,
                             "stationPrice": o.price,
                             "stationAdress": capitalizeString(o.street) + (typeof(o.houseNumber) == "object" ? "" : " " + o.houseNumber) + ", " + o.postCode + " " + capitalizeString(o.place),
                             "stationDistance": o.dist*1000,
@@ -106,18 +106,18 @@ Plugin {
         req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+id+"&apikey="+tankerkoenig_apikey )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
-                //console.log( req.responseText )
+                console.log( req.responseText )
                 try {
                     var x = eval( req.responseText )
                     x = x.station
                     var info = [
-                        { "title":qsTr("Brand"), "text":x.brand },
+                        { "title":qsTr("Brand"), "text":x.brand?x.brand:"" },
                         { "title":qsTr("State"), "text":x.isOpen?qsTr("Open"):qsTr("Closed") }
                     ]
                     var price = [
-                        { "title":"Super",       "price":x.e5, "sz":Theme.fontSizeLarge },
-                        { "title":"Super E10", "price": x.e10, "sz":Theme.fontSizeLarge },
-                        { "title":"Diesel", "price": x.diesel, "sz":Theme.fontSizeLarge }
+                        { "title":"Super",       "price":x.e5?x.e5:0, "sz":Theme.fontSizeLarge },
+                        { "title":"Super E10", "price": x.e10?x.e10:0, "sz":Theme.fontSizeLarge },
+                        { "title":"Diesel", "price": x.diesel?x.diesel:0, "sz":Theme.fontSizeLarge }
                     ]
                     var times = []
                     for( var i = 0; i < x.openingTimes.length; i++ ) {
