@@ -137,13 +137,13 @@ Plugin {
                             { "title":qsTr("Prices"), "items": price }
                         ]
                     }
-                    stationBusy = false
                 }
                 catch ( e ) {
                     page.station = {}
                     stationBusy = false
                 }
                 stationPage.station = page.station
+                stationBusy = false
             }
         }
         req.send()

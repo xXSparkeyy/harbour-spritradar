@@ -298,6 +298,22 @@
         <source>Hide Closed</source>
         <translation>Nur Geöffnete zeigen</translation>
     </message>
+    <message>
+        <source>State</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Geöffnet</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Opening Times</source>
+        <translation>Öffnungszeiten</translation>
+    </message>
 </context>
 <context>
     <name>Sviluppoeconomico</name>

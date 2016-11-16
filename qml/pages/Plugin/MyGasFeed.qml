@@ -132,7 +132,6 @@ Plugin {
                             { "title":qsTr("Updated"), "items": times }
                         ]
                     }
-                    stationBusy = false
                 }
                 catch ( e ) {
                     station = {}
@@ -140,6 +139,7 @@ Plugin {
                 }
                 //log( station)
                 stationPage.station = station
+                stationBusy = false
             }
         }
         req.send()

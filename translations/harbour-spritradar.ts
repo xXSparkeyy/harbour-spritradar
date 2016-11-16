@@ -290,6 +290,22 @@
         <source>Hide Closed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening Times</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Sviluppoeconomico</name>

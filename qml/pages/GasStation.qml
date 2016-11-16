@@ -2,6 +2,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
+    id: stationPage
     clip: true
     allowedOrientations: Orientation.All
     property string stationId: ""
@@ -15,6 +16,7 @@ Page {
         id: page
         PullDownMenu {
             busy: selectedPlugin.stationBusy
+            enabled: selectedPlugin.supportsFavs
             MenuItem {
                 text: ( isFav( stationId ) ? qsTr( "Unset as Favourite" ) : qsTr( "Set as Favourite" ) )
                 onClicked: ( isFav( stationId ) ? unsetFav : setFav )(stationId, station.stationName)
@@ -26,7 +28,7 @@ Page {
         Image {
             id: maptile
             width: parent.width
-            height: Math.round(selectedPlugin.stationBusy?0:parent.height/2.5)
+            height: Math.round(selectedPlugin.stationBusy?0:stationPage.height/2.5)
             onHeightChanged: if(!selectedPlugin.stationBusy && station.stationAdress && source != "https://api.mapbox.com/v4/mapbox.dark/pin-l-fuel+"+(Theme.highlightColor+"").replace("#","")+"("+station.stationAdress.longitude+","+station.stationAdress.latitude+")/"+station.stationAdress.longitude+","+station.stationAdress.latitude+",17/"+Math.min(1200,width)+"x"+Math.min(1200,height)+".png?access_token=pk.eyJ1Ijoic3BhcmtleXkiLCJhIjoiY2l0MzhxODdjMDBkNDJ0bzNoMWsyd2c1YyJ9.m-yBA1wgLm3Ps_PxQ1Oasg" ) source = "https://api.mapbox.com/v4/mapbox.dark/pin-l-fuel+"+(Theme.highlightColor+"").replace("#","")+"("+station.stationAdress.longitude+","+station.stationAdress.latitude+")/"+station.stationAdress.longitude+","+station.stationAdress.latitude+",17/"+Math.min(1200,width)+"x"+Math.min(1200,height)+".png?access_token=pk.eyJ1Ijoic3BhcmtleXkiLCJhIjoiY2l0MzhxODdjMDBkNDJ0bzNoMWsyd2c1YyJ9.m-yBA1wgLm3Ps_PxQ1Oasg"
             Rectangle {
                 color: Theme.highlightColor
