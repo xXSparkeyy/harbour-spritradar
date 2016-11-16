@@ -11,14 +11,10 @@ ApplicationWindow
     initialPage: favs
     Component.onCompleted: {
         pluginSettings.load();
-        if( selectedPlugin.supportsFavs) {
-            pageStack.pushAttached( list )
-            if( launchToList ) pageStack.push( list, PageStackAction.Immediate)
-            else if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }
-        }
-        else {
-            pageStack.replace( list )
-        }
+        pageStack.pushAttached( list )
+        if( launchToList ) pageStack.push( list, PageStackAction.Immediate)
+        else if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }
+
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 

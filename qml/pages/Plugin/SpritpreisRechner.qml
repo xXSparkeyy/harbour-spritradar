@@ -70,7 +70,6 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    console.log("response text: " + req.responseText )
                     var x = eval( req.responseText )
                     stations = x;
 
@@ -78,15 +77,13 @@ Plugin {
                         var o = x[i]
                         var stationPrice = o.spritPrice[0].amount;
                         if( contentItem.hideClosed && !o.open || stationPrice <= 0.0) continue
-                        log( o )
                         var itm = {
                             "stationID": i,
                             "stationName": o.gasStationName,
                             "stationPrice": stationPrice,
                             "stationAdress": capitalizeString(o.address) + ", " + o.postalCode + " " + capitalizeString(o.city),
                             "stationDistance": o.distance*1000,
-                            "customMessage": !o.open?qsTr("Closed"):"",
-                            "station": o
+                            "customMessage": !o.open?qsTr("Closed"):""
                         }
                         items.append( itm )
                   }
