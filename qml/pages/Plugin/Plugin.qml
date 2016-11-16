@@ -79,6 +79,7 @@ Dialog {
     property string description;
     property variant units: { "currency":"", "distance": "" }
     property string countryCode: ""
+    property bool supportsFavs: true
 
     onPluginReadyChanged: if( pluginReady ) requestItems()
 

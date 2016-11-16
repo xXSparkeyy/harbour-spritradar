@@ -9,7 +9,7 @@ Page {
     allowedOrientations: Orientation.All
     property int errorCode: 0
     canNavigateForward: selectedPlugin.pluginReady
-    backNavigation: selectedPlugin.pluginReady
+    backNavigation: selectedPlugin.pluginReady && selectedPlugin.supportsFavs
 
     SilicaListView {
         id: listView
@@ -30,7 +30,7 @@ Page {
             stId:      stationID
             message:   customMessage
             height: Theme.itemSizeSmall + ( favMenu.parentItem == this ? favMenu.height : 0 )
-            onPressAndHold: favMenu._showI( this, this )
+            onPressAndHold: if( selectedPlugin.supportsFavs ) favMenu._showI( this, this )
             onClicked: {
                 selectedPlugin.requestStation( stId )
             }
@@ -38,7 +38,7 @@ Page {
         PullDownMenu {
             busy: bsyi.visible
             MenuItem {
-                enabled: !main.launchToList
+                enabled: !main.launchToList || !selectedPlugin.supportsFavs
                 text: qsTr("Set as First Page")
                 onClicked: launchToList = true
             }

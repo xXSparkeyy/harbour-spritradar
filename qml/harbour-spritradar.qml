@@ -11,9 +11,14 @@ ApplicationWindow
     initialPage: favs
     Component.onCompleted: {
         pluginSettings.load();
-        pageStack.pushAttached( list )
-        if( launchToList ) pageStack.push( list, PageStackAction.Immediate)
-        else if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }
+        if( selectedPlugin.supportsFavs) {
+            pageStack.pushAttached( list )
+            if( launchToList ) pageStack.push( list, PageStackAction.Immediate)
+            else if( !selectedPlugin.pluginReady ) { selectedPlugin.prepare() }
+        }
+        else {
+            pageStack.replace( list )
+        }
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 
@@ -113,12 +118,12 @@ ApplicationWindow
             onClicked: { changePlugin( gg ); selectedPluginNum = 2 }
         }
         MenuItem {
-            text: gf.name
-            onClicked: { changePlugin( gf ); selectedPluginNum = 3 }
+            text: sr.name
+            onClicked: { changePlugin( sr ); selectedPluginNum = 3 }
         }
         MenuItem {
-            text: sr.name
-            onClicked: { changePlugin( sr ); selectedPluginNum = 5 }
+            text: gf.name
+            onClicked: { changePlugin( gf ); selectedPluginNum = 4 }
         }
     }
 

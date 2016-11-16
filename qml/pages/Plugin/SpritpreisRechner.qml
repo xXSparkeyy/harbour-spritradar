@@ -12,6 +12,9 @@ Plugin {
     type: "DIE"
     types: ["SUP","DIE"]
     names: [qsTr("e5"),qsTr("diesel")]
+    supportsFavs: false
+
+    property variant stations: []
 
     settings: Settings {
         name: "spritpreisrechner"
@@ -62,27 +65,28 @@ Plugin {
     }
 
     function getItems( lat, lng ) {
-        console.log("lat: " + lat + ", lng: " +lng);
         var req = new XMLHttpRequest()
         req.open( "POST", "http://www.spritpreisrechner.at/ts/GasStationServlet" )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    //console.log("response text: " + req.responseText )
+                    console.log("response text: " + req.responseText )
                     var x = eval( req.responseText )
+                    stations = x;
 
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
                         var stationPrice = o.spritPrice[0].amount;
                         if( contentItem.hideClosed && !o.open || stationPrice <= 0.0) continue
-
+                        log( o )
                         var itm = {
-                            "stationID": "xxx",
+                            "stationID": i,
                             "stationName": o.gasStationName,
                             "stationPrice": stationPrice,
                             "stationAdress": capitalizeString(o.address) + ", " + o.postalCode + " " + capitalizeString(o.city),
                             "stationDistance": o.distance*1000,
-                            "customMessage": !o.open?qsTr("Closed"):""
+                            "customMessage": !o.open?qsTr("Closed"):"",
+                            "station": o
                         }
                         items.append( itm )
                   }
@@ -105,7 +109,7 @@ Plugin {
     }
 
     function requestStation( id ) {
-        console.log("requestStation not implemented")
+        log(stations[id]) //Lots of information to work with
     }
 
     function getPriceForFav( id ) {

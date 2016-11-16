@@ -106,7 +106,7 @@ Plugin {
         req.open( "GET", "https://creativecommons.tankerkoenig.de/json/detail.php?id="+id+"&apikey="+tankerkoenig_apikey )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
-                console.log( req.responseText )
+                //console.log( req.responseText )
                 try {
                     var x = eval( req.responseText )
                     x = x.station

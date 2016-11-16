@@ -5,6 +5,7 @@ Page {
     allowedOrientations: Orientation.All
     property variant stations: []
     function set( stId, name ) {
+        if( !selectedPlugin.supportsFavs ) return false
         var y = stations
         y[y.length] = { id:stId, name:name, price:9.999 }
         stations = y
@@ -12,6 +13,7 @@ Page {
         selectedPlugin.getPriceForFav(stId)
     }
     function unset( stId, name ) {
+        if( !selectedPlugin.supportsFavs ) return false
         var y = []
         for( var i = 0; i<stations.length; i++ ) {
             if( stations[i].id != stId ) y[y.length] = stations[i]
@@ -20,12 +22,14 @@ Page {
         save()
     }
     function is( stId ) {
+        if( !selectedPlugin.supportsFavs ) return false
         for( var i = 0; i<stations.length; i++ ) {
             if( stId == stations[i].id ) return true
         }
         return false
     }
     function load() {
+        if( !selectedPlugin.supportsFavs ) return false
         var y = []
         var x = selectedPlugin.settings.getValue( "Favourites/count" )
         for( var i = 0; i<x; i++ ) {
@@ -36,6 +40,7 @@ Page {
         stations = y
     }
     function save() {
+        if( !selectedPlugin.supportsFavs ) return false
         selectedPlugin.settings.setValue( "Favourites/count", stations.length )
         for( var i = 0; i<stations.length; i++ ) {
             selectedPlugin.settings.setValue( "Favourites/station"+i, stations[i].id+"|"+stations[i].name )
@@ -48,6 +53,7 @@ Page {
         VerticalScrollDecorator {}
 
         PullDownMenu {
+            enabled: selectedPlugin.supportsFavs
             MenuItem {
                 enabled: main.launchToList
                 text: qsTr("Set as First Page")
@@ -82,6 +88,15 @@ Page {
                         onPressAndHold: favMenu._showI( this, lavkavk )
                 }
             }
+
         }
+    }
+    Label {
+        id: plc
+        visible: !selectedPlugin.supportsFavs
+        text: "API doesn`t support this feature"
+        anchors.centerIn: parent
+        color: Theme.highlightColor
+        font.pixelSize: Theme.fontSizeLarge
     }
 }

@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished">Aktualisieren</translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -50,47 +50,47 @@
     </message>
     <message>
         <source>Gasolina 95 (G.Protecctión)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesel 95 ( G Schutz )</translation>
     </message>
     <message>
         <source>Gasolina 98</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesel 98</translation>
     </message>
     <message>
         <source>Gasóleo A habitual</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzin A</translation>
     </message>
     <message>
         <source>Nuevo gasóleo</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Benzin</translation>
     </message>
     <message>
         <source>Gasóleo B</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzin B</translation>
     </message>
     <message>
         <source>Gasóleo C</source>
-        <translation type="unfinished"></translation>
+        <translation>Benzin C</translation>
     </message>
     <message>
         <source>Biodiésel</source>
-        <translation type="unfinished"></translation>
+        <translation>Biodiesel</translation>
     </message>
     <message>
         <source>Gasolina 95</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesel 95</translation>
     </message>
     <message>
         <source>Bioetanol</source>
-        <translation type="unfinished"></translation>
+        <translation>Bioethanol</translation>
     </message>
     <message>
         <source>(GLP) - Gases licuados del petróleo</source>
-        <translation type="unfinished"></translation>
+        <translation>LPG</translation>
     </message>
     <message>
         <source>(GNC) - Gases natural comprimido</source>
-        <translation type="unfinished"></translation>
+        <translation>CNG</translation>
     </message>
 </context>
 <context>
@@ -284,19 +284,19 @@
     <name>SpritpreisRechner</name>
     <message>
         <source>e5</source>
-        <translation type="unfinished">Super</translation>
+        <translation>Super</translation>
     </message>
     <message>
         <source>diesel</source>
-        <translation type="unfinished">Diesel</translation>
+        <translation>Diesel</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Geschlossen</translation>
+        <translation>Geschlossen</translation>
     </message>
     <message>
         <source>Hide Closed</source>
-        <translation type="unfinished">Nur Geöffnete zeigen</translation>
+        <translation>Nur Geöffnete zeigen</translation>
     </message>
 </context>
 <context>

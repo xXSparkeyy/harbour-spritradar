@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished">Aggiorna</translation>
+        <translation>Aggiorna</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>%1 ago</source>
-        <translation>%1 fa'</translation>
+        <translation>%1 fa&apos;</translation>
     </message>
     <message>
         <source>in %1</source>
@@ -284,19 +284,19 @@
     <name>SpritpreisRechner</name>
     <message>
         <source>e5</source>
-        <translation type="unfinished">Benzina</translation>
+        <translation>Benzina</translation>
     </message>
     <message>
         <source>diesel</source>
-        <translation type="unfinished">Gasolio</translation>
+        <translation>Gasolio</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Chiuso</translation>
+        <translation>Chiuso</translation>
     </message>
     <message>
         <source>Hide Closed</source>
-        <translation type="unfinished">Hide chiuso</translation>
+        <translation>Hide chiuso</translation>
     </message>
 </context>
 <context>
