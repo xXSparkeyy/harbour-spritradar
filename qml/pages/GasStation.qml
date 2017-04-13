@@ -70,7 +70,7 @@ Page {
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.WordWrap
                     //Adresse
-                    text: typeof(station.stationAdress) == "object"? ( station.stationAdress.street+"\n"+station.stationAdress.county +(station.stationAdress.country?"\n"+station.stationAdress.country:"" ) ):""
+                    text: typeof(station.stationAdress) == "object"? ( station.stationAdress.street+"\n"+station.stationAdress.county +(station.stationAdress.country?"\n"+station.stationAdress.country:"" ) ):typeof(station.stationAdress) == "string"?station.stationAdress:""
                     color: addressContainer.highlighted ? Theme.highlightColor : Theme.primaryColor
                     font.pixelSize: Theme.fontSizeSmall
                     verticalAlignment: Text.AlignVCenter

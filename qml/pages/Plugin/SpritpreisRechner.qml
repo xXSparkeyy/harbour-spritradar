@@ -32,8 +32,8 @@ Plugin {
                 searchRadius = getValue( "radius" )
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )
-                useGps = eval( getValue( "gps" ) )
-                contentItem.hideClosed = eval( getValue( "hideClosed" ) )
+                useGps = JSON.parse( getValue( "gps" ) )
+                contentItem.hideClosed = JSON.parse( getValue( "hideClosed" ) )
                 address = getValue( "address" )
                 favs.load()
             }
@@ -70,7 +70,7 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    var x = eval( req.responseText )
+                    var x = JSON.parse( req.responseText )
                     stations = x;
 
                     for( var i = 0; i < x.length; i++ ) {

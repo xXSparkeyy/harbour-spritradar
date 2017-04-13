@@ -110,7 +110,7 @@ Dialog {
         req.onreadystatechange = function() {
             if( req.readyState == 4 && !useGps ) {
                 try {
-                    var x = eval( req.responseText )
+                    var x = JSON.parse( req.responseText )
                     address = x.results[0].formatted_address
                     x = x.results[0].geometry.location
                     callback( x.lat, x.lng )
@@ -142,7 +142,7 @@ Dialog {
         if( main.sort!="price") list = qmSort( "dist",  qmSort( "price", list ).reverse() )
         else                    list = qmSort( "price", qmSort( "dist",  list ).reverse() )
         items.clear()
-        for( var i = 0; i<list.length&&i<50; i++ ) {
+        for( i = 0; i<list.length&&i<50; i++ ) {
             items.append(list[i])
         }
         createCoverItems()

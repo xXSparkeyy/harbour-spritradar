@@ -87,7 +87,7 @@ ApplicationWindow
     TankerKoenig { id: tk }
     Sviluppoeconomico { id: sv }
     GeoportalGasolineras { id: gg }
-    MyGasFeed { id: gf }
+    PrixCarburants { id: gf }
     SpritpreisRechner { id: sr }
     function changePlugin( plugin ) {
         plugin.pluginReady = false
@@ -148,7 +148,7 @@ ApplicationWindow
 
         var textSplitHyphen = newTextDash.split("-")
         var newTextHyphen =""
-        for (var i = 0; i < textSplitHyphen.length; i++) {
+        for ( i = 0; i < textSplitHyphen.length; i++) {
             newTextHyphen += ucfirst(textSplitHyphen[i]) + (i === textSplitHyphen.length - 1 ? "" : "-")
         }
 

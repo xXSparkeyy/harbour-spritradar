@@ -29,8 +29,8 @@ Plugin {
                 searchRadius = getValue( "radius" )
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )
-                useGps = eval( getValue( "gps" ) )
-                contentItem.hideClosed = eval( getValue( "hideClosed" ) )
+                useGps = JSON.parse( getValue( "gps" ) )
+                contentItem.hideClosed = JSON.parse( getValue( "hideClosed" ) )
                 address = getValue( "address" )
                 favs.load()
             }
@@ -68,7 +68,7 @@ Plugin {
             if( req.readyState == 4 ) {
                 try {
                     //console.log( req.responseText )
-                    var x = eval( req.responseText )
+                    var x = JSON.parse( req.responseText )
 
                     x = x.stations
                     for( var i = 0; i < x.length; i++ ) {
@@ -76,7 +76,7 @@ Plugin {
                         if( contentItem.hideClosed && !o.isOpen ) continue
                         var itm = {
                             "stationID": o.id,
-                            "stationName": (o.name.toLowerCase().substring(0, o.brand.length)==o.brand.toLowerCase()?"":(x.brand?x.brand:"")+" ")+o.name,
+                            "stationName": (o.name.toLowerCase().substring(0, o.brand.length)==o.brand.toLowerCase()?"":(o.brand?o.brand:"")+" ")+o.name,
                             "stationPrice": o.price,
                             "stationAdress": capitalizeString(o.street) + (typeof(o.houseNumber) == "object" ? "" : " " + o.houseNumber) + ", " + o.postCode + " " + capitalizeString(o.place),
                             "stationDistance": o.dist*1000,
@@ -108,7 +108,7 @@ Plugin {
             if( req.readyState == 4 ) {
                 //console.log( req.responseText )
                 try {
-                    var x = eval( req.responseText )
+                    var x = JSON.parse( req.responseText )
                     x = x.station
                     var info = [
                         { "title":qsTr("Brand"), "text":x.brand?x.brand:"" },
@@ -158,9 +158,9 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    var x = eval( req.responseText )
-                    x = x.station
-                    var price = x[type]
+                    var o = JSON.parse( req.responseText )
+                    o = o.station
+                    var price = o[type]
                     if( !price ) return
                     var y = favs.stations
                     for( var x in y ) {

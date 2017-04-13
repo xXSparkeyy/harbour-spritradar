@@ -30,7 +30,7 @@ Plugin {
                 searchRadius = getValue( "radius" )
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )
-                useGps = eval( getValue( "gps" ) )
+                useGps = JSON.parse( getValue( "gps" ) )
                 address = getValue( "address" )
                 favs.load()
             }
@@ -70,7 +70,7 @@ Plugin {
             if( req.readyState == 4 ) {
                 try {
                 //console.log(req.responseText)
-                    var x = eval( req.responseText )
+                    var x = JSON.parse( req.responseText )
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
                         var price = { price:0 }
@@ -111,7 +111,7 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    var st = eval( req.responseText )
+                    var st = JSON.parse( req.responseText )
                     var price = []
                     for( var j = 0; j < st.prices.length; j++ ) {
                         price[price.length] = { "title":qsTr(names[types.indexOf(st.prices[j].type)]), "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
@@ -155,7 +155,7 @@ Plugin {
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
-                    var o = eval( req.responseText )
+                    var o = JSON.parse( req.responseText )
                     var price = 0
                         for( var j = 0; j < o.prices.length; j++ ) {
                             if( o.prices[j].type == type ) price = o.prices[j].price

@@ -15,16 +15,10 @@ QT+=positioning network concurrent
 CONFIG += sailfishapp
 
 HEADERS += \
-    src/settings.h \
-    src/svmanager.h \
-    src/svprice.h \
-    src/svstation.h
+    src/settings.h
 
 SOURCES += src/harbour-spritradar.cpp \
-    src/settings.cpp \
-    src/svmanager.cpp \
-    src/svprice.cpp \
-    src/svstation.cpp
+    src/settings.cpp
 
 OTHER_FILES += qml/harbour-spritradar.qml \
     qml/cover/*.qml \
@@ -64,7 +58,8 @@ DISTFILES += \
     php/db.php \
     php/index.php \
     rpm/harbour-spritradar.yaml \
-    harbour-spritradar.png
+    harbour-spritradar.png \
+    qml/pages/Plugin/PrixCarburants.qml
 
 
 
