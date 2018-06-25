@@ -10,8 +10,8 @@ Plugin {
     units: { "currency":"€", "distance": "km" }
     countryCode: "de"
     type: "DIE"
-    types: ["SUP","DIE"]
-    names: [qsTr("e5"),qsTr("diesel")]
+    types: ["SUP","DIE","GAS"]
+    names: [qsTr("e5"),qsTr("diesel"),qsTr("Gas")]
     supportsFavs: false
 
     property variant stations: []
@@ -66,7 +66,7 @@ Plugin {
 
     function getItems( lat, lng ) {
         var req = new XMLHttpRequest()
-        req.open( "POST", "http://www.spritpreisrechner.at/ts/GasStationServlet" )
+        req.open( "GET", "https://api.e-control.at/sprit/1.0/search/gas-stations/by-address?latitude="+lat+"&longitude="+lng+"&fuelType="+type+"&includeClosed="+(contentItem.hideClosed? "false" : "true") )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
@@ -75,14 +75,17 @@ Plugin {
 
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
-                        var stationPrice = o.spritPrice[0].amount;
+                        var l = o.location
+                        var stationPrice = o.prices[0].amount;
                         if( contentItem.hideClosed && !o.open || stationPrice <= 0.0) continue
                         var itm = {
-                            "stationID": i,
-                            "stationName": o.gasStationName,
+                            "stationID": o.id,
+                            "stationName": o.name,
                             "stationPrice": stationPrice,
-                            "stationAdress": capitalizeString(o.address) + ", " + o.postalCode + " " + capitalizeString(o.city),
-                            "stationDistance": o.distance*1000,
+                            "stationAdress": capitalizeString(l.address) + ", " + l.postalCode + " " + capitalizeString(l.city),
+                            "latitude": l.latitude,
+                            "longitude": l.longitude,
+                            "stationDistance": 0,//o.distance*1000,
                             "customMessage": !o.open?qsTr("Closed"):""
                         }
                         items.append( itm )
@@ -98,11 +101,7 @@ Plugin {
                 }
             }
        }
-        var data = [contentItem.hideClosed? "" : "checked", type, lng, lat, lng, lat];
-        var params = JSON.stringify(data);
-
-        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        req.send("data=" + params)
+        req.send()
     }
 
     function requestStation( id ) {
