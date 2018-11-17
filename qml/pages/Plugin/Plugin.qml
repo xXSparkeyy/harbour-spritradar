@@ -106,7 +106,7 @@ Dialog {
     }
     function getItemsByAddress(country, callback) {
         var req = new XMLHttpRequest()
-        req.open( "GET", "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&region="+country )
+        req.open( "GET", "https://nominatim.openstreetmap.org/search?format=json&street="+address+"&city="+city+"&country="+country )
         req.onreadystatechange = function() {
             if( req.readyState == 4 && !useGps ) {
                 try {
