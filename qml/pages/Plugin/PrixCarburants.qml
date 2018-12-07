@@ -55,7 +55,7 @@ Plugin {
     function requestItems() {
         prepareItems()
         if( useGps ) getItems( latitude, longitude )
-        else getItemsByAddress("FR", getItems)
+        else getItemsByAddress(getItems)
     }
 
     function getItems( lat, lng ) {

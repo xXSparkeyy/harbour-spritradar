@@ -6,7 +6,6 @@ import harbour.spritradar.Util 1.0
 
   France: http://www.prix-carburants.gouv.fr/mobile/
   Netherlands: http://www.anwb.nl/pois/
-  Österreich: www.spritpreisrechner.at ( Seems more like a developers diarrhea )
 
 
   Format for items:
@@ -104,16 +103,15 @@ Dialog {
         items.clear()
         coverItems.clear()
     }
-    function getItemsByAddress(country, callback) {
+    function getItemsByAddress(callback) {
         var req = new XMLHttpRequest()
-        req.open( "GET", "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&region="+country )
+        req.open( "GET", "https://nominatim.openstreetmap.org/search/"+address+"?format=json&limit=1&accept-language="+countryCode+"&countrycodes="+countryCode )
         req.onreadystatechange = function() {
             if( req.readyState == 4 && !useGps ) {
                 try {
                     var x = JSON.parse( req.responseText )
-                    address = x.results[0].formatted_address
-                    x = x.results[0].geometry.location
-                    callback( x.lat, x.lng )
+                    address = x[0].display_name
+                    callback( x[0].lat, x[0].lon )
                 }
                 catch( e ) {
                     items.clear()

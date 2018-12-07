@@ -59,7 +59,8 @@ DISTFILES += \
     php/index.php \
     rpm/harbour-spritradar.yaml \
     harbour-spritradar.png \
-    qml/pages/Plugin/PrixCarburants.qml
+    qml/pages/Plugin/PrixCarburants.qml \
+    rpm/harbour-spritradar.yaml
 
 
 

@@ -8,13 +8,14 @@ Plugin {
     name: "AT - spritpreisrechner.at"
     description: "Powered by E-Control"
     units: { "currency":"€", "distance": "km" }
-    countryCode: "de"
+    countryCode: "at"
     type: "DIE"
     types: ["SUP","DIE","GAS"]
     names: [qsTr("e5"),qsTr("diesel"),qsTr("Gas")]
     supportsFavs: false
 
     property variant stations: []
+    property string url: "https://api.e-control.at/sprit/1.0/search/gas-stations/by-address"
 
     settings: Settings {
         name: "spritpreisrechner"
@@ -61,12 +62,12 @@ Plugin {
     function requestItems() {
         prepareItems()
         if( useGps ) getItems( latitude, longitude )
-        else getItemsByAddress("AT", getItems)
+        else getItemsByAddress(getItems)
     }
 
     function getItems( lat, lng ) {
         var req = new XMLHttpRequest()
-        req.open( "GET", "https://api.e-control.at/sprit/1.0/search/gas-stations/by-address?latitude="+lat+"&longitude="+lng+"&fuelType="+type+"&includeClosed="+(contentItem.hideClosed? "false" : "true") )
+        req.open( "GET", url+"?latitude="+lat+"&longitude="+lng+"&fuelType="+type+"&includeClosed="+(contentItem.hideClosed? "false" : "true") )
         req.onreadystatechange = function() {
             if( req.readyState == 4 ) {
                 try {
@@ -76,16 +77,17 @@ Plugin {
                     for( var i = 0; i < x.length; i++ ) {
                         var o = x[i]
                         var l = o.location
+                        if( o.prices.length == 0 ) continue
                         var stationPrice = o.prices[0].amount;
                         if( contentItem.hideClosed && !o.open || stationPrice <= 0.0) continue
                         var itm = {
-                            "stationID": o.id,
+                            "stationID": i,//o.id,
                             "stationName": o.name,
                             "stationPrice": stationPrice,
                             "stationAdress": capitalizeString(l.address) + ", " + l.postalCode + " " + capitalizeString(l.city),
                             "latitude": l.latitude,
                             "longitude": l.longitude,
-                            "stationDistance": 0,//o.distance*1000,
+                            "stationDistance": o.distance*1000,
                             "customMessage": !o.open?qsTr("Closed"):""
                         }
                         items.append( itm )
@@ -115,19 +117,19 @@ Plugin {
             ]
             var times = []
             for( var i = 0; i < x.openingHours.length; i++ ) {
-                times[i] = { "title":x.openingHours[i].day.dayLabel, "text":stripSeconds(x.openingHours[i].beginn) + " - " + stripSeconds(x.openingHours[i].end), "tf":true, "order": x.openingHours[i].day.order }
+                times[i] = { "title":x.openingHours[i].label, "text":stripSeconds(x.openingHours[i].from) + " - " + stripSeconds(x.openingHours[i].to), "tf":true, "order": x.openingHours[i].order }
             }
             times.sort( function(a,b) { return a.order-b.order } )
 
             station = {
                 "stationID":id,
-                "stationName":x.gasStationName,
+                "stationName":x.name,
                 "stationAdress": {
-                    "street": x.address,
-                    "county":x.city,
+                    "street": x.location.address,
+                    "county":x.location.city,
                     "country":"",
-                    "latitude":x.latitude,
-                    "longitude":x.longitude
+                    "latitude":x.location.latitude,
+                    "longitude":x.location.longitude
                 },
                 "content": [
                     { "title":qsTr("Info"), "items": info },
@@ -137,6 +139,7 @@ Plugin {
 
         }
         catch ( e ) {
+            console.log( e )
             station = {}
             stationBusy = false
         }
