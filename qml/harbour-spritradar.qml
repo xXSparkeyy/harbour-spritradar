@@ -35,6 +35,16 @@ ApplicationWindow
            text: typeof favMenu.parentItem == "undefined"?"":( isFav( favMenu.parentItem.stId ) ? qsTr( "Unset as Favourite" ) : qsTr( "Set as Favourite" ) )
            onClicked: typeof favMenu.parentItem == "undefined"?"":( isFav( favMenu.parentItem.stId ) ? unsetFav : setFav )(favMenu.parentItem.stId , favMenu.parentItem.name)
        }
+       TextField {
+           visible: pageStack.currentPage == favs
+           text: typeof favMenu.parentItem == "undefined"?"":favMenu.parentItem.name
+           width: parent.width
+           EnterKey.enabled: text.length>0
+           EnterKey.onClicked: {
+               favMenu.parentItem.name = text
+               favs.save()
+           }
+       }
    }
 
     property string sort: "price" //price,dist

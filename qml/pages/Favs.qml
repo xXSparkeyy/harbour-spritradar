@@ -60,7 +60,6 @@ Page {
                 onClicked: launchToList = false
             }
             MenuItem {
-                enabled: main.launchToList
                 text: qsTr("Refresh")
                 onClicked: load()
             }
@@ -84,6 +83,7 @@ Page {
                         onClicked: {
                             selectedPlugin.requestStation( stations[index].id )
                         }
+                        onNameChanged: stations[index].name = name
                         height: Theme.itemSizeSmall + ( favMenu.parentItem == lavkavk ? favMenu.height : 0 )
                         onPressAndHold: favMenu._showI( this, lavkavk )
                 }
