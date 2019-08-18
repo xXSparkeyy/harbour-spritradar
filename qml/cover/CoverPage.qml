@@ -24,7 +24,7 @@ CoverBackground {
             anchors.fill: parent
             Repeater {
                 id: listView
-                model: selectedPlugin.coverItems
+                model: launchToList ? selectedPlugin.coverItems : favs.stations
                 delegate: ListText {
                     width: cover.width
                     text:      stationName
@@ -44,7 +44,7 @@ CoverBackground {
         id: coverAction
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: selectedPlugin.requestItems()
+            onTriggered:  launchToList ? selectedPlugin.requestItems() : favs.load()
         }
     }
 }
