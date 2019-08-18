@@ -29,7 +29,19 @@ Page {
             id: maptile
             width: parent.width
             height: Math.round(selectedPlugin.stationBusy?0:stationPage.height/2.5)
-            onHeightChanged: if(!selectedPlugin.stationBusy && station.stationAdress && source != "https://api.mapbox.com/v4/mapbox.dark/pin-l-fuel+"+(Theme.highlightColor+"").replace("#","")+"("+station.stationAdress.longitude+","+station.stationAdress.latitude+")/"+station.stationAdress.longitude+","+station.stationAdress.latitude+",17/"+Math.min(1200,width)+"x"+Math.min(1200,height)+".png?access_token=pk.eyJ1Ijoic3BhcmtleXkiLCJhIjoiY2l0MzhxODdjMDBkNDJ0bzNoMWsyd2c1YyJ9.m-yBA1wgLm3Ps_PxQ1Oasg" ) source = "https://api.mapbox.com/v4/mapbox.dark/pin-l-fuel+"+(Theme.highlightColor+"").replace("#","")+"("+station.stationAdress.longitude+","+station.stationAdress.latitude+")/"+station.stationAdress.longitude+","+station.stationAdress.latitude+",17/"+Math.min(1200,width)+"x"+Math.min(1200,height)+".png?access_token=pk.eyJ1Ijoic3BhcmtleXkiLCJhIjoiY2l0MzhxODdjMDBkNDJ0bzNoMWsyd2c1YyJ9.m-yBA1wgLm3Ps_PxQ1Oasg"
+            function  getMapSource() {
+                var src  = "https://api.mapbox.com/v4/mapbox."+(Theme.colorScheme == Theme.LightOnDark?"dark":"light")+"/pin-l-fuel+"
+                    src += (Theme.highlightColor+"").replace("#","")
+                    src += "("+station.stationAdress.longitude+","+station.stationAdress.latitude+")/"
+                    src += station.stationAdress.longitude+","+station.stationAdress.latitude+",17/"
+                    src += Math.min(1200,width)+"x"+Math.min(1200,height)+".png?access_token=pk.eyJ1Ijoic3BhcmtleXkiLCJhIjoiY2l0MzhxODdjMDBkNDJ0bzNoMWsyd2c1YyJ9.m-yBA1wgLm3Ps_PxQ1Oasg"
+                return src
+            }
+            onHeightChanged: if(!selectedPlugin.stationBusy && station.stationAdress && source != getMapSource() && height > 0 ) source = getMapSource()
+            Connections {
+                target: Theme
+                onColorSchemeChanged: maptile.source = maptile.getMapSource()
+            }
             Rectangle {
                 color: Theme.highlightColor
                 anchors.fill: parent
