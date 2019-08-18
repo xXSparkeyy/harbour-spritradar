@@ -33,7 +33,8 @@ Plugin {
                 address = getValue( "address" )
                 favs.load()
             }
-            catch( e ) {
+            catch(e) {
+console.log(e.message)
                 assign()
                 load()
             }
@@ -90,7 +91,8 @@ Plugin {
                     itemsBusy = false
                     errorCode = items.count < 1 ? 1 : 0
                 }
-                catch ( e ) {
+                catch(e) {
+console.log(e.message)
                     items.clear()
                     itemsBusy = false
                     errorCode = 3
@@ -114,14 +116,15 @@ Plugin {
                     for( var j = 0; j < st.prices.length; j++ ) {
                         try {
                             price[price.length] = { "title":qsTr(names[types.indexOf(st.prices[j].id)]), "price":st.prices[j].price, "sz":Theme.fontSizeLarge, "tf":true }
-                           } catch( e ) {
+                           } catch( ex ) {
                             console.log( JSON.stringify(st))
                         }
                     }
                     for( j = 0; j < st.services.length; j++ ) {
-                        service[service.length] = { "text":st.services[j] }
+                        service[service.length] = { title:"",text:st.services[j] }
                     }
-                    page.station = {
+                    var optimes = st.openingtimes.length>0?[ {title:qsTr("Daily"), "text":st.openingtimes[0].from+"-"+st.openingtimes[0].to }, {title:qsTr("Except"), "text":st.openingtimes[0].except?st.openingtimes[0].except:"-" } ]: []
+                    station = {
                         "stationID":st.id,
                         "stationName":st.adresse,
                         "stationAdress": {
@@ -131,18 +134,19 @@ Plugin {
                             "latitude":st.latitude,
                             "longitude":st.longitude
                         },
-                        "content": [,
-                            { "title":qsTr("Opening times"),   "items":[ {title:qsTr("Daily"), "text":st.openingtimes[0].from+"-"+st.openingtimes[0].to }, {title:qsTr("Except"), "text":st.openingtimes[0].except?st.openingtimes[0].except:"-" } ] },
+                        "content": [
+                            { "title":qsTr("Opening times"), "items":optimes },
                             { "title":qsTr("Prices"), "items": price },
                             { "title":qsTr("Services"), "items": service },
                         ]
                     }
                 }
-                catch ( e ) {
-                    page.station = {}
+                catch(e) {
+                    console.log( e.message )
+                    stationPage.station = {}
                     stationBusy = false
                 }
-                stationPage.station = page.station
+                stationPage.station = station
                 stationBusy = false
             }
         }
@@ -163,7 +167,8 @@ Plugin {
                     if( price == 0) return
                     setPriceForFav( id, price )
                 }
-                catch ( e ) {
+                catch(e) {
+console.log(e.message)
                 }
             }
         }

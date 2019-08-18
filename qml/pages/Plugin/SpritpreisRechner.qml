@@ -38,7 +38,8 @@ Plugin {
                 address = getValue( "address" )
                 favs.load()
             }
-            catch( e ) {
+            catch(e) {
+console.log(e.message)
                 assign()
                 load()
             }
@@ -96,7 +97,8 @@ Plugin {
                     itemsBusy = false
                     errorCode = items.count < 1 ? 1 : 0
                 }
-                catch ( e ) {
+                catch(e) {
+console.log(e.message)
                     items.clear()
                     itemsBusy = false
                     errorCode = 3
@@ -138,7 +140,8 @@ Plugin {
             }
 
         }
-        catch ( e ) {
+        catch(e) {
+console.log(e.message)
             console.log( e )
             station = {}
             stationBusy = false

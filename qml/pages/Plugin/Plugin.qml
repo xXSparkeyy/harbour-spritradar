@@ -119,7 +119,8 @@ Dialog {
                     address = x[0].display_name
                     callback( x[0].lat, x[0].lon )
                 }
-                catch( e ) {
+                catch(e) {
+console.log(e.message)
                     items.clear()
                     coverItems.clear()
                     itemsBusy = false

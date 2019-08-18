@@ -34,7 +34,8 @@ Plugin {
                 address = getValue( "address" )
                 favs.load()
             }
-            catch( e ) {
+            catch(e) {
+console.log(e.message)
                 assign()
                 load()
             }
@@ -72,7 +73,7 @@ Plugin {
 
                     x = x.stations
                     for( var i = 0; i < x.length; i++ ) {
-                        var o = x[i]
+                       var o = x[i]
                         if( contentItem.hideClosed && !o.isOpen ) continue
                         var itm = {
                             "stationID": o.id,
@@ -88,7 +89,8 @@ Plugin {
                     itemsBusy = false
                     errorCode = items.count < 1 ? 1 : 0
                 }
-                catch ( e ) {
+                catch(e) {
+console.log(e.message)
                     items.clear()
                     itemsBusy = false
                     errorCode = 3
@@ -140,7 +142,8 @@ Plugin {
                         ]
                     }
                 }
-                catch ( e ) {
+                catch(e) {
+console.log(e.message)
                     station = {}
                     stationBusy = false
                 }
@@ -164,7 +167,8 @@ Plugin {
                     if( !price ) return
                     setPriceForFav( id, price )
                 }
-                catch ( e ) {
+                catch(e) {
+console.log(e.message)
                 }
             }
         }
