@@ -327,7 +327,7 @@
     </message>
     <message>
         <source>diesel</source>
-        <translation type="unfinished">Gasoline</translation>
+        <translation type="unfinished">Diesel</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -351,6 +351,10 @@
     </message>
     <message>
         <source>Opening Times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -445,7 +449,7 @@
     </message>
     <message>
         <source>diesel</source>
-        <translation>Gasoline</translation>
+        <translation>Diesel</translation>
     </message>
     <message>
         <source>Hide Closed</source>

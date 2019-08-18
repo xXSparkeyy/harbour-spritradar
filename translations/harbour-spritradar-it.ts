@@ -361,6 +361,10 @@
         <source>Opening Times</source>
         <translation>Orari di apertura</translation>
     </message>
+    <message>
+        <source>Gas</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Sviluppoeconomico</name>
