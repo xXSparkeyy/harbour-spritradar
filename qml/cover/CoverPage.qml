@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 import "../pages"
 
 CoverBackground {
+    property bool sourceFromList: !favsOnCover
+    property ListModel source: sourceFromList ? selectedPlugin.coverItems : favs.stations
     CoverPlaceholder {
         visible: ( selectedPlugin.coverItems.count < 1 ) && !selectedPlugin.itemsBusy && selectedPlugin.pluginReady
         text: qsTr( "Nothing Found" )
@@ -24,7 +26,7 @@ CoverBackground {
             anchors.fill: parent
             Repeater {
                 id: listView
-                model: launchToList ? selectedPlugin.coverItems : favs.stations
+                model: source
                 delegate: ListText {
                     width: cover.width
                     text:      stationName
@@ -45,6 +47,10 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
             onTriggered:  launchToList ? selectedPlugin.requestItems() : favs.load()
+        }
+        CoverAction {
+            iconSource: sourceFromList ? "image://theme/icon-cover-search" : "image://theme/icon-cover-favorite"
+            onTriggered:  sourceFromList = !sourceFromList
         }
     }
 }

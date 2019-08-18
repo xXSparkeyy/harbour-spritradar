@@ -38,6 +38,11 @@ Page {
         PullDownMenu {
             busy: bsyi.visible
             MenuItem {
+                enabled: favsOnCover
+                text: qsTr("Set as Cover")
+                onClicked: favsOnCover = false
+            }
+            MenuItem {
                 enabled: !main.launchToList && selectedPlugin.supportsFavs
                 text: qsTr("Set as First Page")
                 onClicked: launchToList = true

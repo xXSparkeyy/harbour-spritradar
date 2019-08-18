@@ -51,6 +51,11 @@ Page {
         PullDownMenu {
             enabled: selectedPlugin.supportsFavs
             MenuItem {
+                enabled: !favsOnCover
+                text: qsTr("Set as Cover")
+                onClicked: favsOnCover = true
+            }
+            MenuItem {
                 enabled: main.launchToList
                 text: qsTr("Set as First Page")
                 onClicked: launchToList = false
