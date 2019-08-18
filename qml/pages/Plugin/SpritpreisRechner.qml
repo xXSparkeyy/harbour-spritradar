@@ -12,7 +12,7 @@ Plugin {
     type: "DIE"
     types: ["SUP","DIE","GAS"]
     names: [qsTr("e5"),qsTr("diesel"),qsTr("Gas")]
-    supportsFavs: false
+    supportsFavs: true
 
     property variant stations: []
     property string url: "https://api.e-control.at/sprit/1.0/search/gas-stations/by-address"
@@ -82,7 +82,7 @@ console.log(e.message)
                         var stationPrice = o.prices[0].amount;
                         if( contentItem.hideClosed && !o.open || stationPrice <= 0.0) continue
                         var itm = {
-                            "stationID": i,//o.id,
+                            "stationID": l.latitude+";"+l.longitude,
                             "stationName": o.name,
                             "stationPrice": stationPrice,
                             "stationAdress": capitalizeString(l.address) + ", " + l.postalCode + " " + capitalizeString(l.city),
@@ -113,32 +113,35 @@ console.log(e.message)
             stationBusy = true
             station = {}
             stationPage = pageStack.push( "../GasStation.qml", {stationId:id} )
-            var x = stations[id]
-            var info = [
-                { "title":qsTr("State"), "text":x.open?qsTr("Open"):qsTr("Closed") }
-            ]
-            var times = []
-            for( var i = 0; i < x.openingHours.length; i++ ) {
-                times[i] = { "title":x.openingHours[i].label, "text":stripSeconds(x.openingHours[i].from) + " - " + stripSeconds(x.openingHours[i].to), "tf":true, "order": x.openingHours[i].order }
+            var x = false
+            for( var i = 0; i<stations.length; i++ ) if( stations[i].location.latitude+";"+stations[i].location.longitude == id ) { x = stations[i]; break }
+            if( x ) {
+                station = parseStation(x)
+                stationPage.station = station
+                stationBusy = false
+            } else {
+                x = id.split(";")
+                var lat = x[0]
+                var lng = x[1]
+                var req = new XMLHttpRequest()
+                req.open( "GET", url+"?latitude="+lat+"&longitude="+lng+"&fuelType="+type+"&includeClosed=true")
+                req.onreadystatechange = function() {
+                    if( req.readyState == 4 ) {
+                            x = JSON.parse( req.responseText )
+                            for( var i = 0; i<x.length;i++ ) {
+                                var o = x[i]
+                                if(o.location.latitude+";"+o.location.longitude!=id) continue
+                                station = parseStation(o)
+                                stationPage.station = station
+                                stationBusy = false
+                                return
+                            }
+                            stationPage.station = {}
+                            stationBusy = false
+                    }
+               }
+                req.send()
             }
-            times.sort( function(a,b) { return a.order-b.order } )
-
-            station = {
-                "stationID":id,
-                "stationName":x.name,
-                "stationAdress": {
-                    "street": x.location.address,
-                    "county":x.location.city,
-                    "country":"",
-                    "latitude":x.location.latitude,
-                    "longitude":x.location.longitude
-                },
-                "content": [
-                    { "title":qsTr("Info"), "items": info },
-                    { "title":qsTr("Opening Times"), "items": times }
-                ]
-            }
-
         }
         catch(e) {
 console.log(e.message)
@@ -146,10 +149,53 @@ console.log(e.message)
             station = {}
             stationBusy = false
         }
-        stationPage.station = station
-        stationBusy = false
     }
+    function parseStation( x ) {
+        var info = [
+            { "title":qsTr("State"), "text":x.open?qsTr("Open"):qsTr("Closed") }
+        ]
+        var times = []
+        for( var i = 0; i < x.openingHours.length; i++ ) {
+            times[i] = { "title":x.openingHours[i].label, "text":stripSeconds(x.openingHours[i].from) + " - " + stripSeconds(x.openingHours[i].to), "tf":true, "order": x.openingHours[i].order }
+        }
+        times.sort( function(a,b) { return a.order-b.order } )
 
+        return {
+            "stationID":x.location.latitude+";"+x.location.longitude,
+            "stationName":x.name,
+            "stationAdress": {
+                "street": x.location.address,
+                "county":x.location.city,
+                "country":"",
+                "latitude":x.location.latitude,
+                "longitude":x.location.longitude
+            },
+            "content": [
+                { "title":qsTr("Info"), "items": info },
+                { "title":qsTr("Opening Times"), "items": times }
+            ]
+        }
+    }
+    function getPriceForFav( id ) {
+        var x = id.split(";")
+        var lat = x[0]
+        var lng = x[1]
+        var req = new XMLHttpRequest()
+        req.open( "GET", url+"?latitude="+lat+"&longitude="+lng+"&fuelType="+type+"&includeClosed=true")
+        req.onreadystatechange = function() {
+            if( req.readyState == 4 ) {
+                    x = JSON.parse( req.responseText )
+                    for( var i = 0; i<x.length;i++ ) {
+                        var o = x[i]
+                        if(o.location.latitude+";"+o.location.longitude!=id) continue
+                        setPriceForFav(id, o.prices[0].amount )
+                        return
+                    }
+
+            }
+       }
+       req.send()
+    }
 
     radiusSlider {
         maximumValue: 20

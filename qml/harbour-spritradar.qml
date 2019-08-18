@@ -57,6 +57,7 @@ ApplicationWindow
     property variant station: []
     property bool stationLoading: false
     property bool launchToList: true
+    property bool favsOnCover: false
     onLaunchToListChanged: pluginSettings.save()
     List { id: list }
     Favs { id: favs }
@@ -77,6 +78,7 @@ ApplicationWindow
                     default: selectedPlugin = tk;
                 }
                 launchToList = getValue( "launchToList" )==1
+                favsOnCover  = getValue( "favsOnCover"  )==1
             }
             catch(e) {
 console.log(e.message)
@@ -86,10 +88,12 @@ console.log(e.message)
         function save() {
             setValue( "plugin", selectedPlugin.name )
             setValue( "launchToList", launchToList?"1":"0" )
+            setValue( "favsOnCover", favsOnCover?"1":"0" )
         }
         function assign() {
             selectedPlugin = tk
             launchToList = true
+            favsOnCover = false
             save()
         }
     }
