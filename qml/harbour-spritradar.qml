@@ -54,7 +54,6 @@ ApplicationWindow
     property string longitude: position.position.coordinate.longitude
     property variant searchItems: []
     property bool loading: false
-    property variant favs: []
     property variant station: []
     property bool stationLoading: false
     property bool launchToList: true

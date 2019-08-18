@@ -174,11 +174,7 @@ Plugin {
                             else if( type.indexOf("spezial") > -1 && ( (new RegExp( type, "i" )).test(o.prices[j].type) && ( price.price > o.prices[j].price || price.price == 0 ) ) ) { if( price.price != 0 ) { sPrice = price; } price = o.prices[j] }
                         }
                     if( price.price == 0) return
-                    var y = favs.stations
-                    for( var x in y ) {
-                        if( y[x].id == id  ) y[x].price = price.price
-                    }
-                    favs.stations = y
+                    setPriceForFav( id, price )
                 }
                 catch ( e ) {
                 }

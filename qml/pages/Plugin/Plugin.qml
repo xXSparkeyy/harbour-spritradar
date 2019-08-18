@@ -94,6 +94,12 @@ Dialog {
     function getPriceForFav( id ) {
         return 0
     }
+    function setPriceForFav( id, price ) {
+        for( var i = 0; i<favs.stations.count; i++ )
+            if( favs.stations.get(i).id == id )
+                favs.stations.setProperty( i, "stationPrice", price )
+    }
+
     function prepare() {
         pluginReady = true
     }

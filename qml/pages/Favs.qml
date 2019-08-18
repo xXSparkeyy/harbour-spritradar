@@ -3,47 +3,43 @@ import Sailfish.Silica 1.0
 Page {
     clip: true
     allowedOrientations: Orientation.All
-    property variant stations: []
+    property ListModel stations: ListModel {}
     function set( stId, name ) {
         if( !selectedPlugin.supportsFavs ) return false
-        var y = stations
-        y[y.length] = { id:stId, name:name, price:9.999 }
-        stations = y
+        stations.append( { id:stId, stationName:name, stationPrice:9.999 } )
         save()
         selectedPlugin.getPriceForFav(stId)
     }
     function unset( stId, name ) {
         if( !selectedPlugin.supportsFavs ) return false
-        var y = []
-        for( var i = 0; i<stations.length; i++ ) {
-            if( stations[i].id != stId ) y[y.length] = stations[i]
-        }
+        for( var i = 0; i<stations.count; i++ )
+            if( stations.get(i).id == stId )
+                stations.remove( i )
         stations = y
         save()
     }
     function is( stId ) {
         if( !selectedPlugin.supportsFavs ) return false
-        for( var i = 0; i<stations.length; i++ ) {
-            if( stId == stations[i].id ) return true
+        for( var i = 0; i<stations.count; i++ ) {
+            if( stId == stations.get(i).id ) return true
         }
         return false
     }
     function load() {
         if( !selectedPlugin.supportsFavs ) return false
-        var y = []
+        stations.clear()
         var x = selectedPlugin.settings.getValue( "Favourites/count" )
         for( var i = 0; i<x; i++ ) {
             var s = selectedPlugin.settings.getValue( "Favourites/station"+i ).split("|")
-            y[y.length] = { id:s[0], name:s[1], price:9.999}
+            stations.append( { id:s[0], stationName:s[1], stationPrice:9.999} )
             selectedPlugin.getPriceForFav( s[0] )
         }
-        stations = y
     }
     function save() {
         if( !selectedPlugin.supportsFavs ) return false
-        selectedPlugin.settings.setValue( "Favourites/count", stations.length )
-        for( var i = 0; i<stations.length; i++ ) {
-            selectedPlugin.settings.setValue( "Favourites/station"+i, stations[i].id+"|"+stations[i].name )
+        selectedPlugin.settings.setValue( "Favourites/count", stations.count )
+        for( var i = 0; i<stations.count; i++ ) {
+            selectedPlugin.settings.setValue( "Favourites/station"+i, stations.get(i).id+"|"+stations.get(i).stationName )
         }
     }
     SilicaFlickable {
@@ -73,17 +69,17 @@ Page {
             }
 
             Repeater {
-                model: stations.length
+                model: stations
                     StationListDelegate {
                         id: lavkavk
                         width: col.width
-                        name: stations[index].name
-                        price: stations[index].price
-                        property string stId: stations[index].id
+                        name: stationName
+                        price: stationPrice
+                        property string stId: id
                         onClicked: {
-                            selectedPlugin.requestStation( stations[index].id )
+                            selectedPlugin.requestStation( id )
                         }
-                        onNameChanged: stations[index].name = name
+                        onNameChanged: stationName = name
                         height: Theme.itemSizeSmall + ( favMenu.parentItem == lavkavk ? favMenu.height : 0 )
                         onPressAndHold: favMenu._showI( this, lavkavk )
                 }

@@ -161,11 +161,7 @@ Plugin {
                             if( o.prices[j].id == type ) price = o.prices[j].price
                         }
                     if( price == 0) return
-                    var y = favs.stations
-                    for( var x in y ) {
-                        if( y[x].id == id  ) y[x].price = price
-                    }
-                    favs.stations = y
+                    setPriceForFav( id, price )
                 }
                 catch ( e ) {
                 }
