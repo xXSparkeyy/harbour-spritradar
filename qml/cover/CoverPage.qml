@@ -46,7 +46,7 @@ CoverBackground {
         id: coverAction
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered:  launchToList ? selectedPlugin.requestItems() : favs.load()
+            onTriggered:  sourceFromList ? selectedPlugin.requestItems() : favs.load()
         }
         CoverAction {
             iconSource: sourceFromList ? "image://theme/icon-cover-search" : "image://theme/icon-cover-favorite"
