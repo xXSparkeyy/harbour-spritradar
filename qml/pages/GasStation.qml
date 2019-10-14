@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Nemo.Notifications 1.0
 
 Page {
     id: stationPage
@@ -70,6 +71,15 @@ Page {
                 height: address.paintedHeight + 2*Theme.paddingLarge
                 width: parent.width
                 onClicked: Qt.openUrlExternally( "geo:"+station.stationAdress.latitude+","+station.stationAdress.longitude )
+                onPressAndHold: {
+                    Clipboard.text = station.stationAdress.latitude+","+station.stationAdress.longitude
+                    clipborad_notification.publish()
+                }
+                Notification {
+                    id: clipborad_notification
+                    isTransient: true
+                    previewSummary: qsTr("Coordinates Copied to Clipboard")
+                }
                 id: addressContainer
                 visible: !selectedPlugin.stationBusy
                 Label {

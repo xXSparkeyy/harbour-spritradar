@@ -60,7 +60,8 @@ DISTFILES += \
     rpm/harbour-spritradar.yaml \
     harbour-spritradar.png \
     qml/pages/Plugin/PrixCarburants.qml \
-    rpm/harbour-spritradar.yaml
+    rpm/harbour-spritradar.yaml \
+    rpm/harbour-spritradar.changes
 
-
+SAILFISHAPP_ICONS = 108x108 128x128 256x256 86x86
 

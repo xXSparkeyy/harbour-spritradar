@@ -22,6 +22,10 @@
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
+    <message>
+        <source>Set as Cover</source>
+        <translation type="unfinished">Als Cover zeigen</translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>
@@ -32,6 +36,10 @@
     <message>
         <source>Set as Favourite</source>
         <translation>Zu Favoriten hinzufügen</translation>
+    </message>
+    <message>
+        <source>Coordinates Copied to Clipboard</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -130,6 +138,10 @@
     <message>
         <source>Set as First Page</source>
         <translation>Als erste Seite zeigen</translation>
+    </message>
+    <message>
+        <source>Set as Cover</source>
+        <translation type="unfinished">Als Cover zeigen</translation>
     </message>
 </context>
 <context>
