@@ -6,7 +6,7 @@ CoverBackground {
     property bool sourceFromList: !favsOnCover
     property ListModel source: sourceFromList ? selectedPlugin.coverItems : favs.stations
     CoverPlaceholder {
-        visible: ( selectedPlugin.coverItems.count < 1 ) && !selectedPlugin.itemsBusy && selectedPlugin.pluginReady
+        visible: ( source.count < 1 ) && !selectedPlugin.itemsBusy && selectedPlugin.pluginReady
         text: qsTr( "Nothing Found" )
         anchors {
             verticalCenter: parent.verticalCenter
