@@ -7,6 +7,7 @@ Page {
     property ListModel stations: ListModel {}
     property ListModel stations_sorted: ListModel {}
     property bool reorder_mode: false
+    onStationsChanged: sort()
     function set( stId, name ) {
         if( !selectedPlugin.supportsFavs ) return false
         stations.append( { id:stId, stationName:name, stationPrice:9.999 } )
