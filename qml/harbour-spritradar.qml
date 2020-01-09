@@ -28,12 +28,12 @@ ApplicationWindow
        property variant parentItem;
        function _showI( anchor, item ) {
            parentItem = item
-           show( anchor )
+           open( anchor )
        }
 
        MenuItem {
            text: typeof favMenu.parentItem == "undefined"?"":( isFav( favMenu.parentItem.stId ) ? qsTr( "Unset as Favourite" ) : qsTr( "Set as Favourite" ) )
-           onClicked: typeof favMenu.parentItem == "undefined"?"":( isFav( favMenu.parentItem.stId ) ? unsetFav : setFav )(favMenu.parentItem.stId , favMenu.parentItem.name)
+           onClicked: typeof favMenu.parentItem == "undefined"?"":( isFav( favMenu.parentItem.stId ) ? favMenu.parentItem.del : setFav )(favMenu.parentItem.stId , favMenu.parentItem.name)
        }
        TextField {
            visible: pageStack.currentPage == favs
@@ -220,5 +220,25 @@ console.log(e.message)
             return d;
     }
 
-
+    function qmSort( by, list ) {
+        if( list.length > 1 ) {
+            var left = []
+            var right = []
+            var pivot =  list[list.length-1]
+            var srt = by == "dist"
+            for( var i = 0; i < list.length-1; i++ ) {
+                var itm = list[i]
+                if( ( (srt?itm.stationDistance:itm.stationPrice) < (srt?pivot.stationDistance:pivot.stationPrice) ) ) {
+                    left[left.length] = list[i]
+                }
+                else {
+                    right[right.length] = list[i]
+                }
+            }
+            left = qmSort( by, left )
+            right = qmSort( by, right )
+            list = ( left.concat( [pivot] ) ).concat( right )
+        }
+        return list
+    }
 }

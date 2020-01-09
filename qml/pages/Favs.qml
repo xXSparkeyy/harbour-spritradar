@@ -129,6 +129,14 @@ Page {
                         onNameChanged: stationName = name
                         height: Theme.itemSizeSmall + ( favMenu.parentItem == lavkavk ? favMenu.height : 0 )
                         onPressAndHold: favMenu._showI( this, lavkavk )
+                        RemorseItem { id: remorse }
+                        function del( stId, name ) {
+                            remorse.execute( remorse_wrapper, "Deleting", function () { unset( stId, name ) })
+                        }
+                        Item {
+                            id: remorse_wrapper
+                            anchors.fill: parent
+                        }
                         Item {
                             anchors.fill: parent
                             visible: reorder_mode
