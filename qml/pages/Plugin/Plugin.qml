@@ -273,17 +273,27 @@ console.log(e.message)
                 id: gpsSwitchh
                 text: qsTr("Use GPS")
             }
-
-            TextField {
-                id: postalCode
-                placeholderText: qsTr("Address")
-                label: placeholderText
+            Item {
                 width: parent.width
-                readOnly: useGps
-                EnterKey.enabled: text.length > 0
-                EnterKey.onClicked: focus = false
+                height: postalCode.height
+                TextField {
+                    id: postalCode
+                    placeholderText: qsTr("Address")
+                    label: placeholderText
+                    anchors.left: parent.left
+                    anchors.right: clear_text_btn.left
+                    readOnly: useGps
+                    EnterKey.enabled: text.length > 0
+                    EnterKey.onClicked: focus = false
+                }
+                 IconButton {
+                    id: clear_text_btn
+                    icon.source: "image://theme/icon-m-clear?" + (pressed? Theme.highlightColor: Theme.primaryColor)
+                    onClicked: postalCode.text = ""
+                    anchors.right: parent.right
+                    anchors.verticalCenter: postalCode.verticalCenter
+                }
             }
-
 
             ComboBox {
                 id: autoUpdateSelector
