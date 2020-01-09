@@ -18,7 +18,7 @@ Page {
         for( var i = 0; i<stations.count; i++ )
             if( stations.get(i).id == stId )
                 stations.remove( i )
-        stations = y
+
         save()
     }
     function is( stId ) {
