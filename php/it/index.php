@@ -23,6 +23,7 @@
 	}
 	function savePrices() {
 		global $db;
+		var_dump($db);
 		mysqli_query( $db, "TRUNCATE TABLE  `it_prices`" );
 		global $pricesURL;
 		$csv = download( $pricesURL );
@@ -52,14 +53,13 @@
 	function getStations($lat, $lng, $rad) {
 		global $db;
 		$ret = array();
-		$q = mysqli_query( $db, "SELECT * FROM `it_stations`" );
+	    
+		$q = mysqli_query( $db, "SELECT *, ( 3959 * acos( cos( radians($lat) ) * cos( radians( lat ) ) * cos( radians(lng) - radians($lng)) + sin(radians($lat)) * sin( radians(lat)))) AS distance FROM `it_stations` HAVING `distance` < $rad" );
 		while( ($station=mysqli_fetch_assoc( $q))!=null ) {
-			$station["distance"] = ceil(getDistance( (double)$station["lat"], (double)$station["lng"], (double)$lat, (double)$lng )*1000);
-			if( $station["distance"] < $rad*1000 ) {
-				$station["prices"] = getPrices( $station["id"] );
-				$ret[] = $station;
-			}
+			$station["prices"] = getPrices( $station["id"] );
+			$ret[] = $station;
 		}
+		
 		return $ret;
 	}
 	function getStation( $id ) {
@@ -82,13 +82,14 @@
 		return str_replace( "\"","\\\"",$s );
 	}
 	function main() {
+	    global $db;
 		switch( $_GET["get"] ) {
 			case "stations":
-				connectDB();
+				$db = connectDB();
 				echo json_encode( getStations( $_GET["lat"], $_GET["lng"], $_GET["radius"] ) );
 			break;
 			case "station":
-				connectDB();
+				$db = connectDB();
 				echo json_encode( getStation( $_GET["id"] ) );
 			break;
 			case "cron":
@@ -96,25 +97,28 @@
 				if( $_GET["key"] == $cronjob_key ) cron();
 			break;
 			case "info":
-				connectDB();
-				getInfo( true );
+				$db = connectDB();
+				getInfo( true, false );
 			break;
 			default: header( "Location: https://github.com/xXSparkeyy/harbour-spritradar" );
 		}
 	}
-	function getInfo( $s ) {
+	function getInfo( $s, $sendmail=true ) {
 		global $db;
 		$lp = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `it_prices` WHERE 1" ) );
 		$lp = $lp["length"];
 		$ls = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `it_stations` WHERE 1" ) );
 		$ls = $ls["length"];
 		$s = $s&&($lp>0)&&($ls>0);
-		mail('lukasnagel99@gmail.com', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+        if($sendmail) mail('lukasnagel99@gmail.com', '[IT] Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+		else {
+		    echo "{ 'stations': $ls, 'prices': $lp }";
+		}
 	}
 	
 	
-	$stationsURL = "http://www.sviluppoeconomico.gov.it/images/exportCSV/anagrafica_impianti_attivi.csv";
-	$pricesURL = "http://www.sviluppoeconomico.gov.it/images/exportCSV/prezzo_alle_8.csv";
+	$stationsURL = "https://www.sviluppoeconomico.gov.it/images/exportCSV/anagrafica_impianti_attivi.csv";
+	$pricesURL = "https://www.sviluppoeconomico.gov.it/images/exportCSV/prezzo_alle_8.csv";
 	include "../index.php";
 	include '../db.php';
 	main();

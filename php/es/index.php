@@ -69,15 +69,14 @@
 	function getStations($lat, $lng, $rad) {
 		global $db;
 		$ret = [];
-		$q = mysqli_query( $db, "SELECT * FROM `es_stations`" );
+		$q = mysqli_query( $db, "SELECT *, ( 3959 * acos( cos( radians($lat) ) * cos( radians( lat ) ) * cos( radians(lng) - radians($lng)) + sin(radians($lat)) * sin( radians(lat)))) AS distance FROM `es_stations` HAVING `distance` < $rad" );
 		while( ($station=mysqli_fetch_assoc($q))!=null ) {
-			$station["distance"] = ceil(getDistance( (double)$station["lat"], (double)$station["lng"], (double)$lat, (double)$lng )*1000);
-			if( $station["distance"] < $rad*1000 ) {
-				$station["address"] = getAdress( $station["id"] );
-				$station["prices"] =  getPrices( $station["id"] );
-				$ret[] = $station;
-			}
+			$station["address"] = getAdress( $station["id"] );
+			$station["prices"] =  getPrices( $station["id"] );
+			$ret[] = $station;
 		}
+		
+		return $ret;
 		return $ret;
 	}
 	function getStation( $id ) {
@@ -101,7 +100,7 @@
 		global $db;
 		$q = mysqli_query( $db, "SELECT `address` FROM `es_addresses` WHERE `id` Like \"$id\"" );
 		if( ($address=mysqli_fetch_assoc($q))!=null ) {
-			return $address["address"];
+			if( $address["address"] != "" ) return $address["address"];
 		}
 		
 		$o = mysqli_fetch_assoc( mysqli_query($db, "SELECT `lat`, `lng` FROM `es_stations` WHERE `id` Like \"$id\" ") ); $lat = $o["lat"]; $lng = $o["lng"];
@@ -112,6 +111,7 @@
 		curl_close($ch);
 		
 		$address = json_decode($data,true)["results"][0]["formatted_address"];
+		
 		mysqli_query($db, "INSERT INTO `es_addresses` ( `id`, `address` ) VALUES ( \"$id\", \"$address\" )");
 		
 		return $address;
@@ -140,19 +140,22 @@
 			break;
 			case "info":
 				connectDB();
-				getInfo( true );
+				getInfo( true, false );
 			break;
 			default: header( "Location: https://github.com/xXSparkeyy/harbour-spritradar" );
 		}
 	}
-	function getInfo( $s ) {
+	function getInfo( $s, $sendmail=true ) {
 		global $db;
-		$lp = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `it_prices` WHERE 1" ) );
+		$lp = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `es_prices` WHERE 1" ) );
 		$lp = $lp["length"];
-		$ls = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `it_stations` WHERE 1" ) );
+		$ls = mysqli_fetch_assoc( mysqli_query($db, "SELECT COUNT(*) As length FROM `es_stations` WHERE 1" ) );
 		$ls = $ls["length"];
 		$s = $s&&($lp>0)&&($ls>0);
-		mail('lukasnagel99@gmail.com', 'Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+		if($sendmail) mail('lukasnagel99@gmail.com', '[ES] Cron Job: '.($s?"Succesfull":"Some Kinda Broke"), "Stationen: $ls | Preise: $lp" );
+		else {
+		    echo "{ 'stations': $ls, 'prices': $lp }";
+		}
 	}
 	include "../index.php";
 	include '../db.php';
