@@ -90,9 +90,9 @@ Page {
         PushUpMenu {
             enabled: selectedPlugin.supportsFavs
             MenuItem {
-                text: "Sort"
+                text: qsTr("Sort by") + " " + (st_repr.model == stations ? qsTr("Price") : qsTr("Favourites"))
                 onClicked: {
-                    st_repr.model = stations_sorted
+                    st_repr.model = st_repr.model == stations ? stations_sorted : stations
                     sort_favs()
                 }
             }
