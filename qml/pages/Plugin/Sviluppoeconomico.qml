@@ -9,7 +9,7 @@ Plugin {
     description: "Fonte: Ministero dello Sviluppo Economico"
     units: { "currency":"€", "distance": "km" }
     countryCode: "it"
-    property string url: "http://harbour-spritradar.w4f.eu/it/"
+    property string url: "http://harbour-spritradar-fork.w4f.eu/it/"
     type: "Benzina"
     types: ["Benzina","Gasolio","Metano","GPL","((.*(benzina|benzin|petrol|spezial).+)|(.+(benzina|benzin|petrol|spezial).*))","(.+(gasolio|diesel|gasoline|spezial).*)|(.*(gasolio|diesel|gasoline|spezial).+)"]
     names: [qsTr("Benzina"),qsTr("Gasolio"),qsTr("Metano"),qsTr("GPL"),qsTr("Benzina Special"),qsTr("Gasolio Special")]

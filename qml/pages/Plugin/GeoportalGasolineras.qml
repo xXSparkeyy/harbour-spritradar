@@ -9,7 +9,7 @@ Plugin {
     description: "Ministerio de Industria, Energía y Turismo"
     units: { "currency":"€", "distance": "km" }
     countryCode: "es"
-    property string url: "http://harbour-spritradar.w4f.eu/es/"
+    property string url: "http://harbour-spritradar-fork.w4f.eu/es/"
     type: "GPR"
     types: ['GPR', 'G98', 'GOA', 'NGO', 'GOB', 'GOC', 'BIO', 'G95', 'BIE', 'GLP', 'GNC']
     names: [qsTr('Gasolina 95 (G.Protecctión)'), qsTr('Gasolina 98'), qsTr('Gasóleo A habitual'), qsTr('Nuevo gasóleo'), qsTr('Gasóleo B'), qsTr('Gasóleo C'), qsTr('Biodiésel'), qsTr('Gasolina 95'), qsTr('Bioetanol'), qsTr('(GLP) - Gases licuados del petróleo'), qsTr('(GNC) - Gases natural comprimido')]

@@ -9,7 +9,7 @@ Plugin {
     description: "https://www.prix-carburants.gouv.fr/"
     units: { "currency":"€", "distance": "km" }
     countryCode: "fr"
-    property string url: "http://harbour-spritradar.w4f.eu/fr/"
+    property string url: "http://harbour-spritradar-fork.w4f.eu/fr/"
     type: "e10"
     types: ["Gazole", "SP95", "E10", "E85", "GPLc", "SP98"]
     names: [qsTr("Gazole"), qsTr("SP95"), qsTr("E10"), qsTr("E85"), qsTr("GPLc"), qsTr("SP98")]
