@@ -112,6 +112,8 @@ Dialog {
     function getItemsByAddress(callback) {
         var req = new XMLHttpRequest()
         req.open( "GET", "https://nominatim.openstreetmap.org/search/"+address+"?format=json&limit=1&accept-language="+countryCode+"&countrycodes="+countryCode )
+        req.setRequestHeader("user-agent", "harbour-spritradar/2.11")
+        req.setRequestHeader("referer", "harbour-spritradar/2.11")
         req.onreadystatechange = function() {
             if( req.readyState == 4 && !useGps ) {
                 try {
@@ -160,27 +162,7 @@ console.log(e.message)
         }
     }
 
-    function qmSort( by, list ) {
-        if( list.length > 1 ) {
-            var left = []
-            var right = []
-            var pivot =  list[list.length-1]
-            var srt = by == "dist"
-            for( var i = 0; i < list.length-1; i++ ) {
-                var itm = list[i]
-                if( ( (srt?itm.stationDistance:itm.stationPrice) < (srt?pivot.stationDistance:pivot.stationPrice) ) ) {
-                    left[left.length] = list[i]
-                }
-                else {
-                    right[right.length] = list[i]
-                }
-            }
-            left = qmSort( by, left )
-            right = qmSort( by, right )
-            list = ( left.concat( [pivot] ) ).concat( right )
-        }
-        return list
-    }
+
 
     function timeSince( timestamp ) {
         var ago = _getAgo( timestamp )
