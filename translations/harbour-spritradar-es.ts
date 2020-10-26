@@ -26,6 +26,14 @@
         <source>Set as Cover</source>
         <translation type="unfinished">Configurado como Cover</translation>
     </message>
+    <message>
+        <source>Sort by</source>
+        <translation type="unfinished">Ordena por</translation>
+    </message>
+    <message>
+        <source>Price</source>
+        <translation type="unfinished">Precio</translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>
@@ -46,59 +54,15 @@
     <name>GeoportalGasolineras</name>
     <message>
         <source>Info</source>
-        <translation>Información</translation>
-    </message>
-    <message>
-        <source>Prices</source>
-        <translation>Precios</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Opening Times</source>
-        <translation>Horario de apertura</translation>
+        <translation type="unfinished">Horario de apertura</translation>
     </message>
     <message>
-        <source>Gasolina 95 (G.Protecctión)</source>
-        <translation>Gasolina 95</translation>
-    </message>
-    <message>
-        <source>Gasolina 98</source>
-        <translation>Gasolina 98</translation>
-    </message>
-    <message>
-        <source>Gasóleo A habitual</source>
-        <translation>Gasóleo A</translation>
-    </message>
-    <message>
-        <source>Nuevo gasóleo</source>
-        <translation>Gasóleo Especial</translation>
-    </message>
-    <message>
-        <source>Gasóleo B</source>
-        <translation>Gasóleo B</translation>
-    </message>
-    <message>
-        <source>Gasóleo C</source>
-        <translation>Gasóleo C</translation>
-    </message>
-    <message>
-        <source>Biodiésel</source>
-        <translation>Biodiésel</translation>
-    </message>
-    <message>
-        <source>Gasolina 95</source>
-        <translation>Gasolina 95</translation>
-    </message>
-    <message>
-        <source>Bioetanol</source>
-        <translation>Bioetanol</translation>
-    </message>
-    <message>
-        <source>(GLP) - Gases licuados del petróleo</source>
-        <translation>(GLP) - Gases licuados del petróleo</translation>
-    </message>
-    <message>
-        <source>(GNC) - Gases natural comprimido</source>
-        <translation>(GNC) - Gases natural comprimido</translation>
+        <source>Prices</source>
+        <translation type="unfinished">Precios</translation>
     </message>
 </context>
 <context>
