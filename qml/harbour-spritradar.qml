@@ -58,6 +58,7 @@ ApplicationWindow
     property bool stationLoading: false
     property bool launchToList: true
     property bool favsOnCover: false
+    onFavsOnCoverChanged: pluginSettings.save()
     onLaunchToListChanged: pluginSettings.save()
     List { id: list }
     Favs { id: favs }
