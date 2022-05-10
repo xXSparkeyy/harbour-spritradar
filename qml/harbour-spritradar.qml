@@ -226,7 +226,7 @@ console.log(e.message)
             var left = []
             var right = []
             var pivot =  list[list.length-1]
-            var srt = by == "dist"
+            var srt = by === "dist"
             for( var i = 0; i < list.length-1; i++ ) {
                 var itm = list[i]
                 if( ( (srt?itm.stationDistance:itm.stationPrice) < (srt?pivot.stationDistance:pivot.stationPrice) ) ) {

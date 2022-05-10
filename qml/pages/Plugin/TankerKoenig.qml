@@ -13,10 +13,14 @@ Plugin {
     types: ["e5","e10","diesel"]
     names: [qsTr("e5"),qsTr("e10"),qsTr("diesel")]
 
+    property var tankerkoenig_apikey
+
     settings: Settings {
         name: "tankerkoenig"
 
         function save() {
+            // set from the Favs page settings.
+            //setValue("apiKey", apiKey) //tankerkoenig_apikey = getValue("apiKey")
             setValue( "radius", searchRadius )
             setValue( "type", type )
             setValue( "sort", main.sort )
@@ -26,6 +30,9 @@ Plugin {
         }
         function load() {
            try {
+                //apiKey = getValue("apiKey")
+                tankerkoenig_apikey = getValue("apiKey")
+               console.debug(tankerkoenig_apikey)
                 searchRadius = getValue( "radius" )
                 type = getValue( "type" )
                 main.sort = getValue( "sort" )

@@ -186,6 +186,7 @@ console.log(e.message)
     property alias searchRadius: sradius.value
     property alias address: postalCode.text
     property alias useGps: gpsSwitchh.checked
+    //property alias apiKey
     onUseGpsChanged: main.gpsActive = useGps
 
     property string type: ""
@@ -276,6 +277,19 @@ console.log(e.message)
                     anchors.verticalCenter: postalCode.verticalCenter
                 }
             }
+            /*Item {
+                width: parent.width
+                height: apiKeyText.height
+                TextField {
+                    id: apiKeyText
+                    placeholderText: qsTr("API Key")
+                    label: placeholderText
+                    anchors.left: parent.left
+                    readOnly: apiKey
+                    EnterKey.enabled: text.length > 0
+                    EnterKey.onClicked: focus = false
+                }
+            }*/
 
             ComboBox {
                 id: autoUpdateSelector

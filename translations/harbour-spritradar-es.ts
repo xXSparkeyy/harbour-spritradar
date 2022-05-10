@@ -34,6 +34,10 @@
         <source>Price</source>
         <translation type="unfinished">Precio</translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GasStation</name>
@@ -300,6 +304,17 @@
     </message>
     <message>
         <source>E10</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TankerKoenig API key</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

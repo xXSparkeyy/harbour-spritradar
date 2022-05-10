@@ -29,11 +29,7 @@ OTHER_FILES += qml/harbour-spritradar.qml \
     harbour-spritradar.desktop \
     rpm/harbour-spritradar.changes
 
-!defined(TANKERKOENIG_APIKEY, var) {
-    error("Please provide Tankerkoenig API key as argument of qmake, e.g. 'qmake TANKERKOENIG_APIKEY=<your API key here>'")
-}
-
-DEFINES += TANKERKOENIG_APIKEY=\\\"$$TANKERKOENIG_APIKEY\\\"
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -60,8 +56,6 @@ DISTFILES += \
     rpm/harbour-spritradar.yaml \
     harbour-spritradar.png \
     qml/pages/Plugin/PrixCarburants.qml \
-    rpm/harbour-spritradar.yaml \
-    rpm/harbour-spritradar.changes
+    rpm/harbour-spritradar.spec \
 
-SAILFISHAPP_ICONS = 108x108 128x128 256x256 86x86
 

@@ -50,8 +50,9 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
-    QCoreApplication::setOrganizationName("org");
-    QCoreApplication::setOrganizationDomain("Sparkeyy");
+    // move to github https://github.com/xXSparkeyy
+    QCoreApplication::setOrganizationName("xXSparkeyy");
+    QCoreApplication::setOrganizationDomain("com.github.xXSparkeyy");
     QCoreApplication::setApplicationName("harbour-spritradar");
     qmlRegisterType<Settings>("harbour.spritradar.Util", 1,0, "Settings");
 
@@ -59,8 +60,10 @@ int main(int argc, char *argv[])
 
     QQuickView* view = SailfishApp::createView();
     QObject::connect(view->engine(), SIGNAL(quit()), app, SLOT(quit()));
-    view->rootContext()->setContextProperty("tankerkoenig_apikey", QString(TANKERKOENIG_APIKEY)); //Claim here: https://creativecommons.tankerkoenig.de/#register
-    // has to be set as additional qmake argument to the project configuration (armv7hl, i486 and debug/release for both), like this: "TANKERKOENIG_APIKEY=<your_apikey>"
+    //view->rootContext()->setContextProperty("tankerkoenig_apikey", apiKey); //QString(TANKERKOENIG_APIKEY));
+    //Claim here: https://creativecommons.tankerkoenig.de/#register
+    // has to be set as additional qmake argument to the project configuration (armv7hl, i486 and debug/release for both),
+    // like this: "TANKERKOENIG_APIKEY=<your_apikey>"
     view->setSource(SailfishApp::pathTo("qml/harbour-spritradar.qml"));
     view->show();
 

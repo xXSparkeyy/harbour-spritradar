@@ -68,9 +68,16 @@ Page {
         anchors.fill: parent
 
         VerticalScrollDecorator {}
-
         PullDownMenu {
             enabled: selectedPlugin.supportsFavs
+            /*MenuItem {
+                text: qsTr("About")
+                onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+            }*/
+            MenuItem {
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
+            }
             MenuItem {
                 enabled: !favsOnCover
                 text: qsTr("Set as Cover")
