@@ -8,5 +8,5 @@ Name=SpritRadar
 [X-Sailjail]
 OrganizationName=harbour-spritradar
 ApplicationName=harbour-spritradar
-Permissions=UserDirs;Camera;Location;Internet
+Permissions=UserDirs;Location;Internet
 

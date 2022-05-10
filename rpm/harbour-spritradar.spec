@@ -25,6 +25,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
+BuildRequires:  qt5-qttools-linguist
 
 %description
 A Gas price comparison App. Based on https://github.com/xXSparkeyy/harbour-spritradar
