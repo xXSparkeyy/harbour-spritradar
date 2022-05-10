@@ -6,7 +6,7 @@ Exec=harbour-spritradar
 Name=SpritRadar
 
 [X-Sailjail]
-OrganizationName=de.poetaster
-ApplicationName=harbour-spiritradar
+OrganizationName=harbour-spritradar
+ApplicationName=harbour-spritradar
 Permissions=UserDirs;Camera;Location;Internet
 

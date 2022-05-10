@@ -39,7 +39,6 @@
 #include <QtQml>
 #include <QQuickView>
 
-
 int main(int argc, char *argv[])
 {
     // SailfishApp::main() will display "qml/template.qml", if you need more
@@ -51,19 +50,24 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
     // move to github https://github.com/xXSparkeyy
-    QCoreApplication::setOrganizationName("xXSparkeyy");
-    QCoreApplication::setOrganizationDomain("com.github.xXSparkeyy");
+    QCoreApplication::setOrganizationName("harbour-spritradar");
     QCoreApplication::setApplicationName("harbour-spritradar");
-    qmlRegisterType<Settings>("harbour.spritradar.Util", 1,0, "Settings");
+/*
+    QString sFile = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
+        .filePath(QCoreApplication::organizationName())+"/harbour-spritradar/harbour-spritradar";
+    QSettings settings(sFile);
 
+    qDebug() << 'sFile: ' << sFile;
+
+    //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, sFile);
+*/
+    qmlRegisterType<Settings>("harbour.spritradar.Util", 1, 0, "Settings");
     QGuiApplication* app = SailfishApp::application(argc, argv);
 
     QQuickView* view = SailfishApp::createView();
     QObject::connect(view->engine(), SIGNAL(quit()), app, SLOT(quit()));
     //view->rootContext()->setContextProperty("tankerkoenig_apikey", apiKey); //QString(TANKERKOENIG_APIKEY));
     //Claim here: https://creativecommons.tankerkoenig.de/#register
-    // has to be set as additional qmake argument to the project configuration (armv7hl, i486 and debug/release for both),
-    // like this: "TANKERKOENIG_APIKEY=<your_apikey>"
     view->setSource(SailfishApp::pathTo("qml/harbour-spritradar.qml"));
     view->show();
 
