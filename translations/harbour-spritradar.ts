@@ -251,6 +251,10 @@
         <source>At time</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>API Key</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PrixCarburants</name>

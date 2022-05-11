@@ -28,20 +28,8 @@ Page {
             setValue( "apiKey", apiKey )
         }
         function load() {
-           try {
-                apiKey = getValue( "apiKey" )
-               tKapiKeyText.text = apiKey
-            }
-            catch(e) {
-console.log(e.message)
-                //assign()
-                load()
-                save()
-            }
-        }
-        function assign() {
-            //setValue( "radius", 1 )
-
+            apiKey = getValue( "apiKey" )
+            tKapiKeyText.text = apiKey
         }
     }
 
@@ -55,7 +43,6 @@ console.log(e.message)
         Column {
             id: column
             width: parent.width
-            //height: childRect.height
 
             PageHeader { title: qsTr("Settings") }
 

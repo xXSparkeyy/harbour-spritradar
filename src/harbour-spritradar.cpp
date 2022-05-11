@@ -49,25 +49,21 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+
     // move to github https://github.com/xXSparkeyy
+    QGuiApplication* app = SailfishApp::application(argc, argv);
+
     QCoreApplication::setOrganizationName("harbour-spritradar");
     QCoreApplication::setApplicationName("harbour-spritradar");
-/*
-    QString sFile = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
-        .filePath(QCoreApplication::organizationName())+"/harbour-spritradar/harbour-spritradar";
-    QSettings settings(sFile);
-
-    qDebug() << 'sFile: ' << sFile;
-
-    //QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, sFile);
-*/
-    qmlRegisterType<Settings>("harbour.spritradar.Util", 1, 0, "Settings");
-    QGuiApplication* app = SailfishApp::application(argc, argv);
 
     QQuickView* view = SailfishApp::createView();
     QObject::connect(view->engine(), SIGNAL(quit()), app, SLOT(quit()));
+
+    qmlRegisterType<Settings>("harbour.spritradar.Util", 1, 0, "Settings");
+
     //view->rootContext()->setContextProperty("tankerkoenig_apikey", apiKey); //QString(TANKERKOENIG_APIKEY));
     //Claim here: https://creativecommons.tankerkoenig.de/#register
+
     view->setSource(SailfishApp::pathTo("qml/harbour-spritradar.qml"));
     view->show();
 

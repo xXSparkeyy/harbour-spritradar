@@ -20,7 +20,7 @@ Plugin {
 
         function save() {
             // set from the Favs page settings.
-            //setValue("apiKey", apiKey) //tankerkoenig_apikey = getValue("apiKey")
+            setValue("apiKey", apiKey) //tankerkoenig_apikey = getValue("apiKey")
             setValue( "radius", searchRadius )
             setValue( "type", type )
             setValue( "sort", main.sort )
@@ -30,8 +30,8 @@ Plugin {
         }
         function load() {
            try {
-                //apiKey = getValue("apiKey")
-                tankerkoenig_apikey = getValue("apiKey")
+                apiKey = getValue("apiKey")
+                tankerkoenig_apikey = apiKey
                console.debug(tankerkoenig_apikey)
                 searchRadius = getValue( "radius" )
                 type = getValue( "type" )

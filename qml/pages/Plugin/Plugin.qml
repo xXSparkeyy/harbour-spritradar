@@ -186,7 +186,9 @@ console.log(e.message)
     property alias searchRadius: sradius.value
     property alias address: postalCode.text
     property alias useGps: gpsSwitchh.checked
-    //property alias apiKey
+    property alias apiInput: apiKey
+    property alias apiKey: apiKey.text
+
     onUseGpsChanged: main.gpsActive = useGps
 
     property string type: ""
@@ -277,19 +279,26 @@ console.log(e.message)
                     anchors.verticalCenter: postalCode.verticalCenter
                 }
             }
-            /*Item {
+            Item {
                 width: parent.width
-                height: apiKeyText.height
+                height: apiKey.height
                 TextField {
-                    id: apiKeyText
+                    id: apiKey
                     placeholderText: qsTr("API Key")
                     label: placeholderText
                     anchors.left: parent.left
-                    readOnly: apiKey
-                    EnterKey.enabled: text.length > 0
-                    EnterKey.onClicked: focus = false
+                    //readOnly: apiKey
+                    //EnterKey.enabled: text.length > 0
+                    //EnterKey.onClicked: focus = false
                 }
-            }*/
+                 IconButton {
+                    id: clear_apikey_btn
+                    icon.source: "image://theme/icon-m-clear?" + (pressed? Theme.highlightColor: Theme.primaryColor)
+                    onClicked: apiKey.text = ""
+                    anchors.right: parent.right
+                    anchors.verticalCenter: apiKey.verticalCenter
+                }
+            }
 
             ComboBox {
                 id: autoUpdateSelector
