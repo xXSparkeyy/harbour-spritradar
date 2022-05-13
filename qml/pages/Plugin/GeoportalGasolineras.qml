@@ -16,6 +16,10 @@ Plugin {
     types: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
     names: ["Gasolina 95 E5","Gasolina 95 E10","Gasolina 95 E5 Premium","Gasolina 98 E5","Gasolina 98 E10","Gasóleo A habitual","Gasóleo Premium","Gasóleo B","Gasóleo C","Bioetanol","Biodiésel","Gases licuados del petróleo","Gas natural comprimido","Gas natural licuado","Hidrógeno"]
 
+//    https://github.com/carmenfdezb/harbour-spritradar/commit/2963bd16bb349bb122ea1935e854d32638086267
+//    types: ["1","3","4","5","6"]
+//    names: ["Gasolina 95 (G. Protección)","Gasolina 98 E5","Gasóleo A habitual","Gasóleo Premium","Gasóleo B"]
+
     settings: Settings {
         name: "GeoportalGasolineras"
 
